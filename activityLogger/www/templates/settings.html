@@ -1,5 +1,38 @@
 <ion-view title="Settings">
   <ion-content class="padding">
-    <h1>Settings</h1>
+  	<div class="list">
+  			<label class="item item-input">
+				<div class="input-label">Your Name</div>
+				<input class="text-right" type="text" ng-model="none">
+			</label>
+
+			<label class="item item-checkbox item-checkbox-right">
+				<label class="checkbox">
+					<input type="checkbox"
+					ng-model="none">
+				</label>
+				Auto Stop
+			</label>
+            
+			<label class="item item-checkbox item-checkbox-right">
+				<label class="checkbox">
+					<input type="checkbox"
+					ng-model="none">
+				</label>
+				Check Me
+			</label>
+            
+            <label class="item item-input">
+				<div class="input-label">Some Input</div>
+				<input class="text-right" type="text" ng-model="none">
+			</label>
+
+			<div class="padding">
+				<button class="button button-block button-positive"
+						ng-click="someCtrl.save()">
+						Save
+				</button>
+			</div>
+		</div>
   </ion-content>
 </ion-view>
