@@ -2,9 +2,20 @@
     <ion-content class="padding">
         <label class="item item-input item-select">
             <div class="input-label">Activity</div>
-            <select ng-model="" ng-options="a for a in ">
+            <select ng-model="" ng-options="">
             </select>
         </label>
+        <label class="item item-checkbox item-checkbox-right">
+            <label class="checkbox">
+                <input type="checkbox" ng-model="">
+            </label>
+            Live-Tracking
+        </label>
+        <label class="item item-input" style="height: 60%;">
+            <textarea placeholder="Comments"></textarea>
+        </label>
+        <button class="button button-block button-positive" ng-click="">
+            GO!
+        </button>
     </ion-content>
 </ion-view>
-
