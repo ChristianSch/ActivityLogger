@@ -1,6 +1,3 @@
-/**
- * Created by Fosso on 30.11.2014.
- */
 'use strict';
 angular.module('ActivityLogger').factory('Profil',
     function () {

@@ -1,6 +1,4 @@
-/**
- * Created by Fosso on 29.11.2014.
- */
+'use strict';
 angular.module('ActivityLogger').controller('ActivityListCtrl',
     function ($scope) {
 

@@ -1,6 +1,4 @@
-/**
- * Created by Fosso on 30.11.2014.
- */
+'use strict';
 angular.module('ActivityLogger').controller('TabCtrl',
     function ($scope, $ionicPopover) {
         $ionicPopover.fromTemplateUrl('popover.html', {

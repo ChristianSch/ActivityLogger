@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ActivityLogger').controller('ProfileCtrl',
 function ($scope) {
     this.upload= function(){
