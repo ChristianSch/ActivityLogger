@@ -187,7 +187,7 @@
  *
  * The following code will issue the **ng-leave-stagger** event on the element provided:
  *
- * ```js
+ * ```ap
  * var kids = parent.children();
  *
  * $animate.leave(kids[0]); //stagger index=0
@@ -209,7 +209,7 @@
  * In the event that you do not want to use CSS3 transitions or CSS3 animations or if you wish to offer animations on browsers that do not
  * yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.
  *
- * ```js
+ * ```ap
  * //!annotate="YourApp" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.
  * var ngModule = angular.module('YourApp', ['ngAnimate']);
  * ngModule.animation('.my-crazy-animation', function() {

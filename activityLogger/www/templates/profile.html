@@ -1,5 +1,51 @@
-<ion-view title="Profile">
-  <ion-content class="padding">
-    <h1>Profile</h1>
-  </ion-content>
+<ion-view title="Profil">
+    <ion-content class="padding">
+        <div class="list">
+            <a class="item item-thumbnail-left" href="#">
+                <img src="img/ionic.png">
+                <button class="ion-edit" ng-click="pCtrl.upload()">
+
+                </button>
+
+            </a>
+            <label class="item item-input">
+                <input type="text" placeholder="Name"
+                       ng-model="pCtrl.profil.name">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Vorname" ng-model="pCtrl.profil.vorname">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Username" ng-model="pCtrl.profil.username">
+            </label>
+
+            <label class="item item-input">
+                <input type="text" placeholder="Alt" ng-model="pCtrl.profil.alt">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Gewicht" ng-model="pCtrl.profil.gewicht">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Grosse" ng-model="pCtrl.profil.grosse">
+            </label>
+            <label class="item item-checkbox item-checkbox-right">
+                <label class="checkbox">
+                    <input type="checkbox" ng-model="pCtrl.profil.isMann">
+                </label>
+                Männlich
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">Staatangehörigkeit</div>
+                <select ng-model="pCtrl.profil.nationality"
+                        ng-options="n for n in pCtrl.nationalities">
+                </select>
+            </label>
+
+            <div class=" padding">
+                <button class="button button-block button-positive"
+                        ng-click="pCtrl.save()">Speichern
+                </button>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

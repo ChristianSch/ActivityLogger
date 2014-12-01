@@ -1,0 +1,55 @@
+<ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-videocamera" title=" GO !" ng-click="">
+    </button>
+    <button class="button button-icon icon ion-ios7-trash-outline"
+            ng-click="">
+    </button>
+</ion-nav-buttons>
+<ion-view title=" Activity anlegen">
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-input item-select">
+                <div class="input-label">Sport Art</div>
+                <select ng-model="afCtrl.activity.sport"
+                        ng-options="n for n in afCtrl.sports">
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">Distanz</div>
+                <select ng-model="afCtrl.activity.distance"
+                        ng-options="n for n in afCtrl.distances">
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">Höhe</div>
+                <select ng-model="afCtrl.activity.altitude"
+                        ng-options="n for n in afCtrl.altitudes">
+                </select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Dauer</span>
+                <input class="text-right" type="text" maxlength="10"
+                       ng-model="afCtrl.activity.dauer">
+            </label>
+
+            <label class="item item-input">
+                <span class="input-label">Video</span>
+                <input class="text-right" type="image"
+                       ng-model="afCtrl.activity.video">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Trackdaten</span>
+                <input class="text-right" type="image"
+                       ng-model="afCtrl.activity.track_data">
+            </label>
+            <label class="item item-input">
+                <textarea placeholder="Comments"></textarea>
+            </label>
+        </div>
+        <div class=" padding">
+            <button class="button button-block button-positive"
+                    ng-click="rfCtrl.save()">Speichern
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

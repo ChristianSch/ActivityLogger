@@ -286,7 +286,7 @@ window.ionic.version = '1.0.0-beta.13';
 })(window, document, ionic);
 
 /**
- * ion-events.js
+ * ion-events.ap
  *
  * Author: Max Lynch <max@drifty.com>
  *
@@ -294,7 +294,7 @@ window.ionic.version = '1.0.0-beta.13';
  * detects special events like tap/swipe/etc. and emits them
  * as custom events that can be used in an app.
  *
- * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.js - thanks guys!
+ * Portions lovingly adapted from github.com/maker/ratchet and github.com/alexgibson/tap.ap - thanks guys!
  */
 
 (function(ionic) {
@@ -403,7 +403,7 @@ window.ionic.version = '1.0.0-beta.13';
      * @alias ionic.onGesture
      * @description Add an event listener for a gesture on an element.
      *
-     * Available eventTypes (from [hammer.js](http://eightmedia.github.io/hammer.js/)):
+     * Available eventTypes (from [hammer.ap](http://eightmedia.github.io/hammer.ap/)):
      *
      * `hold`, `tap`, `doubletap`, `drag`, `dragstart`, `dragend`, `dragup`, `dragdown`, <br/>
      * `dragleft`, `dragright`, `swipe`, `swipeup`, `swipedown`, `swipeleft`, `swiperight`, <br/>
@@ -451,7 +451,7 @@ window.ionic.version = '1.0.0-beta.13';
   * Simple gesture controllers with some common gestures that emit
   * gesture events.
   *
-  * Ported from github.com/EightMedia/hammer.js Gestures - thanks!
+ * Ported from github.com/EightMedia/hammer.ap Gestures - thanks!
   */
 (function(ionic) {
 
@@ -648,7 +648,7 @@ window.ionic.version = '1.0.0-beta.13';
 
 
     /**
-     * enable of disable hammer.js detection
+     * enable of disable hammer.ap detection
      * @param   {Boolean}   state
      * @returns {ionic.Gestures.Instance}
      */
@@ -847,7 +847,7 @@ window.ionic.version = '1.0.0-beta.13';
 
 
     /**
-     * collect event data for ionic.Gestures js
+     * collect event data for ionic.Gestures ap
      * @param   {HTMLElement}   element
      * @param   {String}        eventType        like ionic.Gestures.EVENT_MOVE
      * @param   {Object}        eventData
@@ -1148,7 +1148,7 @@ window.ionic.version = '1.0.0-beta.13';
     stopDefaultBrowserBehavior: function stopDefaultBrowserBehavior(element, css_class) {
       // changed from making many style changes to just adding a preset classname
       // less DOM manipulations, less code, and easier to control in the CSS side of things
-      // hammer.js doesn't come with CSS, but ionic does, which is why we prefer this method
+      // hammer.ap doesn't come with CSS, but ionic does, which is why we prefer this method
       if(element && element.classList) {
         element.classList.add(css_class);
         element.onselectstart = function() {
@@ -1309,7 +1309,7 @@ window.ionic.version = '1.0.0-beta.13';
 
     /**
      * register new gesture
-     * @param   {Object}    gesture object, see gestures.js for documentation
+     * @param   {Object}    gesture object, see gestures.ap for documentation
      * @returns {Array}     gestures
      */
     register: function register(gesture) {
@@ -2372,7 +2372,7 @@ window.ionic.version = '1.0.0-beta.13';
  * - Works with labels surrounding inputs
  * - Does not fire off a click if the user moves the pointer too far
  * - Adds and removes an 'activated' css class
- * - Multiple [unit tests](https://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
+ * - Multiple [unit tests](https://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.ap) for each scenario
  *
  */
 /*
@@ -3015,7 +3015,7 @@ ionic.DomUtil.ready(function(){
   /**
    * Various utilities used throughout Ionic
    *
-   * Some of these are adopted from underscore.js and backbone.js, both also MIT licensed.
+   * Some of these are adopted from underscore.ap and backbone.ap, both also MIT licensed.
    */
   ionic.Utils = {
 
@@ -3102,7 +3102,7 @@ ionic.DomUtil.ready(function(){
         return result;
       };
     },
-     // Borrowed from Backbone.js's extend
+    // Borrowed from Backbone.ap's extend
      // Helper function to correctly set up the prototype chain, for subclasses.
      // Similar to `goog.inherits`, but uses a hash of prototype properties and
      // class properties to be extended.
@@ -3139,7 +3139,7 @@ ionic.DomUtil.ready(function(){
       return child;
     },
 
-    // Extend adapted from Underscore.js
+    // Extend adapted from Underscore.ap
     extend: function(obj) {
        var args = Array.prototype.slice.call(arguments, 1);
        for(var i = 0; i < args.length; i++) {
@@ -3584,7 +3584,7 @@ function viewportLoadTag() {
 }
 
 function viewportUpdate() {
-  // unit tests in viewport.unit.js
+  // unit tests in viewport.unit.ap
 
   var initWidth = viewportProperties.width;
   var initHeight = viewportProperties.height;
@@ -4399,7 +4399,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
     };
 
     //Broadcasted when keyboard is shown on some platforms.
-    //See js/utils/keyboard.js
+    //See ap/utils/keyboard.ap
     container.addEventListener('scrollChildIntoView', self.scrollChildIntoView);
     container.addEventListener('resetScrollView', self.resetScrollView);
 
@@ -6364,7 +6364,7 @@ ionic.scroll = {
     this.el = opts.el;
     this.scrollEl = opts.scrollEl;
     this.scrollView = opts.scrollView;
-    // Get the True Top of the list el http://www.quirksmode.org/js/findpos.html
+    // Get the True Top of the list el http://www.quirksmode.org/ap/findpos.html
     this.listElTrueTop = 0;
     if (this.listEl.offsetParent) {
       var obj = this.listEl;
@@ -6859,7 +6859,7 @@ ionic.scroll = {
 })(ionic);
 
 /*
- * Adapted from Swipe.js 2.0
+ * Adapted from Swipe.ap 2.0
  *
  * Brad Birdsall
  * Copyright 2013, MIT License

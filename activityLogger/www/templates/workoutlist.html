@@ -1,7 +1,10 @@
-<ion-view title="WorkoutList">
+<ion-view title="ActivityList">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="workout in workouts" type="item-text-wrap" href="#/tab/workoutlist">
+      <ion-item ng-repeat="workout in workouts" type="item-text-wrap" href="#/tab/workoutlist/{{workout.id}}">
+        <ion-option-button class="button-assertive" ng-click="">
+          Löschen
+        </ion-option-button>
         {{workout.name}}
       </ion-item>
     </ion-list>
