@@ -1,5 +1,9 @@
 <ion-view title="Summary">
-  <ion-content class="padding">
-    <h1>Summary</h1>
+ <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="stat in stats" type="item-text-wrap">      
+        {{stat.name}}
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>
