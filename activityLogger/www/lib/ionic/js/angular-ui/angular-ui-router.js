@@ -241,9 +241,9 @@ angular.module('ui.router.state', ['ui.router.router', 'ui.router.util']);
  * <!doctype html>
  * <html ng-app="myApp">
  * <head>
- *   <script src="ap/angular.ap"></script>
+ *   <script src="js/angular.js"></script>
  *   <!-- Include the ui-router script -->
- *   <script src="ap/angular-ui-router.min.ap"></script>
+ *   <script src="js/angular-ui-router.min.js"></script>
  *   <script>
  *     // ...and add 'ui.router' as a dependency
  *     var myApp = angular.module('myApp', ['ui.router']);
@@ -1825,7 +1825,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
      * @param {object=} options Options object. The options are:
      *
      * - **`location`** - {boolean=true|string=} - If `true` will update the url in the location bar, if `false`
-     *    will not. If string, must be `"replace"`, which will update url and also replace last history activity.
+     *    will not. If string, must be `"replace"`, which will update url and also replace last history record.
      * - **`inherit`** - {boolean=true}, If `true` will inherit url parameters from current url.
      * - **`relative`** - {object=$state.$current}, When transitioning with relative path (e.g '^'), 
      *    defines which state to be relative from.
@@ -1880,7 +1880,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory,           $
      * @param {object=} options Options object. The options are:
      *
      * - **`location`** - {boolean=true|string=} - If `true` will update the url in the location bar, if `false`
-     *    will not. If string, must be `"replace"`, which will update url and also replace last history activity.
+     *    will not. If string, must be `"replace"`, which will update url and also replace last history record.
      * - **`inherit`** - {boolean=false}, If `true` will inherit url parameters from current url.
      * - **`relative`** - {object=}, When transitioning with relative path (e.g '^'), 
      *    defines which state to be relative from.

@@ -14,7 +14,7 @@
 
 (function() {
 /*
- * deprecated.ap
+ * deprecated.js
  * https://github.com/wearefractal/deprecated/
  * Copyright (c) 2014 Fractal <contact@wearefractal.com>
  * License MIT
@@ -83,7 +83,7 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
  * @usage
  * To trigger an Action Sheet in your code, use the $ionicActionSheet service in your angular controllers:
  *
- * ```ap
+ * ```js
  * angular.module('mySuperApp', ['ionic'])
  * .controller(function($scope, $ionicActionSheet, $timeout) {
  *
@@ -338,7 +338,7 @@ jqLite.prototype.removeClass = function(cssClasses) {
  *
  * @usage
  *
- * ```ap
+ * ```js
  * function MyController($scope, $ionicBackdrop, $timeout) {
  *   //Show a backdrop for one second
  *   $scope.action = function() {
@@ -412,7 +412,7 @@ IonicModule
   var LOCAL_REGEXP = /^\s*([@=&])(\??)\s*(\w*)\s*$/;
   return function(scope, attrs, bindDefinition) {
     forEach(bindDefinition || {}, function (definition, scopeName) {
-      //Adapted from angular.ap $compile
+      //Adapted from angular.js $compile
       var match = definition.match(LOCAL_REGEXP) || [],
         attrName = match[3] || scopeName,
         mode = match[1], // @, =, or &
@@ -1263,7 +1263,7 @@ IonicModule
  * to change how Ionic works.
  *
  * @usage
- * ```ap
+ * ```js
  * var myApp = angular.module('reallyCoolApp', ['ionic']);
  *
  * myApp.config(function($ionicConfigProvider) {
@@ -1328,7 +1328,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  * interaction.
  *
  * @usage
- * ```ap
+ * ```js
  * angular.module('LoadingApp', ['ionic'])
  * .controller('LoadingCtrl', function($scope, $ionicLoading) {
  *   $scope.show = function() {
@@ -1350,7 +1350,7 @@ var LOADING_SET_DEPRECATED = '$ionicLoading instance.setContent() has been depre
  * Set the default options to be passed to the {@link ionic.service:$ionicLoading} service.
  *
  * @usage
- * ```ap
+ * ```js
  * var app = angular.module('myApp', ['ionic'])
  * app.constant('$ionicLoadingConfig', {
  *   template: 'Default Loading Template...'
@@ -1560,7 +1560,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
  *   </ion-modal-view>
  * </script>
  * ```
- * ```ap
+ * ```js
  * angular.module('testApp', ['ionic'])
  * .controller('MyController', function($scope, $ionicModal) {
  *   $ionicModal.fromTemplateUrl('my-modal.html', {
@@ -1847,7 +1847,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
  *   </ion-nav-bar>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicNavBarDelegate) {
  *   $scope.setNavTitle = function(title) {
  *     $ionicNavBarDelegate.setTitle(title);
@@ -2195,7 +2195,7 @@ IonicModule
  *   </ion-popover-view>
  * </script>
  * ```
- * ```ap
+ * ```js
  * angular.module('testApp', ['ionic'])
  * .controller('MyController', function($scope, $ionicPopover) {
  *   $ionicPopover.fromTemplateUrl('my-popover.html', {
@@ -2409,7 +2409,7 @@ var POPUP_TPL =
  * @usage
  * A few basic examples, see below for details about all of the options available.
  *
- * ```ap
+ * ```js
  *angular.module('mySuperApp', ['ionic'])
  *.controller('PopupCtrl',function($scope, $ionicPopup, $timeout) {
  *
@@ -2864,7 +2864,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
  * It is meant to be used where we need to absolute-position DOM elements in
  * relation to other, existing elements (this is the case for tooltips, popovers, etc.).
  *
- * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.ap),
+ * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
  * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
 IonicModule
@@ -2973,7 +2973,7 @@ IonicModule
  *   </ion-content>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MainCtrl($scope, $ionicScrollDelegate) {
  *   $scope.scrollTop = function() {
  *     $ionicScrollDelegate.scrollTop();
@@ -2998,7 +2998,7 @@ IonicModule
  *   </ion-content>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MainCtrl($scope, $ionicScrollDelegate) {
  *   $scope.scrollMainToTop = function() {
  *     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
@@ -3114,7 +3114,7 @@ IonicModule
    *   </div>
    * </ion-scroll>
    * ```
-   * ```ap
+   * ```js
    * function ScrollCtrl($scope, $ionicScrollDelegate) {
    *   var delegate = $ionicScrollDelegate.$getByHandle('myScroll');
    *
@@ -3191,7 +3191,7 @@ IonicModule
  *   </ion-side-menus>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MainCtrl($scope, $ionicSideMenuDelegate) {
  *   $scope.toggleLeftSideMenu = function() {
  *     $ionicSideMenuDelegate.toggleLeft();
@@ -3305,7 +3305,7 @@ IonicModule
  *   </ion-slide-box>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicSlideBoxDelegate) {
  *   $scope.nextSlide = function() {
  *     $ionicSlideBoxDelegate.next();
@@ -3414,7 +3414,7 @@ IonicModule
  *   </ion-tabs>
  * </body>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicTabsDelegate) {
  *   $scope.selectTabWithIndex = function(index) {
  *     $ionicTabsDelegate.select(index);
@@ -3463,14 +3463,14 @@ IonicModule
  * @usage
  * State templates are cached automatically, but you can optionally cache other templates.
  *
- * ```ap
+ * ```js
  * $ionicTemplateCache('myNgIncludeTemplate.html');
  * ```
  *
  * Optionally disable all preemptive caching with the `$ionicConfigProvider` or individual states by setting `prefetchTemplate`
  * in the `$state` definition
  *
- * ```ap
+ * ```js
  *   angular.module('myApp', ['ionic'])
  *   .config(function($stateProvider, $ionicConfigProvider) {
  *
@@ -4301,7 +4301,7 @@ function($provide) {
  *   </ion-list>
  * </ion-content>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicListDelegate) {
  *   $scope.showDeleteButtons = function() {
  *     $ionicListDelegate.showDelete(true);
@@ -5455,7 +5455,7 @@ IonicModule
  *   </div>
  * </div>
  * ```
- * ```ap
+ * ```js
  * function ContentCtrl($scope) {
  *   $scope.items = [];
  *   for (var i = 0; i < 1000; i++) {
@@ -6383,7 +6383,7 @@ function headerFooterBarDirective(isHeader) {
  *   </ion-infinite-scroll>
  * </ion-content>
  * ```
- * ```ap
+ * ```js
  * function MyController($scope, $http) {
  *   $scope.items = [];
  *   $scope.loadMore = function() {
@@ -6747,7 +6747,7 @@ var ITEM_TPL_REORDER_BUTTON =
 *   </ion-item>
 * </ion-list>
 * ```
- * ```ap
+* ```js
 * function MyCtrl($scope) {
 *   $scope.items = [1, 2, 3, 4];
 *   $scope.moveItem = function(item, fromIndex, toIndex) {
@@ -7195,7 +7195,7 @@ IonicModule
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicNavBarDelegate) {
  *   $scope.goBack = function() {
  *     $ionicNavBarDelegate.back();
@@ -7213,7 +7213,7 @@ IonicModule
  *   </ion-nav-back-button>
  * </ion-nav-bar>
  * ```
- * ```ap
+ * ```js
  * function MyCtrl($scope, $ionicNavBarDelegate) {
  *   $scope.getPreviousTitle = function() {
  *     return $ionicNavBarDelegate.getPreviousTitle();
@@ -7605,7 +7605,7 @@ IonicModule.constant('$ionicNavViewConfig', {
  *
  * Next, we need to setup our states that will be rendered.
  *
- * ```ap
+ * ```js
  * var app = angular.module('myApp', ['ionic']);
  * app.config(function($stateProvider) {
  *   $stateProvider
@@ -7956,7 +7956,7 @@ IonicModule
  *   </ion-list>
  * </ion-content>
  * ```
- * ```ap
+ * ```js
  * angular.module('testApp', ['ionic'])
  * .controller('MyController', function($scope, $http) {
  *   $scope.items = [1,2,3];
@@ -8460,7 +8460,7 @@ IonicModule
  *   </ion-side-menu>
  * </ion-side-menus>
  * ```
- * ```ap
+ * ```js
  * function ContentController($scope, $ionicSideMenuDelegate) {
  *   $scope.toggleLeft = function() {
  *     $ionicSideMenuDelegate.toggleLeft();
@@ -8654,7 +8654,7 @@ function($timeout, $compile, $ionicSlideBoxDelegate) {
     restrict: 'E',
     replace: true,
     require: '^ionSlideBox',
-    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-activity"></i></span></div>',
+    template: '<div class="slider-pager"><span class="slider-pager-page" ng-repeat="slide in numSlides() track by $index" ng-class="{active: $index == currentSlide}" ng-click="pagerClick($index)"><i class="icon ion-record"></i></span></div>',
     link: function($scope, $element, $attr, slideBox) {
       var selectPage = function(index) {
         var children = $element[0].children;
