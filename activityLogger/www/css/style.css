@@ -1,1 +1,13 @@
 /* Empty. Add your own CSS if you like */
+
+.timer-card {
+	font-size: 400%;
+	height: auto !important;
+	padding: 30px;
+}
+
+.timer-card span {
+	display: inline-block;
+	height: auto !important;
+	line-height: 100%;
+}

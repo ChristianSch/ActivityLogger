@@ -1,7 +1,15 @@
-<ion-view view-title="Activity">
+<ion-view view-title="Activity" ng-controller="ActivityCtrl as aCtrl">
 	<ion-content class="padding">
-		<p>
-			<a class="button button-block icon ion-close" href="#/tab/main"> Abbrechen</a>
-		</p>
+		<div class="button-bar">
+			<a ng-hide="timerIsOn" class="button button-positive icon-left ion-play" ng-click="startTimer()"> Resume</a>
+			<a ng-show="timerIsOn" class="button button-positive icon-left ion-pause" ng-click="stopTimer()"> Pause</a>
+			<a class="button button-balanced icon-right ion-chevron-right" ng-click="finishAcitivity()"> Finish</a>
+		</div>
+
+		<div class="card timer-card text-center">
+			<span id="timerHours">{{ timerHours | number : 0 }}</span>:<span id="timerMinutes">{{ timerMinutes | number : 0 }}</span>:<span id="timerSeconds">{{ timerSeconds | number : 0 }}</span>
+		</div>
+
+		<button class="button button-block ion-close" ng-click="abortActivity()" href="#/tab/main"> Abort</button>
 	</ion-content>
 </ion-view>
