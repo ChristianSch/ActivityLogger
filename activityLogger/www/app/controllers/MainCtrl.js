@@ -1,12 +1,25 @@
 'use strict';
+
+
 angular.module('ActivityLogger').controller('MainCtrl',
-    function ($scope, $ionicPopover) {
+    function($scope, $state) {
+    	// set up the selectable options
+        $scope.possibleActivityTypes = [{
+            id: 1,
+            label: 'Laufen'
+        }, {
+            id: 2,
+            label: 'Radfahren'
+        }];
 
-        $ionicPopover.fromTemplateUrl('popover.html', {
-            scope: $scope
+        $scope.selectedActivityType = $scope.possibleActivityTypes[0];
+        $scope.comment = '';
 
-        }).then(function (popover) {
-            $scope.popover = popover;
-
-        });
-    })
+        $scope.startActivity = function() {
+        	// we could validate something here
+        	// but we don't have anything to validate at the moment
+        	if ($scope.selectedActivityType !== undefined) {
+        		$state.go('tab.activity');
+        	}
+        }
+    });

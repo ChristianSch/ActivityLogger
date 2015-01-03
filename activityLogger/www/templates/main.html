@@ -1,21 +1,18 @@
-<ion-view title="Main">
+<ion-view title="Aktivität starten">
     <ion-content class="padding">
         <label class="item item-input item-select">
             <div class="input-label">Activity</div>
-            <select ng-model="" ng-options="">
+            <select ng-model="selectedActivityType"
+            ng-options="item as item.label for item in possibleActivityTypes">
             </select>
         </label>
-        <label class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="checkbox" ng-model="">
-            </label>
-            Live-Tracking
-        </label>
+
         <label class="item item-input" style="height: 60%;">
-            <textarea placeholder="Comments"></textarea>
+            <textarea placeholder="Comments" ng-model="comment"></textarea>
         </label>
-        <button class="button button-block button-positive" ng-click="">
-            GO!
+
+        <button class="button button-block button-positive" ng-click="startActivity()">
+            Go!
         </button>
     </ion-content>
 </ion-view>

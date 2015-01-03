@@ -5,16 +5,10 @@
 -->
 <ion-tabs class="tabs-icon-top">
 
-
     <!-- Profile Tab -->
     <ion-tab title="Profile" icon="icon ion-person" href="#/tab/profile">
         <ion-nav-view name="tab-profile"></ion-nav-view>
     </ion-tab>
-
-    <!-- Activity Tab -->
-    <!--<ion-tab title="Add Activity" icon="icon ion-plus" href="#/tab/activity-form">
-        <ion-nav-view name="tab-activity-form"></ion-nav-view>
-    </ion-tab>-->
 
     <!-- WorkoutList Tab -->
     <ion-tab title="Activity List" icon="icon ion-clipboard" href="#/tab/workoutlist">
@@ -31,20 +25,16 @@
         <ion-nav-view name="tab-summary"></ion-nav-view>
     </ion-tab>
 
-    <!--<ion-tab title=" Mehr " icon="ion-navicon-round" ng-click="popover.show($event)">
-    </ion-tab>-->
-
     <!-- Settings Tab -->
     <ion-tab title="Settings" icon="icon ion-gear-b" href="#/tab/settings">
         <ion-nav-view name="tab-settings"></ion-nav-view>
     </ion-tab>
-
 </ion-tabs>
-<script id="popover.html" type="text/ng-template">
 
+<!-- what is this good for? TODO -->
+<script id="popover.html" type="text/ng-template">
     <ion-popover-view>
         <ion-list>
-
             <ion-item class="item item-avatar" ng-click="popover.hide()" ng-hide="" href="#">
                 <img src="img/coup.png"><img src="img/wk1.png">
 
@@ -63,16 +53,12 @@
 
                 <h2>Statistik</h2>
             </ion-item>
+
             <ion-item class="item-icon-left" ng-click=" " href="#/tab/settings">
                 <i class="icon ion-gear-b"></i>
 
                 <h2>Settings</h2>
             </ion-item>
-
         </ion-list>
-
     </ion-popover-view>
 </script>
-
-
-
