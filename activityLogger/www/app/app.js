@@ -63,7 +63,7 @@ angular.module('ActivityLogger', ['ionic'])
       url: "/activity",
       views: {
         'tab-main': {
-          templateUrl: 'templates/activity.html'          
+          templateUrl: 'templates/activity.html'
         }
       }
     })
@@ -78,7 +78,17 @@ angular.module('ActivityLogger', ['ionic'])
         }
     })
 
-    .state('tab.settings', {
+   .state('tab.workout', {
+       url: '/workout',
+       views: {
+           'tab-workout': {
+               templateUrl: 'templates/workout.html',
+               controller: 'WorkoutCtrl as wCtrl'
+           }
+       }
+   })
+
+        .state('tab.settings', {
         url: '/settings',
         views: {
             'tab-settings': {
