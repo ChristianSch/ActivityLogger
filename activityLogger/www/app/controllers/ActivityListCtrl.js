@@ -9,7 +9,8 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
         this.activities.push(new Activity(3, 'Laufen 400m', 17, 18, [], 'Dritter Dummy'));
 
         $scope.addActivity = function () {
-            $state.go('tab.workout', {id: 'new'});
+            console.log('addActivity()');
+            $state.go('tab.workout', {id:'new'});
         }
 
         //Todo: Should it really be possible to delete Activities?!
