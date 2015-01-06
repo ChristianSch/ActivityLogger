@@ -79,7 +79,7 @@ angular.module('ActivityLogger', ['ionic'])
     })
 
    .state('tab.workout', {
-       url: '/workout',
+       url: '/workout/:id',
        views: {
            'tab-workout': {
                templateUrl: 'templates/workout.html',

@@ -1,15 +1,12 @@
 <ion-view title="ActivityList">
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-plus" ng-click="alCrtl.addActivity()">
+        <button class="button button-icon icon ion-plus" ng-click="alCtrl.addActivity()">
         </button>
     </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list>
-      <ion-item ng-repeat="workout in workouts" type="item-text-wrap" href="#/tab/workoutlist/{{workout.id}}">
-        <ion-option-button class="button-assertive" ng-click="">
-          Löschen
-        </ion-option-button>
-        {{workout.name}}
+      <ion-item class="item-text-wrap" ng-repeat="activity in alCtrl.activities" href="#/tab/workout/{{activity.id}}">
+        {{activity.id}}, {{activity.type}}, ({{activity.start_time}}, {{activity.end_time}})
       </ion-item>
     </ion-list>
   </ion-content>
