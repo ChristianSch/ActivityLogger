@@ -1,3 +1,4 @@
+'use-strict';
 angular.module('ActivityLogger').service('DataService',
 		function($http, Module) {
 
