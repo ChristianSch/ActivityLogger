@@ -81,14 +81,14 @@ angular.module('ActivityLogger', ['ionic'])
    .state('tab.workout', {
        url: '/workout/:id',
        views: {
-           'tab-workout': {
+           'tab-workoutlist': {
                templateUrl: 'templates/workout.html',
-               controller: 'WorkoutCtrl as wCtrl'
+               //controller: 'WorkoutCtrl as wCtrl'
            }
        }
    })
 
-        .state('tab.settings', {
+   .state('tab.settings', {
         url: '/settings',
         views: {
             'tab-settings': {
@@ -96,7 +96,7 @@ angular.module('ActivityLogger', ['ionic'])
                 controller: 'SettingsCtrl as setCtrl'
             }
         }
-    })
+   })
 
     .state('tab.summary', {
         url: '/summary',
