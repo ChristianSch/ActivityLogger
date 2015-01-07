@@ -1,7 +1,7 @@
-'use-strict'
+'use strict'
 angular.module('ActivityLogger')
     .controller('WorkoutCtrl',
-    function ($scope, $ionicNavBarDelegate, DataService) {
+    function ($stateParams, $scope, $ionicNavBarDelegate) {
 
         this.isEditMode = false;
         if($stateParams.id == 'new') {

@@ -83,7 +83,7 @@ angular.module('ActivityLogger', ['ionic'])
        views: {
            'tab-workoutlist': {
                templateUrl: 'templates/workout.html',
-               //controller: 'WorkoutCtrl as wCtrl'
+               controller: 'WorkoutCtrl as wCtrl'
            }
        }
    })
