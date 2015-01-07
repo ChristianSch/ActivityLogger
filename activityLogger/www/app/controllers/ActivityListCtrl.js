@@ -18,5 +18,18 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
             //Todo: implement
         }
 
-        //Todo: Maybe should implement a Search?
+        /*this.searchQuery = localStorage.getItem('lastSearchQuery');
+        if(this.searchQuery) {
+            this.searchActive = true;
+        } else {
+            this.searchActive = false;
+        }*/
+        this.toggleSearch = function() {
+            console.log('toggleSearch()');
+            if(this.searchActive) {
+                this.searchQuery = '';
+                localStorage.setItem('lastSearchQuery', '');
+            }
+            this.searchActive = !this.searchActive;
+        }
     })
