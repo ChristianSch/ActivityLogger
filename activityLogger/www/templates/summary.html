@@ -5,4 +5,13 @@
 	<div class="item item-text-wrap">{{stat.value}}</div>
 </div>
 
+<div class="card">
+	<div class="item item-divider" data-ng-init="sumCtrl.showChart()">Wochenübersicht</div>
+	<div class="item item-text-wrap">
+		<div style="margin:50px">
+			<canvas id="chart_times"></canvas>
+		</div>
+	</div>
+</div>
+
 </ion-list> </ion-content> </ion-view>

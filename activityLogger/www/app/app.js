@@ -103,7 +103,7 @@ angular.module('ActivityLogger', ['ionic'])
         views: {
             'tab-summary': {
                 templateUrl: 'templates/summary.html',
-                controller: 'SummaryCtrl as sumCrl'
+                controller: 'SummaryCtrl as sumCtrl'
             }
         }
     })
