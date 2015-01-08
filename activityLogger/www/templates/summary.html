@@ -1,9 +1,8 @@
-<ion-view title="Summary">
- <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="stat in stats" type="item-text-wrap">      
-        {{stat.name}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-view>
+<ion-view title="Summary"> <ion-content> <ion-list>
+
+<div class="card" ng-repeat="stat in stats">
+	<div class="item item-divider">{{stat.name}}</div>
+	<div class="item item-text-wrap">{{stat.value}}</div>
+</div>
+
+</ion-list> </ion-content> </ion-view>
