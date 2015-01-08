@@ -11,7 +11,7 @@ angular.module('ActivityLogger').factory(
 				this.end_time = end_time;
 				this.track_data = track_data;
 				this.comment = comment;
-
+				this.duration = this.end_time - this.start_time
 			};
 			return Activity;
 
