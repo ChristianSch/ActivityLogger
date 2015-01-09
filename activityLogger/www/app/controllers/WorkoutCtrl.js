@@ -22,7 +22,7 @@ angular.module('ActivityLogger')
             var mapOptions = {
                 center: new google.maps.LatLng(50.587, 8.669),
                 zoom: 10,
-                mapTypeId: google.maps.MapTypeId.SATELLITE
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map_canvas"),
                 mapOptions);
