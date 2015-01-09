@@ -4,7 +4,7 @@ angular.module('ActivityLogger').factory(
 		function() {
 
 			var Activity = function(id, type, start_time, end_time, track_data,
-					comment) {
+					comment, user_id) {
 				this.id = id;
 				this.type = type;
 				this.start_time = start_time;
@@ -12,7 +12,8 @@ angular.module('ActivityLogger').factory(
 				this.track_data = track_data;
 				this.comment = comment;
 				this.duration = this.end_time - this.start_time
-			};
+			    this.user_id = user_id;
+            };
 			return Activity;
 
 		});
