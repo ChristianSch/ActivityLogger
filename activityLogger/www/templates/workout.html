@@ -17,21 +17,20 @@
                         <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
                     </label>
                     <label class="item item-input" style="height: 60%;">
-                        <textarea placeholder="Comments" ng-model="wCtrl.activity.comment" rows="5"></textarea>
+                        <textarea placeholder="Comments" style="resize: none" ng-model="wCtrl.activity.comment" rows="5"></textarea>
                     </label>
                 </div>
             </div>
-            <div class="card">
-                <div class="item item-divider" data-ng-init="wCtrl.init()">Strecke</div>
-                <div class="item item-text-wrap">
-                    <div id="map_canvas" style="height:300px"></div>
-                </div>
-            </div>
-            <div>
-                <button class="button button-block button-positive" ng-click="wCtrl.save()">
-                    Speichern
-                </button>
-            </div>
         </div>
+        <div class="card">
+            <div class="item item-divider" data-ng-init="wCtrl.init()">Strecke</div>
+            <div id="map_canvas" style="height:300px"></div>
+        </div>
+        <div>
+            <button class="button button-block button-positive" ng-hide="wCtrl.isEditMode" ng-click="wCtrl.save()">
+                Speichern
+            </button>
+        </div>
+
     </ion-content>
 </ion-view>
