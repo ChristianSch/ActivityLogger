@@ -6,12 +6,13 @@
 </div>
 
 <div class="card">
-	<div class="item item-divider" data-ng-init="sumCtrl.showChart()">Zeiten</div>
+	<div class="item item-divider" data-ng-init="sumCtrl.showTimesWeekChart()">Zeiten</div>
 	<div class="item item-text-wrap">
-		<div class="button-bar">
-			<a class="button">Jahr</a> <a class="button">Monat</a> <a
-				class="button">Woche</a>
+		<div class="button-bar" ng-click="sumCtrl.showTimesYearChart()">
+			<a class="button">Jahr</a> <a class="button" ng-click="sumCtrl.showTimesMonthChart()">Monat</a> <a
+				class="button" ng-click="sumCtrl.showTimesWeekChart()">Woche</a>
 		</div>
+
 		<div>
 			<canvas id="chart_times"></canvas>
 		</div>
