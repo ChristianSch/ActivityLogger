@@ -12,7 +12,7 @@ angular.module('ActivityLogger').factory('Track', function() {
 		 * Calculates the distance of the track.
 		 * @return distance
 		 */
-		this.getDistance(){
+		this.getDistance = function(){
 			//TODO
 			return 42;
 		}

@@ -6,9 +6,13 @@
 </div>
 
 <div class="card">
-	<div class="item item-divider" data-ng-init="sumCtrl.showChart()">Wochenübersicht</div>
+	<div class="item item-divider" data-ng-init="sumCtrl.showChart()">Zeiten</div>
 	<div class="item item-text-wrap">
-		<div style="margin:0px">
+		<div class="button-bar">
+			<a class="button">Jahr</a> <a class="button">Monat</a> <a
+				class="button">Woche</a>
+		</div>
+		<div>
 			<canvas id="chart_times"></canvas>
 		</div>
 	</div>
