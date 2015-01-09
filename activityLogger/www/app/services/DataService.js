@@ -1,61 +1,83 @@
 'use-strict';
-angular.module('ActivityLogger').service('DataService',
-		function($http, Module) {
+angular.module('ActivityLogger').factory('DataService',
+    function () {
+        var service = {
+            addUser: function (user) {
+                 if(user.add_onfirebase){
+                     //TO DO :persit on firebase
+                     alert(" persit on firebase ...");
+                     localStorage.setItem('infirebaseSaved','true');
+                 }else{
+                     localStorage.setItem('infirebaseSaved','false');
+                     localStorage.setItem('Userprofil', JSON.stringify(user));
+                 }
+            },
+            getUserProfil:function(){
+                return  JSON.parse(localStorage.getItem('Userprofil'));
+            },
+            addActivity: function (activity) {
 
-			this.addUser = function(user) {
+            }
+            ,
 
-			};
+            addCompetition: function (competition) {
 
-			this.addActivity = function(activity) {
+            }
+            ,
 
-			};
+            removeUser: function (id) {
 
-			this.addCompetition = function(competition) {
+            }
+            ,
 
-			};
+            removeActivity: function (id) {
 
-			this.removeUser = function(id) {
+            }
+            ,
 
-			};
+            removeCompetition: function (id) {
 
-			this.removeActivity = function(id) {
+            }
+            ,
 
-			};
+            updateUser: function (user) {
 
-			this.removeCompetition = function(id) {
+            }
+            ,
 
-			};
+            updateActivity: function (activity) {
 
-			this.updateUser = function(user) {
+            }
+            ,
 
-			};
+            getAllUsers: function () {
 
-			this.updateActivity = function(activity) {
+            }
+            ,
 
-			};
+            getAllActivities: function (user_id) {
 
-			this.getAllUsers = function() {
+            }
+            ,
 
-			};
+            getAllCompetitions: function (user_id) {
 
-			this.getAllActivities = function(user_id) {
+            },
 
-			};
+            getUserByID: function (id) {
 
-			this.getAllCompetitions = function(user_id) {
+            },
 
-			};
+            getActivityByID: function (id) {
 
-			this.getUserByID = function(id) {
+            },
 
-			};
+            getCompetitionByID: function (id) {
 
-			this.getActivityByID = function(id) {
+            }
+        };
 
-			};
+        return service;
 
-			this.getCompetitionByID = function(id) {
-
-			};
-
-		});
+    })
+;
