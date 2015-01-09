@@ -17,4 +17,15 @@ angular.module('ActivityLogger')
         this.save = function() {
             $ionicNavBarDelegate.back();
         };
+
+        this.init = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(50.587, 8.669),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.SATELLITE
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                mapOptions);
+        }
+
     })

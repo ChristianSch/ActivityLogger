@@ -1,22 +1,33 @@
 <ion-view>
     <ion-content class="padding">
-        <div class="list">
-            <label class="item item-input">
-                <span class="input-label">Disziplin</span>
-                <input class="text-right" type="text" maxlength="15" ng-model="wCtrl.activity.type">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Startzeit</span>
-                <input class="text-right" type="text" ng-model="wCtrl.activity.start_time">
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Endzeit</span>
-                <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
-            </label>
-            <label class="item item-input" style="height: 60%;">
-                <textarea placeholder="Comments" ng-model="wCtrl.activity.comment"></textarea>
-            </label>
-            <div class="padding">
+        <div class="card">
+            <div class="item item-divider">Übersicht</div>
+            <div class="item item-text-wrap">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Disziplin</span>
+                        <input class="text-right" type="text" maxlength="15" ng-model="wCtrl.activity.type">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Startzeit</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.start_time">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Endzeit</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
+                    </label>
+                    <label class="item item-input" style="height: 60%;">
+                        <textarea placeholder="Comments" ng-model="wCtrl.activity.comment"></textarea>
+                    </label>
+                </div>
+            </div>
+            <div class="card">
+                <div class="item item-divider" data-ng-init="wCtrl.init()">Strecke</div>
+                <div class="item item-text-wrap">
+                    <div id="map_canvas" style="height:300px"></div>
+                </div>
+            </div>
+            <div>
                 <button class="button button-block button-positive" ng-click="wCtrl.save()">
                     Speichern
                 </button>
