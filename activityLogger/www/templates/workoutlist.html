@@ -16,7 +16,7 @@
             </button>
         </div>
         <ion-list>
-            <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'type')" href="#/tab/workout/{{activity.id}}">
+            <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.id}}">
                 {{activity.id}}, {{activity.type}}, ({{activity.start_time}}, {{activity.end_time}})
             </ion-item>
         </ion-list>
