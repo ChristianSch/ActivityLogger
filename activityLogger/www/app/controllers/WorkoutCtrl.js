@@ -8,6 +8,7 @@ angular.module('ActivityLogger')
             $ionicNavBarDelegate.setTitle('Neue Activity');
             this.activity = {};
             //this.activity.id = localStorage.getItem('nextActivityId');
+            //this.activity.user_id = DataService.getUserProfil();
         } else {
             //edit
             this.isEditMode = true;
@@ -15,6 +16,7 @@ angular.module('ActivityLogger')
             //this.activity = DataService.getActivityById($stateParams.id);
         }
         this.save = function() {
+            //DataService.addActivity(activity);
             $ionicNavBarDelegate.back();
         };
 
