@@ -6,16 +6,28 @@
 </div>
 
 <div class="card">
-	<div class="item item-divider" data-ng-init="sumCtrl.showTimesWeekChart()">Zeiten</div>
+	<div class="item item-divider"
+		data-ng-init="sumCtrl.showTimesWeekChart()">Zeiten</div>
 	<div class="item item-text-wrap">
-		<div class="button-bar" ng-click="sumCtrl.showTimesYearChart()">
-			<a class="button">Jahr</a> <a class="button" ng-click="sumCtrl.showTimesMonthChart()">Monat</a> <a
-				class="button" ng-click="sumCtrl.showTimesWeekChart()">Woche</a>
+		<div class="button-bar">
+			<a class="button"
+				ng-click="chart_times_year_visible = true;chart_times_month_visible = false;chart_times_week_visible = false;sumCtrl.showTimesYearChart()">Jahr</a>
+			<a class="button"
+				ng-click="chart_times_year_visible = false;chart_times_month_visible = true;chart_times_week_visible = false;sumCtrl.showTimesMonthChart()">Monat</a>
+			<a class="button"
+				ng-click="chart_times_year_visible = false;chart_times_month_visible = false;chart_times_week_visible = true;sumCtrl.showTimesWeekChart()">Woche</a>
 		</div>
 
 		<div>
-			<canvas id="chart_times"></canvas>
+			<canvas id="chart_times_week" ng-show="chart_times_week_visible"></canvas>
 		</div>
+		<div>
+			<canvas id="chart_times_month" ng-show="chart_times_month_visible"></canvas>
+		</div>
+		<div>
+			<canvas id="chart_times_year" ng-show="chart_times_year_visible"></canvas>
+		</div>
+
 	</div>
 </div>
 

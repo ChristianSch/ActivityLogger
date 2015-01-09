@@ -1,7 +1,7 @@
 'use strict';
 angular.module('ActivityLogger').controller(
 		'SummaryCtrl',
-		function($scope, $compile,$window, Activity) {
+		function($scope, $compile, $window, Activity) {
 			// Example data
 			this.activities = [];
 			this.activities.push(new Activity(1, 'Laufen 100m', 1420744000,
@@ -18,6 +18,8 @@ angular.module('ActivityLogger').controller(
 				}
 				return time;
 			};
+
+			
 
 			$scope.stats = [ {
 				name : "Kilometer gesamt",
@@ -45,7 +47,10 @@ angular.module('ActivityLogger').controller(
 			}
 
 			this.timesMonthChart = {
-				labels : [ "1", "2", "3", "4", "5", "6", "7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30" ],
+				labels : [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+						"11", "12", "13", "14", "15", "16", "17", "18", "19",
+						"20", "21", "22", "23", "24", "25", "26", "27", "28",
+						"29", "30" ],
 				datasets : [ {
 					label : "My First dataset",
 					fillColor : "rgba(220,220,220,0.2)",
@@ -59,7 +64,8 @@ angular.module('ActivityLogger').controller(
 			}
 
 			this.timesYearChart = {
-				labels : [ "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So" ],
+				labels : [ "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul",
+						"Aug", "Sep", "Okt", "Nov", "Dez" ],
 				datasets : [ {
 					label : "My First dataset",
 					fillColor : "rgba(220,220,220,0.2)",
@@ -73,29 +79,27 @@ angular.module('ActivityLogger').controller(
 			}
 
 			this.showTimesWeekChart = function() {
-				var ctx = document.getElementById("chart_times").getContext(
-						"2d");
+				console.log("week");
+				var ctx = document.getElementById("chart_times_week")
+						.getContext("2d");
 				$window.myLine = new Chart(ctx).Line(this.timesWeekChart, {
 					responsive : true
 				});
 			}
 
 			this.showTimesMonthChart = function() {
-				console.log("month");
-				if( window.myLine!==undefined)
-				     window.myLine.destroy();
-				var ctx = document.getElementById("chart_times").getContext(
-						"2d");
+				
+				var ctx = document.getElementById("chart_times_month")
+						.getContext("2d");
 				$window.myLine = new Chart(ctx).Line(this.timesMonthChart, {
 					responsive : true
 				});
-				console.log(ctx);
-				$compile(document.getElementById("chart_times"))($scope);				
 			}
 
 			this.showTimesYearChart = function() {
-				var ctx = document.getElementById("chart_times").getContext(
-						"2d");
+				
+				var ctx = document.getElementById("chart_times_year")
+						.getContext("2d");
 				$window.myLine = new Chart(ctx).Line(this.timesYearChart, {
 					responsive : true
 				});
