@@ -2,8 +2,9 @@
 
 
 angular.module('ActivityLogger')
-    .controller('ActivityCtrl', ['$scope',
-        function($scope) {
+    .controller('ActivityCtrl', ['$scope', '$state', '$ionicPopup',
+
+        function($scope, $state, $ionicPopup) {
             // init values
             $scope.timerHours = 0;
             $scope.timerMinutes = 0;
@@ -66,14 +67,30 @@ angular.module('ActivityLogger')
 
             // shows popup and aborts if affirmative
             $scope.abortActivity = function() {
-                // TODO: maybe show popup?
-                $scope.resetTimer();
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Abort Activity',
+                    template: 'Are you sure you want to abort your activity?'
+                });
+                confirmPopup.then(function(res) {
+                    if (res) {
+                        $scope.resetTimer();
+                        $state.go('tab.main');
+                    }
+                });
 
             }
 
             $scope.finishAcitivity = function() {
-                $scope.stopTimer();
-                // TODO: "really finish off" popup
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Finish Activity',
+                    template: 'Are you sure you want to finish your activity?'
+                });
+                confirmPopup.then(function(res) {
+                    if (res) {
+                        $scope.stopTimer();
+                        // TODO: save
+                    }
+                });
             }
 
             // start the timer on initialization
