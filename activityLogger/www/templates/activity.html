@@ -7,7 +7,7 @@
 		</div>
 
 		<div class="card timer-card text-center">
-			<span id="timerHours">{{ timerHours | number : 0 }}</span>:<span id="timerMinutes">{{ timerMinutes | number : 0 }}</span>:<span id="timerSeconds">{{ timerSeconds | number : 0 }}</span>
+			<span id="timerHours">{{ timerHours | normalizeTimeFilter}}</span>:<span id="timerMinutes">{{ timerMinutes | normalizeTimeFilter }}</span>:<span id="timerSeconds">{{ timerSeconds | normalizeTimeFilter }}</span>
 		</div>
 
 		<button class="button button-block ion-close" ng-click="abortActivity()" href="#/tab/main"> Abort</button>
