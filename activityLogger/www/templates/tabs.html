@@ -3,10 +3,10 @@
   Each tab's child <ion-nav-view> directive will have its own
   navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top">
+<ion-tabs  class="tabs-icon-top">
 
     <!-- Profile Tab -->
-    <ion-tab title="Profile" icon="icon ion-person" href="#/tab/profile">
+    <ion-tab  title="Profile" icon="icon ion-person" href="#/tab/profile">
         <ion-nav-view name="tab-profile"></ion-nav-view>
     </ion-tab>
 
@@ -31,34 +31,3 @@
     </ion-tab>
 </ion-tabs>
 
-<!-- what is this good for? TODO -->
-<script id="popover.html" type="text/ng-template">
-    <ion-popover-view>
-        <ion-list>
-            <ion-item class="item item-avatar" ng-click="popover.hide()" ng-hide="" href="#">
-                <img src="img/coup.png"><img src="img/wk1.png">
-
-                <h2>Wettkampfmodus 1</h2>
-
-            </ion-item>
-
-            <ion-item class="item item-avatar" ng-click="popover.hide()" ng-hide="" href="#">
-                <img src="img/coup.png"><img src="img/wk1.png"><img src="img/wk1.png">
-
-                <h2>Wettkampfmodus 2</h2>
-            </ion-item>
-
-            <ion-item class="item-icon-left" ng-click="tCtrl.Showsummary()" href="#/tab/summary">
-                <i class="icon ion-stats-bars"></i>
-
-                <h2>Statistik</h2>
-            </ion-item>
-
-            <ion-item class="item-icon-left" ng-click=" " href="#/tab/settings">
-                <i class="icon ion-gear-b"></i>
-
-                <h2>Settings</h2>
-            </ion-item>
-        </ion-list>
-    </ion-popover-view>
-</script>

@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.ap
 // 'starter.controllers' is found in controllers.ap
-angular.module('ActivityLogger', ['ionic'])
+angular.module('ActivityLogger', ['ionic','firebase'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -54,13 +54,13 @@ angular.module('ActivityLogger', ['ionic'])
         views: {
             'tab-main': {
                 templateUrl: 'templates/main.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl as mCtrl'
             }
         }
     })
 
      .state('tab.activity', {
-      url: "/activity",
+      url: '/activity/:type',
       views: {
         'tab-main': {
           templateUrl: 'templates/activity.html'

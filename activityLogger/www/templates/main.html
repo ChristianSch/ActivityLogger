@@ -1,9 +1,13 @@
 <ion-view title="Aktivität starten">
+    <ion-nav-buttons side="right">
+        <button side="right" title="mit Firebase verbindet" ng-controller="SettingsCtrl as setCtrl" ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
+        </button>
+    </ion-nav-buttons>
     <ion-content class="padding">
         <label class="item item-input item-select">
             <div class="input-label">Activity</div>
-            <select ng-model="selectedActivityType"
-            ng-options="item as item.label for item in possibleActivityTypes">
+            <select ng-model="mCtrl.selectedActivityType"
+                    ng-options="item as item.label for item in mCtrl.possibleActivityTypes">
             </select>
         </label>
 
@@ -11,8 +15,9 @@
             <textarea placeholder="Comments" ng-model="comment"></textarea>
         </label>
 
-        <button class="button button-block button-positive" ng-click="startActivity()">
+        <button class="button button-block button-positive" ng-click="mCtrl.startActivity()">
             Go!
         </button>
+    </ion-content>
     </ion-content>
 </ion-view>

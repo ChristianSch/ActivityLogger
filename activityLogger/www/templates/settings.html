@@ -1,38 +1,39 @@
 <ion-view title="Settings">
-  	<ion-content class="padding">
-  		<div class="list">
-  			<label class="item item-input">
-				<div class="input-label">Your Name</div>
-				<input class="text-right" type="text" ng-model="none">
-			</label>
+    <ion-nav-buttons side="right">
+        <button side="right" title="mit Firebase verbindet" ng-controller="SettingsCtrl as setCtrl" ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+        <div class="list">
+            <label class="item item-checkbox item-checkbox-right">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           ng-model="setCtrl.autoStop"
+                           ng-click="setCtrl.saveAutoStop()"
+                           >
+                </label>
 
-			<label class="item item-checkbox item-checkbox-right">
-				<label class="checkbox">
-					<input type="checkbox"
-					ng-model="none">
-				</label>
-				Auto Stop
-			</label>
-            
-			<label class="item item-checkbox item-checkbox-right">
-				<label class="checkbox">
-					<input type="checkbox"
-					ng-model="none">
-				</label>
-				Check Me
-			</label>
-            
-            <label class="item item-input">
-				<div class="input-label">Some Input</div>
-				<input class="text-right" type="text" ng-model="none">
-			</label>
+                <div class="settingOption">Auto Stop</div>
+            </label>
 
-			<div class="padding">
-				<button class="button button-block button-positive"
-						ng-click="someCtrl.save()">
-						Save
-				</button>
-			</div>
-		</div>
-  </ion-content>
+            <label class="item item-checkbox item-checkbox-right">
+                <label class="checkbox">
+                    <input type="checkbox"
+                           ng-model="setCtrl.firebaseConection"
+                           ng-click="setCtrl.connectWithFirebase()"
+                           ng-checked="setCtrl.firebaseConection">
+                </label>
+
+                <div class="settingOption">Firebase Verbindung</div>
+                Daten mit der Datenbank Firebase <br>synchronisieren
+            </label>
+
+            <div class="padding">
+                <button class="button button-block button-positive"
+                        ng-click="setCtrl.save()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

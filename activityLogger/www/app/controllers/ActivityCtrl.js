@@ -1,10 +1,9 @@
 'use strict';
 
 
-angular.module('ActivityLogger')
-    .controller('ActivityCtrl', ['$scope', '$state', '$ionicPopup',
+angular.module('ActivityLogger').controller('ActivityCtrl',
 
-        function($scope, $state, $ionicPopup) {
+        function($scope, $state,$stateParams,$ionicPopup,DataService,Activity) {
             // init values
             $scope.timerHours = 0;
             $scope.timerMinutes = 0;
@@ -79,7 +78,6 @@ angular.module('ActivityLogger')
                 });
 
             }
-
             $scope.finishAcitivity = function() {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Finish Activity',
@@ -89,6 +87,9 @@ angular.module('ActivityLogger')
                     if (res) {
                         $scope.stopTimer();
                         // TODO: save
+                      var activity= new Activity(1,$stateParams.type,4,8,'trackdaten','test');
+                        DataService.addActivity(activity);
+
                     }
                 });
             }
@@ -96,4 +97,4 @@ angular.module('ActivityLogger')
             // start the timer on initialization
             $scope.startTimer();
         }
-    ]);
+    );

@@ -4,6 +4,8 @@
         </button>
         <button class="button button-icon icon ion-plus" ng-click="alCtrl.addActivity()">
         </button>
+        <button side="right" title="mit Firebase verbindet" ng-controller="SettingsCtrl as setCtrl" ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
+        </button>
     </ion-nav-buttons>
     <ion-content class="has-header">
         <div class="item item-input-inset" ng-show="alCtrl.searchActive">
@@ -18,7 +20,14 @@
         <ion-list>
             <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.id}}">
                 {{activity.id}}, {{activity.type}}, ({{activity.start_time}}, {{activity.end_time}})
+
+            <ion-option-button class="button-assertive" ng-click="alCtrl.deleteConfirm(activity)">
+                Löschen
+            </ion-option-button>
             </ion-item>
         </ion-list>
+        <div class="card" ng-hide="alCtrl.activities.length">
+            Keine Aktivität vorhanden.
+        </div>
     </ion-content>
 </ion-view>

@@ -1,4 +1,8 @@
 <ion-view title="Profil">
+    <ion-nav-buttons side="right">
+        <button side="right" title="mit Firebase verbindet" ng-controller="SettingsCtrl as setCtrl" ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
+        </button>
+    </ion-nav-buttons>
     <ion-content class="padding">
         <div class="list">
             <label class="item item-input">
