@@ -206,7 +206,7 @@ angular.module('ActivityLogger').factory('DataService',
                 var all_user_activities = this.getAllActivities();
                 var all_activitiesByUserID = [];
 
-                var firebaseConnected = this.getStatus('firebaseConection') == 'true';
+                var firebaseConnected = this.getStatus('firebaseConection')== 'true';
                 if(user_id&&firebaseConnected){
                     for (var i = 0; i < all_user_activities.length; i++) {
                         var activity = all_user_activities[i];

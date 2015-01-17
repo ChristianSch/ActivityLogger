@@ -4,5 +4,5 @@
 angular.module('ActivityLogger')
     .controller('TabCtrl',
         function($scope, DataService) {
-            this.hasUser = DataService.getStatus('user') ? true : false;
+            $scope.hasUser = DataService.getStatus('user') ? true : false;
         });
