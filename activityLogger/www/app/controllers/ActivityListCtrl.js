@@ -14,7 +14,6 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
 
         this.activities = DataService.getAllActivitiesByUserID(userId);
 
-
         this.addActivity = function() {
             console.log('addActivity()');
             $state.go('tab.workout', {
