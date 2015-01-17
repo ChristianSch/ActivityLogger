@@ -109,5 +109,7 @@ angular.module('ActivityLogger', ['ionic', 'firebase'])
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/main');
+    // $urlRouterProvider.otherwise('/tab/main');
+    // TODO! temporary:
+    $urlRouterProvider.otherwise('/tab/profile');
 });
