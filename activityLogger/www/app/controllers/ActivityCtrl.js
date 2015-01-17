@@ -1,9 +1,9 @@
 'use strict';
 
 
-angular.module('ActivityLogger').controller('ActivityCtrl',
-
-        function($scope, $state,$stateParams,$ionicPopup,DataService,Activity) {
+angular.module('ActivityLogger')
+    .controller('ActivityCtrl',
+        function($scope, $state, $stateParams, $ionicPopup, DataService, Activity) {
             // init values
             $scope.timerHours = 0;
             $scope.timerMinutes = 0;
@@ -37,7 +37,7 @@ angular.module('ActivityLogger').controller('ActivityCtrl',
                         $scope.$digest();
                     }, 1000);
                 }
-            }
+            };
 
             // pauses the timer
             $scope.stopTimer = function() {
@@ -47,7 +47,7 @@ angular.module('ActivityLogger').controller('ActivityCtrl',
 
                     clearInterval($scope.timer);
                 }
-            }
+            };
 
             // resets all timer vars
             $scope.resetTimer = function() {
@@ -62,7 +62,7 @@ angular.module('ActivityLogger').controller('ActivityCtrl',
                 $scope.timerHours = 0;
                 $scope.timerMinutes = 0;
                 $scope.timerSeconds = 0;
-            }
+            };
 
             // shows popup and aborts if affirmative
             $scope.abortActivity = function() {
@@ -70,31 +70,32 @@ angular.module('ActivityLogger').controller('ActivityCtrl',
                     title: 'Abort Activity',
                     template: 'Are you sure you want to abort your activity?'
                 });
+
                 confirmPopup.then(function(res) {
                     if (res) {
                         $scope.resetTimer();
                         $state.go('tab.main');
                     }
                 });
+            };
 
-            }
             $scope.finishAcitivity = function() {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Finish Activity',
                     template: 'Are you sure you want to finish your activity?'
                 });
+
                 confirmPopup.then(function(res) {
                     if (res) {
                         $scope.stopTimer();
                         // TODO: save
-                      var activity= new Activity(1,$stateParams.type,4,8,'trackdaten',$stateParams.comment);
+                        var activity = new Activity(1, $stateParams.type, 4, 8, 'trackdaten', $stateParams.comment);
                         DataService.addActivity(activity);
 
                     }
                 });
-            }
+            };
 
             // start the timer on initialization
             $scope.startTimer();
-        }
-    );
+        });

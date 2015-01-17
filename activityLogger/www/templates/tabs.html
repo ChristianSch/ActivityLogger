@@ -3,30 +3,29 @@
   Each tab's child <ion-nav-view> directive will have its own
   navigation history that also transitions its views in and out.
 -->
-<ion-tabs  class="tabs-icon-top">
-
+<ion-tabs class="tabs-icon-top">
     <!-- Profile Tab -->
-    <ion-tab  title="Profile" icon="icon ion-person" href="#/tab/profile">
+    <ion-tab title="Profile" icon="icon ion-person" href="#/tab/profile">
         <ion-nav-view name="tab-profile"></ion-nav-view>
     </ion-tab>
 
     <!-- WorkoutList Tab -->
-    <ion-tab   title="ActivityList"  icon="icon ion-clipboard" class={{tCtrl.show_hide()}} href="#/tab/workoutlist">
+    <ion-tab title="ActivityList" icon="icon ion-clipboard" ng-if="hasUser" href="#/tab/workoutlist">
         <ion-nav-view name="tab-workoutlist"></ion-nav-view>
     </ion-tab>
 
     <!-- Main Tab -->
-    <ion-tab title="Main" icon="icon ion-home" class={{tCtrl.show_hide()}} href="#/tab/main">
+    <ion-tab title="Main" icon="icon ion-home" ng-if="hasUser" href="#/tab/main">
         <ion-nav-view name="tab-main"></ion-nav-view>
     </ion-tab>
 
     <!-- Summary Tab -->
-    <ion-tab title="Summary" icon="icon ion-stats-bars" class={{tCtrl.show_hide()}} href="#tab/summary">
+    <ion-tab title="Summary" icon="icon ion-stats-bars" ng-if="hasUser" href="#tab/summary">
         <ion-nav-view name="tab-summary"></ion-nav-view>
     </ion-tab>
 
     <!-- Settings Tab -->
-    <ion-tab title="Settings" icon="icon ion-gear-b"  class={{tCtrl.show_hide()}} href="#/tab/settings">
+    <ion-tab title="Settings" icon="icon ion-gear-b" ng-if="hasUser" href="#/tab/settings">
         <ion-nav-view name="tab-settings"></ion-nav-view>
     </ion-tab>
 </ion-tabs>

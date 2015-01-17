@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.ap
 // 'starter.controllers' is found in controllers.ap
-angular.module('ActivityLogger', ['ionic','firebase'])
+angular.module('ActivityLogger', ['ionic', 'firebase'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -59,13 +59,13 @@ angular.module('ActivityLogger', ['ionic','firebase'])
         }
     })
 
-     .state('tab.activity', {
-      url: '/activity/:type/:comment',
-      views: {
-        'tab-main': {
-          templateUrl: 'templates/activity.html'
+    .state('tab.activity', {
+        url: '/activity/:type/:comment',
+        views: {
+            'tab-main': {
+                templateUrl: 'templates/activity.html'
+            }
         }
-      }
     })
 
     .state('tab.workoutlist', {
@@ -78,17 +78,17 @@ angular.module('ActivityLogger', ['ionic','firebase'])
         }
     })
 
-   .state('tab.workout', {
-       url: '/workout/:id',
-       views: {
-           'tab-workoutlist': {
-               templateUrl: 'templates/workout.html',
-               controller: 'WorkoutCtrl as wCtrl'
-           }
-       }
-   })
+    .state('tab.workout', {
+        url: '/workout/:id',
+        views: {
+            'tab-workoutlist': {
+                templateUrl: 'templates/workout.html',
+                controller: 'WorkoutCtrl as wCtrl'
+            }
+        }
+    })
 
-   .state('tab.settings', {
+    .state('tab.settings', {
         url: '/settings',
         views: {
             'tab-settings': {
@@ -96,7 +96,7 @@ angular.module('ActivityLogger', ['ionic','firebase'])
                 controller: 'SettingsCtrl as setCtrl'
             }
         }
-   })
+    })
 
     .state('tab.summary', {
         url: '/summary',
@@ -106,8 +106,10 @@ angular.module('ActivityLogger', ['ionic','firebase'])
                 controller: 'SummaryCtrl as sumCtrl'
             }
         }
-    })
+    });
 
     // if none of the above states are matched, use this as the fallback
+    // $urlRouterProvider.otherwise('/tab/main');
+    // TODO! temporary:
     $urlRouterProvider.otherwise('/tab/profile');
 });
