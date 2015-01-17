@@ -2,10 +2,10 @@
 angular.module('ActivityLogger').controller('ActivityListCtrl',
     function ($state, $ionicPopup, $scope, Activity, DataService, $timeout) {
         var thisCtrl = this;
-         this.activities = [];
+         /*this.activities = [];
          this.activities.push(new Activity(1, 'Laufen 100m', 13, 14, [], 'Erster Dummy'));
          this.activities.push(new Activity(2, 'Laufen 200m', 15, 16, [], 'Zweiter Dummy'));
-         this.activities.push(new Activity(3, 'Laufen 400m', 17, 18, [], 'Dritter Dummy'));
+         this.activities.push(new Activity(3, 'Laufen 400m', 17, 18, [], 'Dritter Dummy'));*/
 
         //Todo: Users hinzufügen, wie finde ich aktuellen user?
         var userId = DataService.getStatus('userId');// current userId saved on firebase

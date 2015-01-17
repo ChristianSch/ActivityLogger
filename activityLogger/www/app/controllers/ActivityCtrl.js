@@ -87,7 +87,7 @@ angular.module('ActivityLogger').controller('ActivityCtrl',
                     if (res) {
                         $scope.stopTimer();
                         // TODO: save
-                      var activity= new Activity(1,$stateParams.type,4,8,'trackdaten','test');
+                      var activity= new Activity(1,$stateParams.type,4,8,'trackdaten',$stateParams.comment);
                         DataService.addActivity(activity);
 
                     }

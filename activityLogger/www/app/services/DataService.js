@@ -169,7 +169,7 @@ angular.module('ActivityLogger').factory('DataService',
                         this.getAllActivities(userId).$add(activity);
                         localStorage.setItem('infirebaseSaved', 'true');
                     } else {
-                        // TO DO ! Popop
+                        // TODO ! Popop
                         alert("Sie müssen ein Profil in Firebase  anlegen um Ihre Aktivität speichert zu können !")
                     }
 

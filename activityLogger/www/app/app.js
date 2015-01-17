@@ -60,7 +60,7 @@ angular.module('ActivityLogger', ['ionic','firebase'])
     })
 
      .state('tab.activity', {
-      url: '/activity/:type',
+      url: '/activity/:type/:comment',
       views: {
         'tab-main': {
           templateUrl: 'templates/activity.html'
@@ -109,5 +109,5 @@ angular.module('ActivityLogger', ['ionic','firebase'])
     })
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/main');
+    $urlRouterProvider.otherwise('/tab/profile');
 });
