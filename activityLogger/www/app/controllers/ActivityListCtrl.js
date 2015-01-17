@@ -9,11 +9,8 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
 
         //Todo: Users hinzufügen, wie finde ich aktuellen user?
         var userId = DataService.getStatus('userId');// current userId saved on firebase
-        if (userId != null) {
-            this.activities = DataService.getAllActivitiesByUserID(userId);
-        } else {
-            this.activities = DataService.getAllActivitiesLocal();
-        }
+
+        this.activities = DataService.getAllActivitiesByUserID(userId);
 
         this.addActivity = function () {
             console.log('addActivity()');

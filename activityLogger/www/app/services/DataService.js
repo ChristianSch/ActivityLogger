@@ -205,15 +205,23 @@ angular.module('ActivityLogger').factory('DataService',
             getAllActivitiesByUserID: function (user_id) {
                 var all_user_activities = this.getAllActivities();
                 var all_activitiesByUserID = [];
-                for (var i = 0; i < all_user_activities.length; i++) {
-                    var activity = all_user_activities[i];
-                    if (activity.userId) {
-                        if ((activity.userId) == (user_id)) {
-                            all_activitiesByUserID.push(activity);
+
+                var firebaseConnected = this.getStatus('firebaseConection') == 'true';
+                if(user_id&&firebaseConnected){
+                    for (var i = 0; i < all_user_activities.length; i++) {
+                        var activity = all_user_activities[i];
+                        if (activity.userId) {
+                            if ((activity.userId) == (user_id)) {
+                                all_activitiesByUserID.push(activity);
+                            }
                         }
                     }
+                    return all_activitiesByUserID.length != 0 ? all_activitiesByUserID : null;
+                }else{
+                    return this.getAllActivitiesLocal();
+
                 }
-                return all_activitiesByUserID.length != 0 ? all_activitiesByUserID : null;
+
 
             },
             /**
