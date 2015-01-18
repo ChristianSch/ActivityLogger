@@ -46,16 +46,6 @@ angular.module('ActivityLogger')
                     error += "Gewicht" + leer;
                     isvalide = false;
                 }
-                if (checkOld(user.birthday)) {
-                    if ((parseInt(user.birthday)) <= 0) {
-                        error += " Alt " + positif;
-                        isvalide = false;
-                    }
-
-                } else {
-                    error += " ALt " + positif;
-                    isvalide = false;
-                }
 
                 if (checkSize(user.size)) {
                     if (((parseInt(user.size) || parseFloat(user.size)) <= 0)) {
@@ -79,9 +69,6 @@ angular.module('ActivityLogger')
                     isvalide = false;
                 }
 
-                function checkOld(str) {
-                    return /^ *[0-9]+ *$/.test(str);
-                }
 
                 function checkSize(str) {
                     return /^[+]?[0-9]+(\.[0-9]+)?$/.test(str);
