@@ -119,7 +119,7 @@ angular.module('ActivityLogger').factory('DataService',
             },
 
 
- /***********************************Activities****************************/
+            /***********************************Activities****************************/
             /**
              *  Give all the activities that have been stored in local
              * @return {*}
@@ -147,15 +147,15 @@ angular.module('ActivityLogger').factory('DataService',
                 var activities = this.getAllActivitiesLocal();
                 var nexid = localStorage.getItem('nextActivityId');
 
-                if(!nexid){
-                   nexid=1;
+                if (!nexid) {
+                    nexid = 1;
                 }
-                if (activities!= null) {
-                    activity.id=nexid;
+                if (activities != null) {
+                    activity.id = nexid;
                     activities.push(activity);
                 } else {
                     activities = [];
-                    activity.id=nexid;
+                    activity.id = nexid;
                     activities.push(activity);
                 }
                 localStorage.setItem('activities', JSON.stringify(activities));
@@ -206,8 +206,8 @@ angular.module('ActivityLogger').factory('DataService',
                 var all_user_activities = this.getAllActivities();
                 var all_activitiesByUserID = [];
 
-                var firebaseConnected = this.getStatus('firebaseConection')== 'true';
-                if(user_id&&firebaseConnected){
+                var firebaseConnected = this.getStatus('firebaseConection') == 'true';
+                if (user_id && firebaseConnected) {
                     for (var i = 0; i < all_user_activities.length; i++) {
                         var activity = all_user_activities[i];
                         if (activity.userId) {
@@ -217,7 +217,7 @@ angular.module('ActivityLogger').factory('DataService',
                         }
                     }
                     return all_activitiesByUserID.length != 0 ? all_activitiesByUserID : null;
-                }else{
+                } else {
                     return this.getAllActivitiesLocal();
 
                 }
@@ -230,7 +230,23 @@ angular.module('ActivityLogger').factory('DataService',
              * @return {Object|null|*}
              */
             getActivityByID: function (id) {
-                return this.getAllActivities().$getRecord(id);
+                var firebaseConnected = this.getStatus('firebaseConection') == 'true';
+
+                if (firebaseConnected) {
+                    return this.getAllActivities().$getRecord(id);
+                } else {
+
+                    var activities = this.getAllActivitiesLocal();
+                    for (var i = 0; i < activities.length; i++) {
+                        var activity = activities[i];
+                        if (activity.id == id) {
+                            return activity;
+                        }
+                    }
+                    return null;
+
+                }
+
             },
             /**
              * remove Activity by id
@@ -240,16 +256,16 @@ angular.module('ActivityLogger').factory('DataService',
                 var firebaseConnected = this.getStatus('firebaseConection') == 'true';
 
                 var activities = this.getAllActivitiesLocal();
-                for (var i = 0; i< activities.length; i++) {
+                for (var i = 0; i < activities.length; i++) {
                     var activity = activities[i];
                     if (activity.id == id) {
                         activities.splice(i, 1);
                         localStorage.setItem('activities', JSON.stringify(activities));
-                        localStorage.setItem('nextActivityId', parseInt(localStorage.getItem('nextActivityId'))-1);
+                        localStorage.setItem('nextActivityId', parseInt(localStorage.getItem('nextActivityId')) - 1);
                         break;
                     }
                 }
-                if(firebaseConnected){
+                if (firebaseConnected) {
                     this.getAllActivities().$remove(this.getActivityByID(id));
                 }
 
@@ -259,15 +275,19 @@ angular.module('ActivityLogger').factory('DataService',
              * @param user_Id: UsersId
              */
             removeAllActivities: function (user_Id) {
-                this.getAllActivities(user_Id).$remove();
+                var firebaseConnected = this.getStatus('firebaseConection') == 'true';
+                localStorage.removeItem('activities');
+                if(firebaseConnected){
+                    this.getAllActivities(user_Id).$remove();
+                }
             },
 
-       /******************************Competition*******************************/
+            /******************************Competition*******************************/
             getAllCompetitions: function () {
                 return competitionsRefAngular.$asArray();
             },
             /**
-             * Create and Save a Competition
+             * Create and Save a competition
              * @param competition
              *
              */
@@ -299,8 +319,10 @@ angular.module('ActivityLogger').factory('DataService',
             getAllCompetitions: function (user_id) {
                 return this.getAllCompetitions().$getRecord(user_id)
             },
+
+            /****************competition*************************/
             /**
-             * get Status from with statusname
+             * get Status by statusname
              * @param statusname:String
              * @return status: String  with statusnamen or null
              */
