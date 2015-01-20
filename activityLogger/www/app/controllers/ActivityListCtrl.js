@@ -2,17 +2,17 @@
 
 
 angular.module('ActivityLogger').controller('ActivityListCtrl',
-    function($state, $ionicPopup, $scope, Activity, DataService, $timeout) {
-        var thisCtrl = this;
-        /*this.activities = [];
-         this.activities.push(new Activity(1, 'Laufen 100m', 13, 14, [], 'Erster Dummy'));
-         this.activities.push(new Activity(2, 'Laufen 200m', 15, 16, [], 'Zweiter Dummy'));
-         this.activities.push(new Activity(3, 'Laufen 400m', 17, 18, [], 'Dritter Dummy'));*/
+    function($state, $ionicPopup, $scope, Activity, DataService) {
+
+        this.activities = [];
+        this.activities.push(new Activity(1, 'Laufen 100m', 13, 14, [], 'Erster Dummy'));
+        this.activities.push(new Activity(2, 'Laufen 200m', 15, 16, [], 'Zweiter Dummy'));
+        this.activities.push(new Activity(3, 'Laufen 400m', 17, 18, [], 'Dritter Dummy'));
 
         //Todo: Users hinzufügen, wie finde ich aktuellen user?
-        var userId = DataService.getStatus('userId'); // current userId saved on firebase
+        //var userId = DataService.getStatus('userId'); // current userId saved on firebase
 
-        this.activities = DataService.getAllActivitiesByUserID(userId);
+        //this.activities = DataService.getAllActivitiesByUserID(userId);
 
         this.addActivity = function() {
             console.log('addActivity()');
@@ -25,26 +25,6 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
         this.delete = function(id) {
             //Todo: implement
 
-        };
-
-        this.deleteConfirm = function(activity) {
-            var confirmPopup = $ionicPopup.confirm({
-                title: 'Aktivität löschen ',
-                template: ' Wollen Sie wirklich die Aktivität unwiderruflich löschen ?'
-            });
-
-            confirmPopup.then(function(res) {
-                if (res) {
-                    if (userId != null) { //nuserId!=
-                        DataService.removeActivity(activity.id); // remove local
-                        DataService.removeActivity(activity.$id); //remove on firebase if userId != null
-                        thisCtrl.activities = DataService.getAllActivitiesByUserID(userId);
-                    } else {
-                        DataService.removeActivity(activity.id);
-                        thisCtrl.activities = DataService.getAllActivitiesLocal();
-                    }
-                }
-            });
         };
 
         this.searchQuery = localStorage.getItem('lastSearchQuery');
