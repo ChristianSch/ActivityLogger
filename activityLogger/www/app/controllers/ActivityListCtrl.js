@@ -2,7 +2,7 @@
 
 
 angular.module('ActivityLogger').controller('ActivityListCtrl',
-    function($state, $ionicPopup, $scope, Activity, DataService) {
+    function($state, $ionicPopup, $scope, $ionicPopover, Activity, DataService) {
 
         this.activities = [];
         this.activities.push(new Activity(1, 'Laufen 100m', 13, 14, [], 'Erster Dummy'));
@@ -21,10 +21,29 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
             });
         };
 
-        //Todo: Should it really be possible to delete Activities?!
-        this.delete = function(id) {
-            //Todo: implement
+        //TODO: Don't forget to remove. Only for testing!
+        var thisActivities = this.activities;
+        $scope.getActivityByID = function(id) {
+            for(var i = 0; i < thisActivities.length; i++) {
+                if(thisActivities[i].id == id) {
+                    return thisActivities[i];
+                }
+            }
+            return null;
+        }
 
+        this.delete = function(id) {
+            var confirmPopup = $ionicPopup.confirm({
+                template: 'Wollen Sie die Aktivität wirklich löschen?',
+                cancelText: 'Abbrechen',
+                okText: 'Löschen'
+            });
+            confirmPopup.then(function(res) {
+                console.log("Delete");
+                thisActivities.splice(thisActivities.indexOf($scope.getActivityByID(id)), 1);
+                //thisActivities.splice(thisActivities.indexOf(DataService.getActivityByID(id)), 1);
+                //DataService.removeActivity(id);
+            });
         };
 
         this.searchQuery = localStorage.getItem('lastSearchQuery');
@@ -36,11 +55,18 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
         }
 
         this.toggleSearch = function() {
-            console.log('toggleSearch()');
             if (this.searchActive) {
                 this.searchQuery = '';
                 localStorage.setItem('lastSearchQuery', '');
             }
             this.searchActive = !this.searchActive;
         };
+
+        $scope.$on('$stateChangeStart',
+            function(event) {
+                if(event.currentScope.alCtrl.searchQuery || (event.currentScope.alCtrl.searchQuery == '')) {
+                    localStorage.setItem('lastSearchQuery', event.currentScope.alCtrl.searchQuery);
+                }
+            });
+
     });
