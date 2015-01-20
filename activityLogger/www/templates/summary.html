@@ -1,17 +1,71 @@
 <ion-view title="Summary"> <ion-content> <ion-list>
-	<ion-nav-buttons side="right">
-		<button side="right" title="mit Firebase verbindet" ng-controller="SettingsCtrl as setCtrl" ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
-		</button>
-	</ion-nav-buttons>
-<div class="card" ng-repeat="stat in stats">
-	<div class="item item-divider">{{stat.name}}</div>
-	<div class="item item-text-wrap">{{stat.value}}</div>
+<ion-nav-buttons side="right">
+<button side="right" title="mit Firebase verbindet"
+	ng-controller="SettingsCtrl as setCtrl"
+	ng-show="setCtrl.firebaseConection" class="ion-connection-bars">
+</button>
+</ion-nav-buttons>
+
+
+
+<div class="card"">
+	<div class="item item-divider">Rekorde</div>
+	<div class="item item-divider">
+		<div class="button-bar" data-ng-init="show_overall_records = true">
+			<a class="button" ng-click="show_overall_records = true">gesamt</a> <a
+				class="button" ng-click="show_overall_records = false">nach
+				Disziplin</a>
+		</div>
+	</div>
+
+	<div ng-show="show_overall_records">
+		<div class="row item" ng-repeat="record in overallRecords">
+			<div class="col col-50">
+				<p>{{record.name}}:</p>
+			</div>
+			<div class="col col-50">
+				<p>{{record.value}}</p>
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="!show_overall_records">
+		<div ng-repeat="records in disciplineRecords">
+			<div class="item item-divider">
+				<p>{{records.discipline}}</p>
+			</div>
+			<div class="row item" ng-repeat="record in records.records">
+				<div class="col col-50">
+					<p>{{record.name}}:</p>
+				</div>
+				<div class="col col-50">
+					<p>{{record.value}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
+<div class="card"">
+	<div class="item item-divider">Gesamtleistungen</div>
+	<div class="row item" ng-repeat="performance in overallPerformances">
+		<div class="col col-50">
+			<p>{{performance.name}}:</p>
+		</div>
+		<div class="col col-50">
+			<p>{{performance.value}}</p>
+		</div>
+	</div>
+</div>
+
+
 
 <div class="card">
 	<div class="item item-divider"
-		data-ng-init="sumCtrl.showTimesWeekChart()">Zeiten</div>
-	<div class="item item-text-wrap">
+		data-ng-init="sumCtrl.showTimesWeekChart(); chart_times_week_visible=true">Leistungsverlauf</div>
+	<div class="item item-divider">
 		<div class="button-bar">
 			<a class="button"
 				ng-click="chart_times_year_visible = true;chart_times_month_visible = false;chart_times_week_visible = false;sumCtrl.showTimesYearChart()">Jahr</a>
@@ -20,7 +74,9 @@
 			<a class="button"
 				ng-click="chart_times_year_visible = false;chart_times_month_visible = false;chart_times_week_visible = true;sumCtrl.showTimesWeekChart()">Woche</a>
 		</div>
+	</div>
 
+	<div class="item item-text-wrap">
 		<div>
 			<canvas id="chart_times_week" ng-show="chart_times_week_visible"></canvas>
 		</div>
@@ -33,5 +89,4 @@
 
 	</div>
 </div>
-
 </ion-list> </ion-content> </ion-view>
