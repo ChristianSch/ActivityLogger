@@ -30,9 +30,9 @@
             <div class="item item-divider">Strecke</div>
             <div id="map_canvas" style="height:300px"></div>
         </div>
-        <div class="card" data-ng-init="wCtrl.plotElevation()">
+        <div class="card" ng-show="wCtrl.isEditMode">
             <div class="item item-divider">Höhenverlauf</div>
-            <div>
+            <div data-ng-init="wCtrl.plotElevation()">
                 <canvas id="elevation_profile" height="250"></canvas>
             </div>
         </div>

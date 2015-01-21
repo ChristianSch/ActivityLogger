@@ -4,39 +4,27 @@
 angular.module('ActivityLogger')
     .controller('WorkoutCtrl',
     function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window) {
+        var infowindow = new google.maps.InfoWindow();
+        var elevationSamples = 50;
+
         var elevator;
         var map;
-        var infowindow = new google.maps.InfoWindow();
-        var chart;
         var polyline;
 
-        var scala = [];
-        for(var i = 1; i <= 50; i++) {
-            scala.push(i + "");
-        }
-        this.elevationChart = {
-            labels : scala,
-            datasets : [ {
-                label : "Elevation",
-                fillColor : "rgba(220,220,220,0.2)",
-                strokeColor : "rgba(220,220,220,1)",
-                pointColor : "rgba(220,220,220,1)",
-                pointStrokeColor : "#fff",
-                pointHighlightFill : "#fff",
-                pointHighlightStroke : "rgba(220,220,220,1)",
-                data : [ 200, 450, 30, 60, 600, 300, 100 ]
-            } ]
-        };
+        var whitney = new google.maps.LatLng(36.578581, -118.291994);
+        var lonepine = new google.maps.LatLng(36.606111, -118.062778);
+        var owenslake = new google.maps.LatLng(36.433269, -117.950916);
+        var beattyjunction = new google.maps.LatLng(36.588056, -116.943056);
+        var panamintsprings = new google.maps.LatLng(36.339722, -117.467778);
+        var badwater = new google.maps.LatLng(36.23998, -116.83171);
 
         this.isEditMode = false;
-
         if ($stateParams.id == 'new') {
             $ionicNavBarDelegate.setTitle('Neue Activity');
             this.activity = {};
             //this.activity.id = localStorage.getItem('nextActivityId');
             //this.activity.user_id = DataService.getUserProfil();
         } else {
-            //edit
             this.isEditMode = true;
             $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
             //this.activity = DataService.getActivityById($stateParams.id);
@@ -66,21 +54,40 @@ angular.module('ActivityLogger')
         };
 
         this.plotElevation = function() {
+            var elevationChart;
+            var ctx;
+            var scala = [];
 
-            var ctx = document.getElementById("elevation_profile").getContext("2d");
-            $window.myLine = new Chart(ctx).Line(this.elevationChart, {
+            for(var i = 1; i <= elevationSamples; i++) {
+                scala.push(i + "");
+            }
+
+            elevationChart = {
+                labels : scala,
+                datasets : [ {
+                    label : "Elevation",
+                    fillColor : "rgba(220,220,220,0.2)",
+                    strokeColor : "rgba(220,220,220,1)",
+                    pointColor : "rgba(220,220,220,1)",
+                    pointStrokeColor : "#fff",
+                    pointHighlightFill : "#fff",
+                    pointHighlightStroke : "rgba(220,220,220,1)",
+                    data : [ 200, 450, -30, 60, 600, 300, 100 ]
+                } ]
+            };
+
+            ctx = document.getElementById("elevation_profile").getContext("2d");
+            $window.myLine = new Chart(ctx).Line(elevationChart, {
+                //showScale: false, //TODO: Mit oder ohne SKALA?
+                //scaleShowLabels: false,
+                scaleLineWidth: 2,
                 scaleShowVerticalLines: false,
+                showTooltips: false,
+                dataSetStroke: false,
                 pointDot: false,
-                responsive : true
+                responsive: true
             });
         };
-
-        var whitney = new google.maps.LatLng(36.578581, -118.291994);
-        var lonepine = new google.maps.LatLng(36.606111, -118.062778);
-        var owenslake = new google.maps.LatLng(36.433269, -117.950916);
-        var beattyjunction = new google.maps.LatLng(36.588056, -116.943056);
-        var panamintsprings = new google.maps.LatLng(36.339722, -117.467778);
-        var badwater = new google.maps.LatLng(36.23998, -116.83171);
 
         function init() {
             var mapOptions = {
@@ -98,15 +105,14 @@ angular.module('ActivityLogger')
             drawPath();
         }
 
-         function drawPath() {
+        function drawPath() {
 
             var path = [ whitney, lonepine, owenslake, panamintsprings, beattyjunction, badwater];
 
             // Create a PathElevationRequest object using this array.
-            // Ask for 256 samples along that path.
             var pathRequest = {
                 'path': path,
-                'samples': 256
+                'samples': elevationSamples
             }
 
             // Initiate the path request.
@@ -139,7 +145,6 @@ angular.module('ActivityLogger')
         }
 
         function getElevation(event) {
-
             var locations = [];
 
             // Retrieve the clicked location and push it on the array
@@ -170,5 +175,7 @@ angular.module('ActivityLogger')
                 }
             });
         }
-        google.maps.event.addDomListener(window, 'load', init());
+        if(this.isEditMode) {
+            google.maps.event.addDomListener(window, 'load', init());
+        }
     });

@@ -39,7 +39,7 @@ angular.module('ActivityLogger').controller('ActivityListCtrl',
 
         //TODO: Don't forget to remove. Only for testing!
         var thisActivities = this.activities;
-        this.getActivityByID = function(id) {
+        $scope.getActivityByID = function(id) {
             for(var i = 0; i < thisActivities.length; i++) {
                 if(thisActivities[i].id == id) {
                     return thisActivities[i];
