@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 
 angular.module('ActivityLogger')
@@ -93,15 +93,12 @@ angular.module('ActivityLogger')
 
             elevator = new google.maps.ElevationService();
 
-            //google.maps.event.addListener(map, 'click', getElevation);
+            google.maps.event.addListener(map, 'click', getElevation);
 
-           // drawPath();
+            drawPath();
         }
 
          function drawPath() {
-
-            // Create a new chart in the elevation_chart DIV.
-            chart = new google.visualization.ColumnChart(document.getElementById('elevation_chart'));
 
             var path = [ whitney, lonepine, owenslake, panamintsprings, beattyjunction, badwater];
 
@@ -139,25 +136,6 @@ angular.module('ActivityLogger')
                 map: map
             }
             polyline = new google.maps.Polyline(pathOptions);
-
-            // Extract the data from which to populate the chart.
-            // Because the samples are equidistant, the 'Sample'
-            // column here does double duty as distance along the
-            // X axis.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Sample');
-            data.addColumn('number', 'Elevation');
-            for (var i = 0; i < results.length; i++) {
-                data.addRow(['', elevations[i].elevation]);
-            }
-
-            // Draw the chart using the data within its DIV.
-            document.getElementById('elevation_chart').style.display = 'block';
-            chart.draw(data, {
-                height: 150,
-                legend: 'none',
-                titleY: 'Elevation (m)'
-            });
         }
 
         function getElevation(event) {
