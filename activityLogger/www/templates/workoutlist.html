@@ -17,8 +17,9 @@
         </div>
         <ion-list>
             <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.id}}">
-                {{activity.id}}, {{activity.type}}, ({{activity.start_time}}, {{activity.end_time}})
-
+                <span>
+                    {{activity.id}}, {{activity.type}}, ({{activity.start_time}}, {{activity.end_time}})
+                </span>
                 <ion-option-button class="button-info" ng-click="alCtrl.delete(activity.id)">
                     Löschen
                 </ion-option-button>
