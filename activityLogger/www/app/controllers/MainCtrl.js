@@ -6,10 +6,10 @@ angular.module('ActivityLogger').controller('MainCtrl',
         // set up the selectable options
         this.possibleActivityTypes = [{
             id: 1,
-            label: 'Laufen'
+            label: 'Run'
         }, {
             id: 2,
-            label: 'Radfahren'
+            label: 'Bike'
         }];
 
         this.selectedActivityType = this.possibleActivityTypes[0];

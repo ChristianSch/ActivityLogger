@@ -3,7 +3,10 @@
 
 angular.module('ActivityLogger')
     .controller('ActivityCtrl',
-        function($scope, $state, $stateParams, $ionicPopup, DataService, Activity) {
+        function($scope, $state, $stateParams, $ionicPopup, DataService, GeoLocationService, Activity) {
+            var data = [];
+
+            // timer setup
             // init values
             $scope.timerHours = 0;
             $scope.timerMinutes = 0;
@@ -88,13 +91,25 @@ angular.module('ActivityLogger')
                 confirmPopup.then(function(res) {
                     if (res) {
                         $scope.stopTimer();
-                        // TODO: save
-                        var activity = new Activity(1, $stateParams.type, 4, 8, 'trackdaten', $stateParams.comment);
-                        DataService.addActivity(activity);
+                        GeoLocationService.stop();
 
+                        var activity = new Activity(1, $stateParams.type, 4, 8, data, $stateParams.comment);
+                        DataService.addActivity(activity);
+                        $state.go('tab.workoutlist');
                     }
                 });
             };
+
+            // location setup
+            GeoLocationService.start(function(locationData) {
+                var coords = locationData.coors;
+                // TODO: map
+                
+                data.push(locationData);
+                console.log(locationData);
+            }, function(err) {
+                alert(err);
+            });
 
             // start the timer on initialization
             $scope.startTimer();
