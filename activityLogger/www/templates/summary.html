@@ -64,15 +64,15 @@
 
 <div class="card">
 	<div class="item item-divider"
-		data-ng-init="sumCtrl.showTimesWeekChart(); chart_times_week_visible=true">Leistungsverlauf</div>
+		data-ng-init="showTimesWeekChart(); chart_times_week_visible=true">Leistungsverlauf</div>
 	<div class="item item-divider">
 		<div class="button-bar">
 			<a class="button"
-				ng-click="chart_times_year_visible = true;chart_times_month_visible = false;chart_times_week_visible = false;sumCtrl.showTimesYearChart()">Jahr</a>
+				ng-click="chart_times_year_visible = true;chart_times_month_visible = false;chart_times_week_visible = false;showTimesYearChart()">Jahr</a>
 			<a class="button"
-				ng-click="chart_times_year_visible = false;chart_times_month_visible = true;chart_times_week_visible = false;sumCtrl.showTimesMonthChart()">Monat</a>
+				ng-click="chart_times_year_visible = false;chart_times_month_visible = true;chart_times_week_visible = false;showTimesMonthChart()">Monat</a>
 			<a class="button"
-				ng-click="chart_times_year_visible = false;chart_times_month_visible = false;chart_times_week_visible = true;sumCtrl.showTimesWeekChart()">Woche</a>
+				ng-click="chart_times_year_visible = false;chart_times_month_visible = false;chart_times_week_visible = true;showTimesWeekChart()">Woche</a>
 		</div>
 	</div>
 
