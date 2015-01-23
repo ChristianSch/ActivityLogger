@@ -4,9 +4,10 @@
 angular.module('ActivityLogger')
     .controller('WorkoutCtrl',
     function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window) {
+        var wCtrl = this;
         var infowindow = new google.maps.InfoWindow();
-        var elevationSamples = 50;
-
+        var elevationSamples = 200;
+        var elevationData = [];
         var elevator;
         var map;
         var polyline;
@@ -53,14 +54,25 @@ angular.module('ActivityLogger')
             });
         };
 
-        this.plotElevation = function() {
+        this.showElevation = function() {
             var elevationChart;
+            var chartOptions;
             var ctx;
             var scala = [];
 
             for(var i = 1; i <= elevationSamples; i++) {
-                scala.push(i + "");
+                scala.push("");
             }
+            chartOptions = {
+                //showScale: false, //TODO: Mit oder ohne SKALA?
+                //scaleShowLabels: false,
+                scaleLineWidth: 2,
+                scaleShowVerticalLines: false,
+                showTooltips: false,
+                dataSetStroke: false,
+                pointDot: false,
+                responsive: true
+            };
 
             elevationChart = {
                 labels : scala,
@@ -72,21 +84,12 @@ angular.module('ActivityLogger')
                     pointStrokeColor : "#fff",
                     pointHighlightFill : "#fff",
                     pointHighlightStroke : "rgba(220,220,220,1)",
-                    data : [ 200, 450, -30, 60, 600, 300, 100 ]
+                    data : elevationData
                 } ]
             };
 
             ctx = document.getElementById("elevation_profile").getContext("2d");
-            $window.myLine = new Chart(ctx).Line(elevationChart, {
-                //showScale: false, //TODO: Mit oder ohne SKALA?
-                //scaleShowLabels: false,
-                scaleLineWidth: 2,
-                scaleShowVerticalLines: false,
-                showTooltips: false,
-                dataSetStroke: false,
-                pointDot: false,
-                responsive: true
-            });
+            $window.myLine = new Chart(ctx).Line(elevationChart, chartOptions);
         };
 
         function init() {
@@ -120,7 +123,7 @@ angular.module('ActivityLogger')
         }
 
         // Takes an array of ElevationResult objects, draws the path on the map
-        // and plots the elevation profile on a Visualization API ColumnChart.
+        // and plots the elevation profile on a Chartjs Line.
         function plotElevation(results, status) {
             if (status != google.maps.ElevationStatus.OK) {
                 return;
@@ -132,6 +135,7 @@ angular.module('ActivityLogger')
             var elevationPath = [];
             for (var i = 0; i < results.length; i++) {
                 elevationPath.push(elevations[i].location);
+                elevationData.push(elevations[i].elevation);
             }
 
             // Display a polyline of the elevation path.
@@ -142,6 +146,8 @@ angular.module('ActivityLogger')
                 map: map
             }
             polyline = new google.maps.Polyline(pathOptions);
+            wCtrl.showElevation();
+
         }
 
         function getElevation(event) {
