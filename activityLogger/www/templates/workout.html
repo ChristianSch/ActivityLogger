@@ -1,6 +1,6 @@
 <ion-view>
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-ios7-trash" ng-click="wCtrl.delete()">
+        <button class="button button-icon icon ion-ios7-trash" ng-show="wCtrl.isEditMode" ng-click="wCtrl.delete()">
         </button>
     </ion-nav-buttons>
     <ion-content class="padding">
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card" ng-show="wCtrl.isEditMode">
             <div class="item item-divider">Strecke</div>
             <div id="map_canvas" style="height:300px"></div>
         </div>
