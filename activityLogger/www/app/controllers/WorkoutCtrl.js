@@ -12,13 +12,6 @@ angular.module('ActivityLogger')
         var map;
         var polyline;
 
-        var whitney = new google.maps.LatLng(36.578581, -118.291994);
-        var lonepine = new google.maps.LatLng(36.606111, -118.062778);
-        var owenslake = new google.maps.LatLng(36.433269, -117.950916);
-        var beattyjunction = new google.maps.LatLng(36.588056, -116.943056);
-        var panamintsprings = new google.maps.LatLng(36.339722, -117.467778);
-        var badwater = new google.maps.LatLng(36.23998, -116.83171);
-
         this.isEditMode = false;
         if ($stateParams.id == 'new') {
             $ionicNavBarDelegate.setTitle('Neue Activity');
@@ -29,6 +22,14 @@ angular.module('ActivityLogger')
             this.isEditMode = true;
             $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
             //this.activity = DataService.getActivityById($stateParams.id);
+
+            /* Setup testdata for existing activity */
+            var whitney = new google.maps.LatLng(36.578581, -118.291994);
+            var lonepine = new google.maps.LatLng(36.606111, -118.062778);
+            var owenslake = new google.maps.LatLng(36.433269, -117.950916);
+            var beattyjunction = new google.maps.LatLng(36.588056, -116.943056);
+            var panamintsprings = new google.maps.LatLng(36.339722, -117.467778);
+            var badwater = new google.maps.LatLng(36.23998, -116.83171);
         }
 
         this.save = function() {
@@ -60,12 +61,10 @@ angular.module('ActivityLogger')
             var ctx;
             var scala = [];
 
-            for(var i = 1; i <= elevationSamples; i++) {
+            for(var i = 0; i < elevationSamples; i++) {
                 scala.push("");
             }
             chartOptions = {
-                //showScale: false, //TODO: Mit oder ohne SKALA?
-                //scaleShowLabels: false,
                 scaleLineWidth: 2,
                 scaleShowVerticalLines: false,
                 showTooltips: false,
@@ -103,7 +102,7 @@ angular.module('ActivityLogger')
 
             elevator = new google.maps.ElevationService();
 
-            google.maps.event.addListener(map, 'click', getElevation);
+            // google.maps.event.addListener(map, 'click', getElevation);
 
             drawPath();
         }
@@ -149,7 +148,7 @@ angular.module('ActivityLogger')
             wCtrl.showElevation();
 
         }
-
+        /*
         function getElevation(event) {
             var locations = [];
 
@@ -180,7 +179,7 @@ angular.module('ActivityLogger')
                     alert('Elevation service failed due to: ' + status);
                 }
             });
-        }
+        }*/
         if(this.isEditMode) {
             google.maps.event.addDomListener(window, 'load', init());
         }
