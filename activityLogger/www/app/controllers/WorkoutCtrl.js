@@ -3,9 +3,9 @@
 
 angular.module('ActivityLogger')
     .controller('WorkoutCtrl',
-    function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window) {
+    function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, Track, TrackRecord, Activity) {
         var wCtrl = this;
-        var infowindow = new google.maps.InfoWindow();
+        //var infowindow = new google.maps.InfoWindow();
         var elevationSamples = 200;
         var elevationData = [];
         var elevator;
@@ -23,13 +23,40 @@ angular.module('ActivityLogger')
             $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
             //this.activity = DataService.getActivityById($stateParams.id);
 
-            /* Setup testdata for existing activity */
-            var whitney = new google.maps.LatLng(36.578581, -118.291994);
-            var lonepine = new google.maps.LatLng(36.606111, -118.062778);
-            var owenslake = new google.maps.LatLng(36.433269, -117.950916);
-            var beattyjunction = new google.maps.LatLng(36.588056, -116.943056);
-            var panamintsprings = new google.maps.LatLng(36.339722, -117.467778);
-            var badwater = new google.maps.LatLng(36.23998, -116.83171);
+            if($stateParams.id == 1) {
+                var track1 = new Track();
+                track1.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
+                track1.addTrackRecord(new TrackRecord(50.5866, 8.6815, 0, 0));
+                track1.addTrackRecord(new TrackRecord(50.5874, 8.6840, 0, 0));
+                track1.addTrackRecord(new TrackRecord(50.5860, 8.6861, 0, 0));
+
+                this.activity = new Activity(1, 'Laufen 100m', 13, 14, track1, 'Erster Dummy');
+            } else if($stateParams.id == 2) {
+                var track2 = new Track();
+                /*track2.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
+                track2.addTrackRecord(new TrackRecord(50.5837, 8.6847, 0, 0));
+                track2.addTrackRecord(new TrackRecord(50.5828, 8.6802, 0, 0));
+                track2.addTrackRecord(new TrackRecord(50.5839, 8.6783, 0, 0));
+                */
+                this.activity = new Activity(2, 'Laufen 200m', 15, 16, track2, 'Zweiter Dummy');
+            } else if($stateParams.id == 3){
+                var track3 = new Track();
+                track3.addTrackRecord(new TrackRecord(50.7967, 8.7688, 0, 0));
+                track3.addTrackRecord(new TrackRecord(50.7950, 8.7689, 0, 0));
+                track3.addTrackRecord(new TrackRecord(50.7943, 8.7625, 0, 0));
+                track3.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
+
+                this.activity = new Activity(3, 'Laufen 400m', 17, 18, track3, 'Dritter Dummy');
+            } else {
+                var track4 = new Track();
+                track4.addTrackRecord(new TrackRecord(36.578581, -118.291994, 0, 0));
+                track4.addTrackRecord(new TrackRecord(36.606111, -118.062778, 0, 0));
+                track4.addTrackRecord(new TrackRecord(36.433269, -117.950916, 0, 0));
+                track4.addTrackRecord(new TrackRecord(36.588056, -116.943056, 0, 0));
+                track4.addTrackRecord(new TrackRecord(36.339722, -117.467778, 0, 0));
+                track4.addTrackRecord(new TrackRecord(36.23998, -116.83171, 0, 0));
+                this.activity = new Activity(4, 'Laufen 20km', 123824193, 183924123, track4, 'Standard Elevation of the Gooogle-API')
+            }
         }
 
         this.save = function() {
@@ -92,24 +119,35 @@ angular.module('ActivityLogger')
         };
 
         function init() {
+            if(thisActivity.track_data.track_records.length > 0) {
+                var initial_Position = thisActivity.track_data.track_records[0];
+            } else {
+                // Default initial Position
+                var initial_Position = new TrackRecord(50.5851, 8.6841, 0, 0);
+            }
             var mapOptions = {
-                center: new google.maps.LatLng(50.587, 8.669),
+                center: new google.maps.LatLng(initial_Position.latitude, initial_Position.logitude),
                 zoom: 10,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
             map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-            elevator = new google.maps.ElevationService();
+            if(thisActivity.track_data.track_records.length > 0) {
+                elevator = new google.maps.ElevationService();
 
-            // google.maps.event.addListener(map, 'click', getElevation);
+                // google.maps.event.addListener(map, 'click', getElevation);
 
-            drawPath();
+                drawPath();
+            }
         }
 
         function drawPath() {
+            var path = [];
 
-            var path = [ whitney, lonepine, owenslake, panamintsprings, beattyjunction, badwater];
+            for(var i = 0; i < thisActivity.track_data.track_records.length; i++) {
+                path.push(new google.maps.LatLng(thisActivity.track_data.track_records[i].latitude, thisActivity.track_data.track_records[i].logitude));
+            }
 
             // Create a PathElevationRequest object using this array.
             var pathRequest = {
