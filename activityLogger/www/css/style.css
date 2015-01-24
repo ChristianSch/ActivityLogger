@@ -1,16 +1,25 @@
 /* Empty. Add your own CSS if you like */
 
-.timer-card {
-	font-size: 400%;
+.timer-card,
+.distance-card {
+	font-size: 200%;
 	height: auto !important;
-	padding: 30px;
+	padding: 30px 10px;
+	width: 49%;
+	display: inline-block;
 }
 
-.timer-card span {
+.timer-card span,
+.distance-card span {
 	display: inline-block;
 	height: auto !important;
 	line-height: 100%;
 }
+
+.timer-card + .distance-card {
+	border-left: 1px solid #eee;
+}
+
 .settingOption{
 	font-weight: bold;
 }
