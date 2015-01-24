@@ -7,14 +7,19 @@ angular.module('ActivityLogger').factory('Track', function() {
 		this.addTrackRecord = function(record) {
 			this.track_records.push(record);
 		}
-		
+
 		/**
 		 * Calculates the distance of the track.
+		 * 
 		 * @return distance
 		 */
-		this.getDistance = function(){
-			//TODO
-			return 42;
+		this.getDistance = function() {
+			var dist = 0;
+			var i;
+			for (i in this.track_records) {
+				dist += this.track_records[i].getDistance();
+			}
+			return dist;
 		}
 
 	};
