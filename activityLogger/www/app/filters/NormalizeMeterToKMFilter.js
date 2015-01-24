@@ -8,8 +8,8 @@ angular.module('ActivityLogger')
 	 * @param  {Number} to normalize
 	 * @return {String}   normalized distance as String
 	 */
-    .filter('normalizeMeterToKMFilter', function() {
+    .filter('normalizeMeterToKMFilter', function($filter) {
         return function(meter) {
-            return meter / 1000;
+            return $filter('number')(meter / 1000, 2);
         };
     });
