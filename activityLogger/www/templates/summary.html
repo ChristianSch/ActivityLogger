@@ -1,36 +1,24 @@
 <ion-view title="Summary"> <ion-content> <ion-list>
-<ion-nav-buttons side="right">
-</ion-nav-buttons>
+<ion-nav-buttons side="right"> </ion-nav-buttons>
 
-
+<div class="item">
+	<center>{{getPeriodText(period_slider)}}</center>
+</div>
+<div class="item range range-positive">
+	<input type="range" name="period" min="1" max="42" value="42"
+		ng-model="period_slider" ng-change="update()">
+</div>
 
 <div class="card"">
 	<div class="item item-divider">Rekorde</div>
-	<div class="item item-divider">
-		<div class="button-bar" data-ng-init="show_overall_records = true">
-			<a class="button" ng-click="show_overall_records = true">gesamt</a> <a
-				class="button" ng-click="show_overall_records = false">nach
-				Disziplin</a>
-		</div>
-	</div>
 
-	<div ng-show="show_overall_records">
-		<div class="row item" ng-repeat="record in overallRecords">
-			<div class="col col-50">
-				<p>{{record.name}}:</p>
-			</div>
-			<div class="col col-50">
-				<p>{{record.value}}</p>
-			</div>
-		</div>
-	</div>
 
-	<div ng-show="!show_overall_records">
-		<div ng-repeat="records in disciplineRecords">
-			<div class="item item-divider">
-				<p>{{records.discipline}}</p>
-			</div>
-			<div class="row item" ng-repeat="record in records.records">
+	<div ng-repeat="performances in bestPerfs">
+		<div class="item">
+			<p>
+				<b>{{performances.discipline}}</b>
+			</p>
+			<div class="row" ng-repeat="record in performances.records">
 				<div class="col col-50">
 					<p>{{record.name}}:</p>
 				</div>
@@ -45,13 +33,28 @@
 
 <div class="card"">
 	<div class="item item-divider">Durchschnittsleistungen</div>
-	
+	<div ng-repeat="performances in avgPerfs">
+		<div class="item">
+			<p>
+				<b>{{performances.discipline}}</b>
+			</p>
+
+			<div class="row" ng-repeat="performance in performances.data">
+				<div class="col col-50">
+					<p>{{performance.name}}:</p>
+				</div>
+				<div class="col col-50">
+					<p>{{performance.value}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 <div class="card"">
 	<div class="item item-divider">Gesamtleistungen</div>
-	<div class="row item" ng-repeat="performance in overallPerformances">
+	<div class="row item" ng-repeat="performance in overallPerfs">
 		<div class="col col-50">
 			<p>{{performance.name}}:</p>
 		</div>
@@ -65,27 +68,43 @@
 
 <div class="card">
 	<div class="item item-divider"
-		data-ng-init="showTimesWeekChart(); chart_times_week_visible=true">Leistungsverlauf</div>
+		data-ng-init="showWeekCharts(); visible_chart='week'">Leistungsverlauf</div>
 	<div class="item item-divider">
 		<div class="button-bar">
-			<a class="button"
-				ng-click="chart_times_year_visible = true;chart_times_month_visible = false;chart_times_week_visible = false;showTimesYearChart()">Jahr</a>
-			<a class="button"
-				ng-click="chart_times_year_visible = false;chart_times_month_visible = true;chart_times_week_visible = false;showTimesMonthChart()">Monat</a>
-			<a class="button"
-				ng-click="chart_times_year_visible = false;chart_times_month_visible = false;chart_times_week_visible = true;showTimesWeekChart()">Woche</a>
+			<a class="button" ng-click="visible_chart='year';showYearCharts()">Jahr</a>
+			<a class="button" ng-click="visible_chart='month';showMonthCharts()">Monat</a>
+			<a class="button" ng-click="visible_chart='week';showWeekCharts()">Woche</a>
 		</div>
 	</div>
 
+	<div class="item item-divider">
+		<p>Zeit</p>
+	</div>
 	<div class="item item-text-wrap">
 		<div>
-			<canvas id="chart_times_week" ng-show="chart_times_week_visible"></canvas>
+			<canvas id="chart_times_week" ng-show="visible_chart=='week'"></canvas>
 		</div>
 		<div>
-			<canvas id="chart_times_month" ng-show="chart_times_month_visible"></canvas>
+			<canvas id="chart_times_month" ng-show="visible_chart=='month'"></canvas>
 		</div>
 		<div>
-			<canvas id="chart_times_year" ng-show="chart_times_year_visible"></canvas>
+			<canvas id="chart_times_year" ng-show="visible_chart=='year'"></canvas>
+		</div>
+
+	</div>
+
+	<div class="item item-divider">
+		<p>Strecke</p>
+	</div>
+	<div class="item item-text-wrap">
+		<div>
+			<canvas id="chart_dist_week" ng-show="visible_chart=='week'"></canvas>
+		</div>
+		<div>
+			<canvas id="chart_dist_month" ng-show="visible_chart=='month'"></canvas>
+		</div>
+		<div>
+			<canvas id="chart_dist_year" ng-show="visible_chart=='year'"></canvas>
 		</div>
 
 	</div>

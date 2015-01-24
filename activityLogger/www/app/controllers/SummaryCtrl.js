@@ -1,95 +1,154 @@
 'use strict';
 
-angular.module('ActivityLogger')
-		.controller(
-				'SummaryCtrl',
-				function($scope, $window, Activity, SummaryService) {
+angular.module('ActivityLogger').controller(
+		'SummaryCtrl',
+		function($scope, $window, Activity, SummaryService) {
 
-					$scope.overallRecords = SummaryService.getOverallRecords();
+			$scope.period_slider = 42;
+			this.period_slider = 42;
 
-					$scope.disciplineRecords = SummaryService
-							.getAllDisciplineRecords();
+			$scope.bestPerfs = SummaryService.getBestPerformances(-1);
 
-					$scope.overallPerformances = SummaryService
-							.getOverallPerformances();
+			$scope.overallPerfs = SummaryService.getOverallPerformances(-1);
 
-					/**
-					 * 
-					 */
-					$scope.showTimesWeekChart = function() {
-						var weekdays = [ "MO", "DI", "MI", "DO", "FR", "SA",
-								"SO" ];
-						// rotate weekdays
-						var day = new Date().getDay();
-						weekdays = weekdays.slice(day).concat(
-								weekdays.slice(0, day))
+			$scope.avgPerfs = SummaryService.getAveragePerformances(-1);
 
-						var data = SummaryService.getDurations(7);
-						drawChart(weekdays, data, "chart_times_week");
-					};
+			/**
+			 * 
+			 */
+			$scope.update = function() {
+				var p = getPeriod(this.period_slider);
+				$scope.bestPerfs = SummaryService.getBestPerformances(p);
+				$scope.overallPerfs = SummaryService.getOverallPerformances(p);
+				$scope.avgPerfs = SummaryService.getAveragePerformances(p);
+			}
+			/**
+			 * 
+			 */
+			$scope.showWeekCharts = function() {
+				var weekdays = [ "MO", "DI", "MI", "DO", "FR", "SA", "SO" ];
+				// rotate weekdays
+				var day = new Date().getDay();
+				weekdays = weekdays.slice(day).concat(weekdays.slice(0, day))
 
-					/**
-					 * 
-					 */
-					$scope.showTimesMonthChart = function() {
-						var days = [ "1", "2", "3", "4", "5", "6", "7", "8",
-								"9", "10", "11", "12", "13", "14", "15", "16",
-								"17", "18", "19", "20", "21", "22", "23", "24",
-								"25", "26", "27", "28", "29", "30" ];
+				// draw times chart
+				var data_time = SummaryService.getDurations(7);
+				drawChart(weekdays, data_time, "chart_times_week");
 
-						var data = SummaryService.getDurations(30);
+				// draw distance chart
+				var data_dist = SummaryService.getDurations(7);
+				drawChart(weekdays, data_dist, "chart_dist_week");
+			};
 
-						drawChart(days, data, "chart_times_month");
-					};
+			/**
+			 * 
+			 */
+			$scope.showMonthCharts = function() {
+				var days = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+						"11", "12", "13", "14", "15", "16", "17", "18", "19",
+						"20", "21", "22", "23", "24", "25", "26", "27", "28",
+						"29", "30" ];
 
-					/**
-					 * 
-					 */
-					$scope.showTimesYearChart = function() {
-						var days = [ "", "", "", "", "", "", "", "", "", "10",
-								"", "", "", "", "", "", "", "", "", "20", "",
-								"", "", "", "", "", "", "", "", "30", "", "",
-								"", "", "", "", "", "", "", "40", "", "", "",
-								"", "", "", "", "", "", "50", "", "" ];
-						var durations = SummaryService.getDurations(364);
-						var data = [];
-						var i;
-						
-						for (i = 0; i < 364; i+=7) {
-							data.push(durations[i] + durations[i + 1]
-									+ durations[i + 2] + durations[i + 3]
-									+ durations[i + 4] + durations[i + 5]
-									+ durations[i + 6]);
-						}
-						
-						drawChart(days, data, "chart_times_year");
-					};
+				// draw times chart
+				var data_time = SummaryService.getDurations(30);
+				drawChart(days, data_time, "chart_times_month");
 
-					/**
-					 * 
-					 */
-					var drawChart = function(labels, data, canvas_id) {
-						var chart = {
-							labels : labels,
-							datasets : [ {
-								label : "",
-								fillColor : "rgba(220,220,220,0.2)",
-								strokeColor : "rgba(220,220,220,1)",
-								pointColor : "rgba(220,220,220,1)",
-								pointStrokeColor : "#fff",
-								pointHighlightFill : "#fff",
-								pointHighlightStroke : "rgba(220,220,220,1)",
-								data : data
-							} ]
-						};
-						var ctx = document.getElementById(canvas_id)
-								.getContext("2d");
-						$window.chart = new Chart(ctx).Line(chart, {
-							showTooltips : false,
-							dataSetStroke : false,
-							pointDot : false,
-							responsive : true
-						});
-					};
+				// draw distance chart
+				var data_dist = SummaryService.getDurations(30);
+				drawChart(days, data_dist, "chart_dist_month");
 
+			};
+
+			/**
+			 * 
+			 */
+			$scope.showYearCharts = function() {
+				var days = [ "", "", "", "", "", "", "", "", "", "10", "", "",
+						"", "", "", "", "", "", "", "20", "", "", "", "", "",
+						"", "", "", "", "30", "", "", "", "", "", "", "", "",
+						"", "40", "", "", "", "", "", "", "", "", "", "50", "",
+						"" ];
+
+				// draw times chart
+				var data_time = SummaryService.getDurations(364);
+				drawChart(days, summarize(data_time, 7), "chart_times_year");
+
+				// draw distance chart
+				var data_dist = SummaryService.getDurations(364);
+				drawChart(days, summarize(data_dist, 7), "chart_dist_year");
+			};
+
+			/**
+			 * 
+			 */
+			var getPeriod = function(slider_value) {
+				if (slider_value < 30) {
+					return slider_value * 60 * 60 * 24;
+				}
+				if (slider_value < 42) {
+					return (slider_value - 29) * 60 * 60 * 24 * 7 * 30;
+				}
+				return -1;
+			}
+
+			$scope.getPeriodText = function(slider_value) {
+				var period = getPeriod(slider_value);
+				if (period == -1) {
+					return "Gesamter Zeitraum";
+				}
+				if (period % (60 * 60 * 24 * 7 * 30) == 0) {
+					return "letzte " + period / (60 * 60 * 24 * 7 * 30)
+							+ " Monate";
+				}
+				if (period % (60 * 60 * 24 * 7) == 0) {
+					return "letzte " + period / (60 * 60 * 24 * 7) + " Wochen";
+				}
+				if (period % (60 * 60 * 24) == 0) {
+					return "letzte " + period / (60 * 60 * 24) + " Tage";
+				}
+			}
+
+			/**
+			 * 
+			 */
+			var drawChart = function(labels, data, canvas_id) {
+				var chart = {
+					labels : labels,
+					datasets : [ {
+						label : "",
+						fillColor : "rgba(220,220,220,0.2)",
+						strokeColor : "rgba(220,220,220,1)",
+						pointColor : "rgba(220,220,220,1)",
+						pointStrokeColor : "#fff",
+						pointHighlightFill : "#fff",
+						pointHighlightStroke : "rgba(220,220,220,1)",
+						data : data
+					} ]
+				};
+				var ctx = document.getElementById(canvas_id).getContext("2d");
+				$window.chart = new Chart(ctx).Line(chart, {
+					showTooltips : false,
+					dataSetStroke : false,
+					pointDot : false,
+					responsive : true
 				});
+			};
+
+			/**
+			 * 
+			 */
+			var summarize = function(data, step) {
+				var summarized_data = [];
+				var i;
+				var j;
+				for (i = 0; i < data.length; i += step) {
+					var val = 0;
+					for (j = 0; j < step; j++) {
+						val += data[i + j];
+					}
+					summarized_data.push(val);
+				}
+				return summarized_data;
+			}
+
+		});
