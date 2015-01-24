@@ -10,6 +10,10 @@
 			<span id="timerHours">{{ timerHours | normalizeTimeFilter}}</span>:<span id="timerMinutes">{{ timerMinutes | normalizeTimeFilter }}</span>:<span id="timerSeconds">{{ timerSeconds | normalizeTimeFilter }}</span>
 		</div>
 
+		<div class="card distance-card text-center">
+			<span id="totalDistance">{{ totalDistance | normalizeMeterToKMFilter }}</span> KM
+		</div>
+
 		<button class="button button-block ion-close" ng-click="abortActivity()" href="#/tab/main"> Abort</button>
 	</ion-content>
 </ion-view>
