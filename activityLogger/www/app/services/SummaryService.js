@@ -38,15 +38,15 @@ angular
 						var disciplines = getAllActivityTypes();
 						var i;
 						for (i in disciplines) {
-							performances
-									.push({
-										discipline : disciplines[i],
-										data : getAvgPerformancesOfDiscipline(disciplines[i],period)
-									})
+							performances.push({
+								discipline : disciplines[i],
+								data : getAvgPerformancesOfDiscipline(
+										disciplines[i], period)
+							})
 						}
 						return performances;
 					}
-					
+
 					/**
 					 * 
 					 */
@@ -73,10 +73,11 @@ angular
 							period) {
 						var longest_track = 0;
 						var highest_avg_speed = 0;
-						var time = new Date().getTime() / 1000 -period;
+						var highest_speed = 0;
+						var time = new Date().getTime() / 1000 - period;
 
 						for (i in activities) {
-							if(activities[i].start_time < time && period != -1){
+							if (activities[i].start_time < time && period != -1) {
 								continue;
 							}
 							if (activities[i].type == activity_type) {
@@ -94,11 +95,13 @@ angular
 						}
 
 						return [ {
-							name : "Längste Strecke",
-							value : longest_track
+							name : "Strecke",
+							value : Math.round(longest_track / 100) / 10,
+							unit : "km"
 						}, {
-							name : "Höchste Durchschnittsgeschwindigkeit",
-							value : highest_avg_speed
+							name : "Ø Geschwindigkeit",
+							value : Math.round(highest_avg_speed * 36) / 10,
+							unit : "km/h"
 						} ];
 
 					}
@@ -106,14 +109,15 @@ angular
 					/**
 					 * 
 					 */
-					function getAvgPerformancesOfDiscipline(activity_type, period) {
+					function getAvgPerformancesOfDiscipline(activity_type,
+							period) {
 						var count = 0;
 						var total_duration = 0;
 						var total_distance = 0;
-						var time = new Date().getTime() / 1000 -period;
+						var time = new Date().getTime() / 1000 - period;
 
 						for (i in activities) {
-							if(activities[i].start_time < time && period != -1){
+							if (activities[i].start_time < time && period != -1) {
 								continue;
 							}
 							if (activities[i].type == activity_type) {
@@ -124,12 +128,15 @@ angular
 							}
 						}
 
+						var avg_speed = total_distance / total_duration;
+
 						return [ {
-							name : "Durchschnittsgeschwindigkeit",
-							value : total_distance / total_duration
+							name : "Ø Geschwindigkeit",
+							value : Math.round(avg_speed * 36) / 10,
+							unit : "km/h"
 						} ];
 
-					}					
+					}
 
 					function getActivityDurationPerDay(day) {
 						var duration = 0;
@@ -166,14 +173,18 @@ angular
 						var activities = [];
 						var id = 1000;
 						var date = new Date().getTime() / 1000 - 60 * 60 * 10;
+						var track = new Track();
+						var x;
+						for (x = 0; x < 100; x++) {
+							track.addTrackRecord(new TrackRecord(0, 0, 0, 42));
+						}
 						for (var i = 0; i < 1000; i++) {
 							start = Math.floor(date - Math.random() * 60 * 60
 									* 10);
 							end = Math.floor(start + Math.random() * 60 * 60
 									* 2);
 							date = start;
-							var track = new Track();
-							track.addTrackRecord(new TrackRecord(0, 0, 0, 1));
+
 							if (Math.random() < 0.5) {
 								activities.push(new Activity(id--, 'Laufen',
 										start, end, track, ''));
