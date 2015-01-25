@@ -1,7 +1,14 @@
 /**
- * Created by Fosso on 08.12.2014.
+ * @author Foss
+ * @creationDate 08.12.2014.
+ * @edited 2015-01-25 by Christian Schulze
  */
-angular.module('ActivityLogger')
-    .constant('FIREBASE_URL','https://activtitylogger.firebaseio.com')
-     .constant('MODULE_UPDATE_INTERVALL', 86400000)// 24h in millis
-;
+
+(function() {
+    'use strict';
+
+    angular
+        .module('ActivityLogger')
+        .constant('FIREBASE_URL', 'https://activtitylogger.firebaseio.com')
+        .constant('MODULE_UPDATE_INTERVALL', 86400000); // 24h in millis
+})();
