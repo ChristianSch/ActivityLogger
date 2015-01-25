@@ -141,7 +141,8 @@
                             // id, type, start_time, end_time, track_data, comment
                             // TODO: what is id supposed to be?
                             var activity = new Activity(1, $stateParams.type,
-                                startedTimeStamp, new Date().getTime(), data, $stateParams.comment);
+                                startedTimeStamp, new Date().getTime(), data,
+                                $stateParams.comment, $scope.totalDistance);
                             DataService.addActivity(activity);
                             $state.go('tab.workoutlist');
                         }
