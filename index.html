@@ -399,8 +399,12 @@ Reveal.addEventListener( 'customevent', function() {
 					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+				],
+				keyboard: {
+				    39: 'next	',
+				    37: 'prev'
+				}	
+			});	
 
 		</script>
 
