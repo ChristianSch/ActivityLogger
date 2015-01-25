@@ -1,0 +1,47 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title">Neuer Wettkampf</h1>
+	</ion-header-bar>
+
+	<ion-content>
+		<div class="card">
+			<div class="item item-divider">
+				New or open competition
+			</div>
+
+			<div class="item item-text-wrap">
+				<select ng-model="mCtrl.selectedCompetitionType"
+				ng-change="mCtrl.refreshCompetitionPopup()" 
+				ng-options="competitionType as competitionType.label for competitionType in mCtrl.possibleCompetitionTypes"></select>	
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="item item-divider">
+				Select opponent
+			</div>
+
+			<div class="item item-text-wrap">
+				<select ng-model="mCtrl.selectedOpponent"
+				ng-change="mCtrl.refreshCompetitionPopup()" 
+				ng-options="opponent as opponent.usersName for opponent in mCtrl.possibleOpponents"></select>	
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="item item-divider">
+				Disciplin
+			</div>
+
+			<div class="item item-text-wrap">
+				<select ng-model="mCtrl.selectedCompetitionDisciplin"
+				ng-change="mCtrl.refreshCompetitionPopup()" 
+				ng-options="competitionDisciplin as competitionDisciplin.label for competitionDisciplin in mCtrl.possibleCompetitionDisciplins"></select>	
+			</div>
+		</div>
+
+		<div class="button button-block button-positive" ng-disabled="!mCtrl.competitionCanBeStarted" ng-click="mCtrl.startCompetitionActivity()">
+			GO!
+		</div>
+	</ion-content>
+</ion-modal-view>
