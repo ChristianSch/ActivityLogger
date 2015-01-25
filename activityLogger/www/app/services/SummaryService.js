@@ -84,12 +84,16 @@ angular
 								var dist = activities[i].track_data
 										.getDistance();
 								var avg_speed = dist / activities[i].duration;
+								var max_speed = getMaxSpeed(activities[i]);
 
 								if (dist > longest_track) {
 									longest_track = dist;
 								}
 								if (avg_speed > highest_avg_speed) {
 									highest_avg_speed = avg_speed;
+								}
+								if (max_speed > highest_speed) {
+									highest_speed = max_speed;
 								}
 							}
 						}
@@ -101,6 +105,10 @@ angular
 						}, {
 							name : "Ø Geschwindigkeit",
 							value : Math.round(highest_avg_speed * 36) / 10,
+							unit : "km/h"
+						}, {
+							name : "Max. Geschwindigkeit",
+							value : Math.round(highest_speed * 36) / 10,
 							unit : "km/h"
 						} ];
 
@@ -136,6 +144,25 @@ angular
 							unit : "km/h"
 						} ];
 
+					}
+
+					/**
+					 * Determines the maximum speed of an activity.
+					 * 
+					 * @param activity
+					 *            {Activity} activity.
+					 * @return {Number} maximum speed.
+					 */
+					function getMaxSpeed(activity) {
+						var track_records = activity.track_data.track_records;
+						var max_speed = 0;
+						var i;
+						for (i in track_records) {
+							if (track_records[i].speed > max_speed) {
+								max_speed = track_records[i].speed;
+							}
+						}
+						return max_speed;
 					}
 
 					function getActivityDurationPerDay(day) {
