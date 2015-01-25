@@ -14,17 +14,24 @@ angular.module('ActivityLogger').factory('DataService',
         var competitionsRefAngular = $firebase(competitionsRef);
 
 
-
-//Private Methode
-             function getUserLocal() {
+//Private method
+        /**
+         * get usersdata stored in local
+         * @return {Object of usersdata|null if user has no profil*}
+         */
+        function getUserLocal() {
             var user = localStorage.getItem('user');
-            return user ? JSON.parse(user) : null;
+            return user?JSON.parse(user):null;
         }
 
-
+        /**
+         * get all activities of a user saved in local
+         * @return {Object of activities saved local|empty array if no activty *}
+         */
         function getAllActivitiesLocal() {
+            var leer = [];
             var activities = localStorage.getItem('activities');
-            return activities ? JSON.parse(activities) : null;
+            return activities ? JSON.parse(activities) : leer;
         }
 
 
@@ -52,10 +59,9 @@ angular.module('ActivityLogger').factory('DataService',
             }, 4 * 60); //wait 4 seconds
         }
 
-        function equal(user1, user2) {
+        function equal(user1,user2) {
             return user1.usersName == user2.usersName;
         }
-
 
         function getFirebaseId(userId, id) {
             var allfirebaseActty = getAllActivities_firebase();
@@ -68,14 +74,32 @@ angular.module('ActivityLogger').factory('DataService',
             return id;
         }
 
-//Public Methode
-//Users
+        function showErrorMess(mess) {
+            $ionicPopup.alert({
+                title: 'Eingabe Fehler',
+                template: mess,
+                buttons: [{
+                    text: 'Schließen',
+                    type: 'button-positive'
+                }]
+            });
+        }
 
+//Public method
+        /*************************Users*******************************************/
+        /**
+         * get all Users stored in firebase
+         * @return {*}
+         */
         function getAllUsers() {
             return usersRefAngular.$asArray();
         }
 
-
+        /**
+         *  add and store user only local or local and in firebase
+         * @param user
+         * @throws exception if Usersname already exist
+         */
         function addUser(user) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId = localStorage.getItem('userId');
@@ -93,7 +117,8 @@ angular.module('ActivityLogger').factory('DataService',
                         }
                     }
                     if (hasUser) {
-                        showErrorMess("BenutzerName schon Vegeben");
+                        throw "BenutzerName schon Vegeben";
+                        // showErrorMess("BenutzerName schon Vegeben");
                     } else {
                         getAllUsers().$add(user);
                         localStorage.setItem('user', JSON.stringify(user));
@@ -108,18 +133,11 @@ angular.module('ActivityLogger').factory('DataService',
             }
         }
 
-        function showErrorMess(mess) {
-            $ionicPopup.alert({
-                title: 'Eingabe Fehler',
-                template: mess,
-                buttons: [{
-                    text: 'Schließen',
-                    type: 'button-positive'
-                }]
-            });
-        }
-
-
+        /**
+         * update user only local or local and in firebase
+         * @param user
+         * @throw exception if a firebase registered users want to update his profil but now he is not connecting.
+         */
         function updateUser(user) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId = localStorage.getItem('userId');
@@ -130,7 +148,7 @@ angular.module('ActivityLogger').factory('DataService',
             } else {
                 if (!userId) {//Profil local update if have not been added in firebase
                     localStorage.setItem('user', JSON.stringify(user));
-                } else {//userid
+                } else {//firebaseConnected==false
                     throw "Um Ihre Profil zu ändern müssen Sie sich mit Firebase verbinden ";
                 }
                 if (firebaseConnected && !userId) {
@@ -139,10 +157,14 @@ angular.module('ActivityLogger').factory('DataService',
             }
         }
 
+        /**
+         *  get user by id stored local or in firebase
+         * @param id: usersid
+         * @return {user| null if the key is not found }
+         */
         function getUserByID(id) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
-            if ((id && id!=null)&& firebaseConnected) {
-
+            if ((id && id != null) && firebaseConnected) {
                 return getAllUsers().$getRecord(id);
             } else {
                 return getUserLocal();
@@ -150,41 +172,29 @@ angular.module('ActivityLogger').factory('DataService',
 
         }
 
-
-        function getCurrentUserId(){
-            var userId= localStorage.getItem('userId');
+        /**
+         * get id of the current user
+         * @return {user id| null if id not exist}
+         */
+        function getCurrentUserId() {
+            var userId = localStorage.getItem('userId');
             return userId?userId:null;
         }
 
+        /**
+         * remove user from firebase
+         * @param id
+         */
         function removeUser(id) {
             getAllUsers().$remove(getUserByID(id));
         }
 
         /************************************Activities*******************************************/
-
-        function getAllActivities(user_id) {
-            var all_activitiesByUserID = [];
-            var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
-            if (user_id && firebaseConnected) {
-                var all_user_activities = getAllActivities_firebase();
-                for (var i = 0; i < all_user_activities.length; i++) {
-                    var activity = all_user_activities[i];
-                    if (activity.userId) {
-                        if ((activity.userId) == (user_id)) {
-
-                            all_activitiesByUserID.push(activity);
-                        }
-                    }
-                }
-                return all_activitiesByUserID.length != 0 ? all_activitiesByUserID : null;
-
-            } else {
-                return getAllActivitiesLocal();
-
-            }
-        }
-
-
+        /**
+         * Add and store activity Activity only local or local and in firebase.
+         * @param activity
+         * @throws exception if a user is connect to firebase and wants to store activities  without registration
+         */
         function addActivity(activity) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId = localStorage.getItem('userId');
@@ -239,7 +249,36 @@ angular.module('ActivityLogger').factory('DataService',
             }
         }
 
+        /**
+         * get all activities of a user
+         * @param user_id: usersid
+         * @return { Array of all usersactivties|empty array}
+         */
+        function getAllActivities(user_id) {
+            var all_activitiesByUserID = [];
+            var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
+            if (user_id && firebaseConnected) {
+                var all_user_activities = getAllActivities_firebase();
+                for (var i = 0; i < all_user_activities.length; i++) {
+                    var activity = all_user_activities[i];
+                    if (activity.userId) {
+                        if ((activity.userId) == (user_id)) {
 
+                            all_activitiesByUserID.push(activity);
+                        }
+                    }
+                }
+                return all_activitiesByUserID;
+            } else {
+                return getAllActivitiesLocal();
+
+            }
+        }
+
+        /**
+         * update activity only local or local and in firebase
+         * @param activity
+         */
         function updateActivity(activity) {
             var activities = getAllActivitiesLocal();
             for (var i = 0; i < activities.length; i++) {
@@ -273,11 +312,16 @@ angular.module('ActivityLogger').factory('DataService',
             }
         }
 
-
+        /**
+         * get activity by id
+         * @param id: id of activity local. If firebase connected, it will be converted to activtysid in firebase
+         * @return {activty by id|null if the key is not found*}
+         */
         function getActivityByID(id) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
-
-            if (firebaseConnected) {
+            var cur_userId = getCurrentUserId();
+            if (firebaseConnected && cur_userId) {
+                id =getFirebaseId(cur_userId, id);  //converted to activtysid in firebase
                 return getAllActivities_firebase().$getRecord(id);
             } else {
                 var activities = getAllActivitiesLocal();
@@ -291,7 +335,10 @@ angular.module('ActivityLogger').factory('DataService',
             }
         }
 
-
+        /**
+         * remove a activty by id only local or local and from firebase.
+         * @param id
+         */
         function removeActivity(id) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var activities = getAllActivitiesLocal();
@@ -300,7 +347,6 @@ angular.module('ActivityLogger').factory('DataService',
                 if (activity.id == id) {
                     activities.splice(i, 1);
                     localStorage.setItem('activities', JSON.stringify(activities));
-                    localStorage.setItem('nextActivityId', parseInt(localStorage.getItem('nextActivityId')) - 1);
                     break;
                 }
             }
@@ -309,14 +355,13 @@ angular.module('ActivityLogger').factory('DataService',
 
                 getAllActivities_firebase().$remove(getActivityByID(getFirebaseId(userId, id)));
                 var activities_firebase = localStorage.getItem('activities_firebase'); // Activities saved on firebase.
-                if (activities_firebase) {//TODO
+                if (activities_firebase) {
                     activities_firebase = JSON.parse(activities_firebase);
                     for (var i = 0; i < activities_firebase.length; i++) {
                         var activity_f = activities_firebase[i];
                         if ((activity_f.id == id)) {
                             activities_firebase.splice(i, 1);
                             localStorage.setItem('activities_firebase', JSON.stringify(activities_firebase));
-                            localStorage.setItem('next_af_id', parseInt(localStorage.getItem('next_af_id')) - 1);
                             break;
                         }
                     }
@@ -325,7 +370,10 @@ angular.module('ActivityLogger').factory('DataService',
 
         }
 
-
+        /**
+         * remove all activties by usersid
+         * @param user_Id: usersid
+         */
         function removeAllActivities(user_Id) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             localStorage.removeItem('activities');
@@ -335,22 +383,36 @@ angular.module('ActivityLogger').factory('DataService',
         }
 
         /*******************************competition********************************************/
-
+        /**
+         * Add a competition
+         * @param competition
+         */
         function addCompetition(competition) {
             getAllCompetitions_firebase().$add(competition);
         }
 
-
+        /**
+         * remove competition by id
+         * @param id: competitions id
+         */
         function removeCompetition(id) {
             getAllCompetitions_firebase().$remove(getCompetitionByID(id));
         }
 
-
+        /**
+         * get competition by id
+         * @param id competitions id
+         * @return {Object|null if the key is not found*}
+         */
         function getCompetitionByID(id) {
             return getAllCompetitions_firebase().$getRecord(id);
         }
 
-
+        /**
+         * get all competions of user by user_id
+         * @param user_id. usersid
+         * @return {Object|null if the key is not found*}
+         */
         function getAllCompetitions(user_id) {
             return getAllCompetitions_firebase().$getRecord(user_id);
         }
@@ -362,7 +424,7 @@ angular.module('ActivityLogger').factory('DataService',
             updateUser: updateUser,
             getUserByID: getUserByID,
             removeUser: removeUser,
-            getCurrentUserId:getCurrentUserId,
+            getCurrentUserId: getCurrentUserId,
             //Activities
             getAllActivities: getAllActivities,
             getActivityByID: getActivityByID,
