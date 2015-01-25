@@ -3,10 +3,15 @@ angular
 		.module('ActivityLogger')
 		.factory(
 				'SummaryService',
-				function(Activity, Track, TrackRecord, User) {
+				function(Activity, User, DataService) {
 
-					var activities = getRandomActivities();
-					var user = new User(42, "a", "b", "male", null, 80, 180);
+					// TEST DATA
+					// var activities = getRandomActivities();
+					// var user = new User(42, "a", "b", "male", null, 80, 180);
+					var activities = DataService.getAllActivities(DataService
+							.getCurrentUserId());
+					var user = DataService.getUserByID(DataService
+							.getCurrentUserId());
 
 					// PUBLIC FUNCTIONS
 
@@ -455,7 +460,6 @@ angular
 					}
 
 					function getOverallTime() {
-						activities = getRandomActivities();
 						var duration = 0;
 						var i;
 						for (i in activities) {
