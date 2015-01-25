@@ -23,7 +23,9 @@
 					<p>{{record.name}}:</p>
 				</div>
 				<div class="col col-50">
-					<p><b>{{record.value}} {{record.unit}}</b></p>
+					<p>
+						<b>{{record.value}} {{record.unit}}</b>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -44,7 +46,9 @@
 					<p>{{performance.name}}:</p>
 				</div>
 				<div class="col col-50">
-					<p><b>{{performance.value}} {{performance.unit}}</b></p>
+					<p>
+						<b>{{performance.value}} {{performance.unit}}</b>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -59,11 +63,12 @@
 			<p>{{performance.name}}:</p>
 		</div>
 		<div class="col col-50">
-			<p><b>{{performance.value}} {{performance.unit}}</b></p>
+			<p>
+				<b>{{performance.value}} {{performance.unit}}</b>
+			</p>
 		</div>
 	</div>
 </div>
-
 
 
 <div class="card">
@@ -106,7 +111,7 @@
 			<canvas id="chart_dist_year" ng-show="visible_chart=='year'"></canvas>
 		</div>
 	</div>
-	
+
 	<div class="item item-divider">
 		<p>Kalorienverbrauch</p>
 	</div>
@@ -119,6 +124,25 @@
 		</div>
 		<div>
 			<canvas id="chart_kcal_year" ng-show="visible_chart=='year'"></canvas>
+		</div>
+	</div>
+</div>
+
+
+<div class="card"">
+	<div class="item item-divider">Leistungsverteilung</div>
+	<div class="item">
+		<div>
+			<canvas id="chart_discipline_distribution"></canvas>
+		</div>
+		<div class="row"
+			ng-repeat="discipline in disciplineDistributionLegend">
+			<div class="col col-20">
+				<p style="color: {{discipline.color}}">{{discipline.label}}</p>
+			</div>
+			<div class="col col-80">
+				<p>{{discipline.value}} Stunden</p>
+			</div>
 		</div>
 	</div>
 </div>

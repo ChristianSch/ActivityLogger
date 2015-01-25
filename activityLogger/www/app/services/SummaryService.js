@@ -209,7 +209,7 @@ angular
 					 * @return {Array} Array that contains all durations for
 					 *         each day in minutes.
 					 */
-					var getDurations = function(days) {
+					function getDurations(days) {
 						var today = new Date().getTime() / 1000;
 						var durations = [];
 						for (var i = days - 1; i >= 0; i--) {
@@ -227,7 +227,7 @@ angular
 					 * @return {Array} Array that contains all distances for
 					 *         each day in km.
 					 */
-					var getDistances = function(days) {
+					function getDistances(days) {
 						var today = new Date().getTime() / 1000;
 						var distances = [];
 						for (var i = days - 1; i >= 0; i--) {
@@ -246,13 +246,52 @@ angular
 					 * @return {Array} Array that contains all calories for each
 					 *         day in kcal.
 					 */
-					var getCalories = function(days) {
+					function getCalories(days) {
 						var today = new Date().getTime() / 1000;
 						var calories = [];
 						for (var i = days - 1; i >= 0; i--) {
 							calories.push(getCaloriesPerDay(today - 86400 * i));
 						}
 						return calories;
+					}
+
+					/**
+					 * 
+					 */
+					function getDurationOfDiscipline(discipline, period) {
+						var time = new Date().getTime() / 1000 - period;
+						var duration = 0;
+
+						var i;
+						for (i in activities) {
+							if (activities[i].start_time < time && period != -1) {
+								continue;
+							}
+							if (activities[i].type == discipline) {
+								duration += activities[i].duration;
+							}
+						}
+
+						return duration;
+					}
+
+					/**
+					 * 
+					 */
+					function getDurationOfAllDisciplines(period) {
+						var durations = [];
+						var disciplines = getAllActivityTypes();
+
+						var i;
+						for (i in disciplines) {
+							durations.push({
+								discipline : disciplines[i],
+								duration : getDurationOfDiscipline(
+										disciplines[i], period)
+							});
+						}
+
+						return durations;
 					}
 
 					// PRIVATE FUNCTIONS
@@ -441,7 +480,9 @@ angular
 						getDurations : getDurations,
 						getDistances : getDistances,
 						getCalories : getCalories,
-						getAveragePerformances : getAveragePerformances
+						getAveragePerformances : getAveragePerformances,
+						getDurationOfDiscipline : getDurationOfDiscipline,
+						getDurationOfAllDisciplines : getDurationOfAllDisciplines
 					};
 
 					return service;
