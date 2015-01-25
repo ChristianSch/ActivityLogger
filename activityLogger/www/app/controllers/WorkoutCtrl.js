@@ -19,7 +19,6 @@
             if ($stateParams.id == 'new') {
                 $ionicNavBarDelegate.setTitle('Neue Activity');
                 this.activity = {};
-                //this.activity.id = localStorage.getItem('nextActivityId');
                 //this.activity.user_id = DataService.getUserProfil();
             } else {
                 this.isEditMode = true;
@@ -33,7 +32,7 @@
                     track1.addTrackRecord(new TrackRecord(50.5874, 8.6840, 0, 0));
                     track1.addTrackRecord(new TrackRecord(50.5860, 8.6861, 0, 0));
 
-                    this.activity = new Activity(1, 'Laufen', 13, 14, track1, 'Erster Dummy');
+                    this.activity = new Activity(1, 'Laufen', 13, 14, track1, 'Erster Dummy', 0);
                 } else if($stateParams.id == 2) {
                     var track2 = new Track();
                     /*track2.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
@@ -41,7 +40,7 @@
                      track2.addTrackRecord(new TrackRecord(50.5828, 8.6802, 0, 0));
                      track2.addTrackRecord(new TrackRecord(50.5839, 8.6783, 0, 0));
                      */
-                    this.activity = new Activity(2, 'Laufen', 15, 16, track2, 'Zweiter Dummy');
+                    this.activity = new Activity(2, 'Laufen', 15, 16, track2, 'Zweiter Dummy', 0);
                 } else if($stateParams.id == 3){
                     var track3 = new Track();
                     track3.addTrackRecord(new TrackRecord(50.7967, 8.7688, 0, 0));
@@ -49,7 +48,7 @@
                     track3.addTrackRecord(new TrackRecord(50.7943, 8.7625, 0, 0));
                     track3.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
 
-                    this.activity = new Activity(3, 'Radfahren', 17, 18, track3, 'Dritter Dummy');
+                    this.activity = new Activity(3, 'Radfahren', 17, 18, track3, 'Dritter Dummy', 0);
                 } else {
                     var track4 = new Track();
                     track4.addTrackRecord(new TrackRecord(36.578581, -118.291994, 0, 0));
@@ -74,7 +73,7 @@
             /**
              * @description Deletes the currently edited Activity.
              */
-            this.delete = function() {
+            this.remove = function() {
                 var confirmPopup = $ionicPopup.confirm({
                     template: 'Wollen Sie die Aktivität wirklich löschen?',
                     cancelText: 'Abbrechen',
@@ -133,11 +132,12 @@
              * @description Initiates the map on the first TrackRecord or a default Centre.
              */
             function init() {
+                var initial_Position;
                 if(thisActivity.track_data.track_records.length > 0) {
-                    var initial_Position = thisActivity.track_data.track_records[0];
+                    initial_Position = thisActivity.track_data.track_records[0];
                 } else {
                     // Default initial Position
-                    var initial_Position = new TrackRecord(50.5851, 8.6841, 0, 0);
+                    initial_Position = new TrackRecord(50.5851, 8.6841, 0, 0);
                 }
                 var mapOptions = {
                     center: new google.maps.LatLng(initial_Position.latitude, initial_Position.logitude),
@@ -170,7 +170,7 @@
                 var pathRequest = {
                     'path': path,
                     'samples': elevationSamples
-                }
+                };
 
                 // Initiate the path request.
                 elevator.getElevationAlongPath(pathRequest, computeElevation);
@@ -201,7 +201,7 @@
                     strokeColor: '#0000CC',
                     opacity: 0.4,
                     map: map
-                }
+                };
                 polyline = new google.maps.Polyline(pathOptions);
                 wCtrl.showElevation();
             }
