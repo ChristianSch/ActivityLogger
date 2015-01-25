@@ -7,7 +7,7 @@
 
     angular.module('ActivityLogger')
         .controller('WorkoutCtrl',
-        function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, Track, TrackRecord, Activity) {
+        function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, DataService, Activity) {
             var wCtrl = this;
             var elevationSamples = 200;
             var elevationData = [];
@@ -19,52 +19,17 @@
             if ($stateParams.id == 'new') {
                 $ionicNavBarDelegate.setTitle('Neue Activity');
                 this.activity = {};
-                //this.activity.user_id = DataService.getUserProfil();
+                this.activity.user_id = DataService.getCurrentUserId();
             } else {
                 this.isEditMode = true;
                 $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
-                //this.activity = DataService.getActivityById($stateParams.id);
-
-                if($stateParams.id == 1) {
-                    var track1 = new Track();
-                    track1.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
-                    track1.addTrackRecord(new TrackRecord(50.5866, 8.6815, 0, 0));
-                    track1.addTrackRecord(new TrackRecord(50.5874, 8.6840, 0, 0));
-                    track1.addTrackRecord(new TrackRecord(50.5860, 8.6861, 0, 0));
-
-                    this.activity = new Activity(1, 'Laufen', 13, 14, track1, 'Erster Dummy', 0);
-                } else if($stateParams.id == 2) {
-                    var track2 = new Track();
-                    /*track2.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
-                     track2.addTrackRecord(new TrackRecord(50.5837, 8.6847, 0, 0));
-                     track2.addTrackRecord(new TrackRecord(50.5828, 8.6802, 0, 0));
-                     track2.addTrackRecord(new TrackRecord(50.5839, 8.6783, 0, 0));
-                     */
-                    this.activity = new Activity(2, 'Laufen', 15, 16, track2, 'Zweiter Dummy', 0);
-                } else if($stateParams.id == 3){
-                    var track3 = new Track();
-                    track3.addTrackRecord(new TrackRecord(50.7967, 8.7688, 0, 0));
-                    track3.addTrackRecord(new TrackRecord(50.7950, 8.7689, 0, 0));
-                    track3.addTrackRecord(new TrackRecord(50.7943, 8.7625, 0, 0));
-                    track3.addTrackRecord(new TrackRecord(50.5851, 8.6841, 0, 0));
-
-                    this.activity = new Activity(3, 'Radfahren', 17, 18, track3, 'Dritter Dummy', 0);
-                } else {
-                    var track4 = new Track();
-                    track4.addTrackRecord(new TrackRecord(36.578581, -118.291994, 0, 0));
-                    track4.addTrackRecord(new TrackRecord(36.606111, -118.062778, 0, 0));
-                    track4.addTrackRecord(new TrackRecord(36.433269, -117.950916, 0, 0));
-                    track4.addTrackRecord(new TrackRecord(36.588056, -116.943056, 0, 0));
-                    track4.addTrackRecord(new TrackRecord(36.339722, -117.467778, 0, 0));
-                    track4.addTrackRecord(new TrackRecord(36.23998, -116.83171, 0, 0));
-                    this.activity = new Activity(4, 'Radfahren', 123824193, 183924123, track4, 'Standard Elevation of the Gooogle-API')
-                }
+                this.activity = DataService.getActivityByID($stateParams.id);
             }
             /**
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
-                //DataService.addActivity(activity);
+                DataService.addActivity(activity);
                 $ionicNavBarDelegate.back();
             };
 
@@ -82,7 +47,7 @@
                 confirmPopup.then(function(res) {
                     if(res) {
                         console.log("Delete");
-                        //DataService.removeActivity(thisActivity.id);
+                        DataService.removeActivity(thisActivity.id);
                         $ionicNavBarDelegate.back();
                     } else {
                         console.log("Do not delete");
