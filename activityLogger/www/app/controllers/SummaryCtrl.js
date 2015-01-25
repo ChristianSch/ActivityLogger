@@ -27,7 +27,8 @@ angular
 								.getOverallPerformances(p);
 						$scope.avgPerfs = SummaryService
 								.getAveragePerformances(p);
-						$scope.showDisciplineDistributionChart(p);
+						$scope.disciplineDistributionLegend = $scope
+								.showDisciplineDistributionChart(p);
 					}
 					/**
 					 * 
@@ -114,7 +115,8 @@ angular
 						var i;
 						for (i in durations) {
 							labels.push(durations[i].discipline);
-							values.push(Math.floor(durations[i].duration / 60 / 60));
+							values.push(Math
+									.floor(durations[i].duration / 60 / 60));
 						}
 						return drawPieChart(labels, values,
 								"chart_discipline_distribution");
