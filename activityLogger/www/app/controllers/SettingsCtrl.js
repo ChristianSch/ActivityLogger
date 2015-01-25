@@ -1,9 +1,7 @@
 'use strict';
-
-
 angular.module('ActivityLogger')
     .controller('SettingsCtrl',
-        function($scope, DataService,$window, $ionicPopup,$http) {
+        function($scope, DataService,$window, $ionicPopup) {
             var thisCtrl = this;
             var firebaseConection = localStorage.getItem('firebaseConection');
             var autoStop =localStorage.getItem('autoStop');
@@ -28,23 +26,6 @@ angular.module('ActivityLogger')
             }
 
 
-            /*function has_Internet_Connection(){
-                var connected=false;
-                var connectedRef = new Firebase("https://activtitylogger.firebaseio.com/.info/connected");
-                connectedRef.on("value", function(snap) {
-                    if (snap.val() === true) {
-                        alert("connected");
-                      // connected=true;
-                    } else {
-                        alert("not connected");
-                        //connected=false;
-                    }
-                });
-
-
-            }*/
-
-
             this.save = function() {
                 //TODO: save all Settings in Localstorage
                 localStorage.setItem('firebaseConection', this.firebaseConection);
@@ -57,6 +38,7 @@ angular.module('ActivityLogger')
                 if (!thisCtrl.firebaseConection) { // Confirm connection only if not connected
                     var confirmPopup = $ionicPopup.confirm({
                         title: " Firebase Verbindung",
+                        cancelText: 'Abbrechen',
                         template: 'Wenn Sie die Verbindung mit der externe Datenbank Firebase zulassen werden ' +
                             'Ihre  Profil und Aktivitätsdaten in dieser gespeichert, synchronisiert  und mit Daten anderer User vergleichen<br>' +
                             'Diese Option ist für den Wettkampftsmodus erforderlich<br>' +
@@ -65,21 +47,20 @@ angular.module('ActivityLogger')
 
                     confirmPopup.then(function(res) {
                         if (res) {
+                             //1.check Internet connection
                              connectedRef = new Firebase("https://activtitylogger.firebaseio.com/.info/connected");
-                            connectedRef.on("value", function(snap) {
+                             connectedRef.on("value", function(snap) {
                                 if (snap.val() === true) {
-                                    alert(" Internet Verbindung !");
+
                                     localStorage.setItem('internetConnection','true');
                                     thisCtrl.firebaseConection = true;
                                     localStorage.setItem('firebaseConection', thisCtrl.firebaseConection);
 
-                                    var user = localStorage.getItem('user'); //Ad user to firebase if not have been
-                                    if(user){
-                                        user=JSON.parse(user);
-                                        DataService.addUser(user);
-                                    }
+                                    var userId=DataService.getCurrentUserId();
+                                    var user = DataService.getUserByID(userId); //Ad user to firebase if not have been
+                                    DataService.addUser(user);
                                 } else {
-                                    alert(" Keine Internet Verbindung !");
+                                    showErrorMess(" Keine Internet Verbindung !");
                                     localStorage.setItem('internetConnection','false');
                                     thisCtrl.firebaseConection = false;
                                     localStorage.setItem('firebaseConection',thisCtrl.firebaseConection);
@@ -96,6 +77,16 @@ angular.module('ActivityLogger')
                     localStorage.setItem('firebaseConection', false);
                 }
 
+            }
+            function showErrorMess(mess) {
+                $ionicPopup.alert({
+                    title: 'Info',
+                    template: mess,
+                    buttons: [{
+                        text: 'Schließen',
+                        type: 'button-positive'
+                    }]
+                });
             }
             $scope.$on('$stateChangeStart()', function() {
                 // TODO something before change state
