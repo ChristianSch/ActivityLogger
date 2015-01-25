@@ -38,6 +38,10 @@ angular.module('ActivityLogger').controller(
 				// draw distance chart
 				var data_dist = SummaryService.getDistances(7);
 				drawChart(weekdays, data_dist, "chart_dist_week");
+				
+				// draw calories chart
+				var data_kcal = SummaryService.getCalories(7);
+				drawChart(weekdays, data_kcal, "chart_kcal_week");
 			};
 
 			/**
@@ -56,6 +60,10 @@ angular.module('ActivityLogger').controller(
 				// draw distance chart
 				var data_dist = SummaryService.getDistances(30);
 				drawChart(days, data_dist, "chart_dist_month");
+				
+				// draw calories chart
+				var data_kcal = SummaryService.getCalories(30);
+				drawChart(days, data_kcal, "chart_kcal_month");
 
 			};
 
@@ -76,6 +84,10 @@ angular.module('ActivityLogger').controller(
 				// draw distance chart
 				var data_dist = SummaryService.getDistances(364);
 				drawChart(days, summarize(data_dist, 7), "chart_dist_year");
+				
+				// draw calories chart
+				var data_kcal = SummaryService.getCalories(364);
+				drawChart(days, summarize(data_kcal, 7), "chart_kcal_year");
 			};
 
 			/**
