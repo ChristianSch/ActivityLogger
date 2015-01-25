@@ -116,7 +116,7 @@ angular
 								if (max_speed > highest_speed) {
 									highest_speed = max_speed;
 								}
-								if(kcal > most_kcal){
+								if (kcal > most_kcal) {
 									most_kcal = kcal;
 								}
 							}
@@ -134,7 +134,7 @@ angular
 							name : "Max. Geschwindigkeit",
 							value : Math.round(highest_speed * 36) / 10,
 							unit : "km/h"
-						} , {
+						}, {
 							name : "Kalorienverbrauch",
 							value : Math.round(most_kcal),
 							unit : "kcal"
@@ -177,12 +177,22 @@ angular
 						}
 						var days = period / 60 / 60 / 24;
 						var avg_speed = total_distance / total_duration;
+						var dist_per_day = total_distance / days;
+						var time_per_day = total_duration / days;
 						var cal_per_day = total_calories / days;
 
 						return [ {
 							name : "Ø Geschwindigkeit",
 							value : Math.round(avg_speed * 36) / 10,
 							unit : "km/h"
+						}, {
+							name : "Strecke",
+							value : Math.round(dist_per_day / 100) / 10,
+							unit : "km/Tag"
+						}, {
+							name : "Zeit",
+							value : Math.round(time_per_day / 60),
+							unit : "Min/Tag"
 						}, {
 							name : "Kalorienverbrauch",
 							value : Math.round(cal_per_day),
