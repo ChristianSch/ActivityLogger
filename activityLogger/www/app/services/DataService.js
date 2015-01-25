@@ -1,7 +1,7 @@
 'use-strict';
 
 angular.module('ActivityLogger').factory('DataService',
-    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup) {
+    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
@@ -13,13 +13,10 @@ angular.module('ActivityLogger').factory('DataService',
         var all_Users_activitiesRefAngular = $firebase(all_Users_activitiesRef);
         var competitionsRefAngular = $firebase(competitionsRef);
 
-        //Private Methode
 
 
-        /*********************************User*******************************/
-
-
-        function getUserLocal() {
+//Private Methode
+             function getUserLocal() {
             var user = localStorage.getItem('user');
             return user ? JSON.parse(user) : null;
         }
@@ -31,10 +28,9 @@ angular.module('ActivityLogger').factory('DataService',
         }
 
 
-        function getAllCompetitions() {
+        function getAllCompetitions_firebase() {
             return competitionsRefAngular.$asArray();
         }
-
 
         function getAllActivities_firebase() {
             return all_Users_activitiesRefAngular.$asArray();
@@ -55,9 +51,6 @@ angular.module('ActivityLogger').factory('DataService',
                 }
             }, 4 * 60); //wait 4 seconds
         }
-
-
-
 
         function equal(user1, user2) {
             return user1.usersName == user2.usersName;
@@ -241,6 +234,7 @@ angular.module('ActivityLogger').factory('DataService',
                 } else {
                     // to firebase connectect and don't have a Profil-> can´t add Activities
                     throw "Sie müssen ein Profil in Firebase  anlegen um Ihre Aktivität speichert zu können !";
+
                 }
             }
         }
@@ -343,23 +337,22 @@ angular.module('ActivityLogger').factory('DataService',
         /*******************************competition********************************************/
 
         function addCompetition(competition) {
-            getAllCompetitions().$add(competition);
+            getAllCompetitions_firebase().$add(competition);
         }
 
 
-
         function removeCompetition(id) {
-            getAllCompetitions().$remove(getCompetitionByID(id));
+            getAllCompetitions_firebase().$remove(getCompetitionByID(id));
         }
 
 
         function getCompetitionByID(id) {
-            return getAllCompetitions().$getRecord(id);
+            return getAllCompetitions_firebase().$getRecord(id);
         }
 
 
         function getAllCompetitions(user_id) {
-            return getAllCompetitions().$getRecord(user_id)
+            return getAllCompetitions_firebase().$getRecord(user_id);
         }
 
         var service = {
