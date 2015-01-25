@@ -36,7 +36,7 @@ angular.module('ActivityLogger').controller(
 				drawChart(weekdays, data_time, "chart_times_week");
 
 				// draw distance chart
-				var data_dist = SummaryService.getDurations(7);
+				var data_dist = SummaryService.getDistances(7);
 				drawChart(weekdays, data_dist, "chart_dist_week");
 			};
 
@@ -54,7 +54,7 @@ angular.module('ActivityLogger').controller(
 				drawChart(days, data_time, "chart_times_month");
 
 				// draw distance chart
-				var data_dist = SummaryService.getDurations(30);
+				var data_dist = SummaryService.getDistances(30);
 				drawChart(days, data_dist, "chart_dist_month");
 
 			};
@@ -74,7 +74,7 @@ angular.module('ActivityLogger').controller(
 				drawChart(days, summarize(data_time, 7), "chart_times_year");
 
 				// draw distance chart
-				var data_dist = SummaryService.getDurations(364);
+				var data_dist = SummaryService.getDistances(364);
 				drawChart(days, summarize(data_dist, 7), "chart_dist_year");
 			};
 

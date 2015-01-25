@@ -3,9 +3,10 @@ angular
 		.module('ActivityLogger')
 		.factory(
 				'SummaryService',
-				function(Activity, Track, TrackRecord) {
+				function(Activity, Track, TrackRecord, User) {
 
 					var activities = getRandomActivities();
+					var user = new User(42, "a", "b", "male");
 
 					// PUBLIC FUNCTIONS
 
@@ -51,12 +52,24 @@ angular
 					 * 
 					 */
 					function getOverallPerformances(period) {
+						var distance = 0;
+						var time = new Date().getTime() / 1000 - period;
+						var i;
+						for (i in activities) {
+							if (activities[i].start_time < time && period != -1) {
+								continue;
+							}
+							distance += activities[i].distance;
+						}
+
 						performances = [ {
 							name : "Zurückgelegte Strecke",
-							value : 42
+							value : Math.round(distance / 100) / 10,
+							unit : "km"
 						}, {
 							name : "Zeit insgesamt",
-							value : getOverallTime()
+							value : Math.round(getOverallTime() / 60),
+							unit : "min"
 						} ];
 						return performances;
 					}
@@ -76,13 +89,13 @@ angular
 						var highest_speed = 0;
 						var time = new Date().getTime() / 1000 - period;
 
+						var i;
 						for (i in activities) {
 							if (activities[i].start_time < time && period != -1) {
 								continue;
 							}
 							if (activities[i].type == activity_type) {
-								var dist = activities[i].track_data
-										.getDistance();
+								var dist = activities[i].distance;
 								var avg_speed = dist / activities[i].duration;
 								var max_speed = getMaxSpeed(activities[i]);
 
@@ -124,6 +137,7 @@ angular
 						var total_distance = 0;
 						var time = new Date().getTime() / 1000 - period;
 
+						var i;
 						for (i in activities) {
 							if (activities[i].start_time < time && period != -1) {
 								continue;
@@ -131,8 +145,7 @@ angular
 							if (activities[i].type == activity_type) {
 								count++;
 								total_duration += activities[i].duration;
-								total_distance += activities[i].track_data
-										.getDistance();
+								total_distance += activities[i].distance;
 							}
 						}
 
@@ -165,6 +178,15 @@ angular
 						return max_speed;
 					}
 
+					/**
+					 * Determines the duration of all activities of the
+					 * specified day.
+					 * 
+					 * @param day
+					 *            {Number} Unix-Timestamp of an arbitrary time
+					 *            of a day.
+					 * @return {Number} duration in seconds.
+					 */
 					function getActivityDurationPerDay(day) {
 						var duration = 0;
 						var i;
@@ -177,35 +199,74 @@ angular
 					}
 
 					/**
+					 * Determines the distance of all activities of the
+					 * specified day.
+					 * 
+					 * @param day
+					 *            {Number} Unix-Timestamp of an arbitrary time
+					 *            of a day.
+					 * @return {Number} distance in meters.
+					 */
+					function getDistancePerDay(day) {
+						var dist = 0;
+						var i;
+						for (i in activities) {
+							if (isSameDay(activities[i].start_time, day)) {
+								dist += activities[i].distance;
+							}
+						}
+						return dist;
+					}
+
+					/**
 					 * Determines the duration of all activities for each day.
 					 * 
 					 * @param {Number}
 					 *            days Number of days.
 					 * @return {Array} Array that contains all durations for
-					 *         each day.
+					 *         each day in minutes.
 					 */
 					var getDurations = function(days) {
 						var today = new Date().getTime() / 1000;
 						var durations = [];
 						for (var i = days - 1; i >= 0; i--) {
 							durations.push(getActivityDurationPerDay(today
-									- 86400 * i));
+									- 86400 * i) / 60);
 						}
 						return durations;
 					}
 
+					/**
+					 * Determines the distance of all activities for each day.
+					 * 
+					 * @param {Number}
+					 *            days Number of days.
+					 * @return {Array} Array that contains all distances for
+					 *         each day in km.
+					 */
+					var getDistances = function(days) {
+						var today = new Date().getTime() / 1000;
+						var distances = [];
+						for (var i = days - 1; i >= 0; i--) {
+							distances
+									.push(getDistancePerDay(today - 86400 * i) / 1000);
+						}
+						return distances;
+					}
+
 					// PRIVATE FUNCTIONS
 
+					/**
+					 * Only for testing!
+					 */
 					function getRandomActivities() {
 						var activities = [];
 						var id = 1000;
 						var date = new Date().getTime() / 1000 - 60 * 60 * 10;
-						var track = new Track();
+						var track = [];
 						var x;
-						for (x = 0; x < 100; x++) {
-							track.addTrackRecord(new TrackRecord(0, 0, 0, 42));
-						}
-						for (var i = 0; i < 1000; i++) {
+
+						for (var i = 0; i < 1053; i++) {
 							start = Math.floor(date - Math.random() * 60 * 60
 									* 10);
 							end = Math.floor(start + Math.random() * 60 * 60
@@ -214,10 +275,12 @@ angular
 
 							if (Math.random() < 0.5) {
 								activities.push(new Activity(id--, 'Laufen',
-										start, end, track, ''));
+										start, end, track, '',
+										Math.random() * 12000));
 							} else {
 								activities.push(new Activity(id--, 'Radfahren',
-										start, end, track, ''));
+										start, end, track, '',
+										Math.random() * 12000));
 							}
 						}
 						return activities;
@@ -271,6 +334,7 @@ angular
 						getOverallPerformances : getOverallPerformances,
 						getActivityDurationPerDay : getActivityDurationPerDay,
 						getDurations : getDurations,
+						getDistances : getDistances,
 						getAveragePerformances : getAveragePerformances
 					};
 
