@@ -1,5 +1,5 @@
 /**
- * @author Foss
+ * @author Fosso
  * @creationDate 08.12.2014.
  * @edited 2015-01-25 by Christian Schulze
  */
