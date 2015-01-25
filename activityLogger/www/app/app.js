@@ -35,8 +35,7 @@ angular.module('ActivityLogger', ['ionic', 'firebase'])
     .state('tab', {
         url: "/tab",
         abstract: true,
-        templateUrl: 'templates/tabs.html',
-        controller: 'TabCtrl as tCtrl'
+        templateUrl: 'templates/tabs.html'
     })
 
     .state('tab.profile', {
