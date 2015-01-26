@@ -56,9 +56,11 @@ angular.module('ActivityLogger')
                                     thisCtrl.firebaseConection = true;
                                     localStorage.setItem('firebaseConection', thisCtrl.firebaseConection);
 
-                                    var userId=DataService.getCurrentUserId();
-                                    var user = DataService.getUserByID(userId); //Ad user to firebase if not have been
-                                    DataService.addUser(user);
+                                    var user = localStorage.getItem('user'); //Ad user to firebase if not have been
+                                    if(user){
+                                        user=JSON.parse(user);
+                                        DataService.addUser(user);
+                                    }
                                 } else {
                                     showErrorMess(" Keine Internet Verbindung !");
                                     localStorage.setItem('internetConnection','false');
@@ -80,7 +82,7 @@ angular.module('ActivityLogger')
             }
             function showErrorMess(mess) {
                 $ionicPopup.alert({
-                    title: 'Info',
+                    title: 'Fehler',
                     template: mess,
                     buttons: [{
                         text: 'Schließen',

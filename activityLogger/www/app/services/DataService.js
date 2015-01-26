@@ -1,7 +1,7 @@
 'use-strict';
 
 angular.module('ActivityLogger').factory('DataService',
-    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state) {
+    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state,User) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
@@ -76,7 +76,7 @@ angular.module('ActivityLogger').factory('DataService',
 
         function showErrorMess(mess) {
             $ionicPopup.alert({
-                title: 'Eingabe Fehler',
+                title: 'Fehler',
                 template: mess,
                 buttons: [{
                     text: 'Schließen',
@@ -98,11 +98,12 @@ angular.module('ActivityLogger').factory('DataService',
         /**
          *  add and store user only local or local and in firebase
          * @param user
-         * @throws exception if Usersname already exist
+         * show exception message if Usersname already exist
          */
         function addUser(user) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId = localStorage.getItem('userId');
+            var fconnect=false;
             if ((firebaseConnected) && (!userId)) {  //Add User on firebase if not have been.
                 var users = getAllUsers();
                 var timer = $timeout(function () {
@@ -111,24 +112,33 @@ angular.module('ActivityLogger').factory('DataService',
                     for (var i = 0; i < users.length; i++) {
                         var userf = users[i];
                         if (userf.usersName == user.usersName) {
-
                             hasUser = true;
                             break;
                         }
                     }
                     if (hasUser) {
-                        throw "BenutzerName schon Vegeben";
-                        // showErrorMess("BenutzerName schon Vegeben");
+                       // throw "BenutzerName schon Vegeben";
+                        showErrorMess("BenutzerName schon Vegeben");
                     } else {
+                        fconnect = true;
+
                         getAllUsers().$add(user);
                         localStorage.setItem('user', JSON.stringify(user));
                         localStorage.setItem('infirebaseSaved', 'true');
                         saveUserId_Local(user);
+                        var users_ref2 = getAllUsers();
+                        timer=$timeout(function(user){
+                            var userId=getCurrentUserId();
+                            var user=getUserByID(userId);
+                            user.id=userId;
+                            users_ref2.$save(user);
+                            localStorage.setItem('user', JSON.stringify(user));
+                        },4*60)
+
                     }
-                }, 4 * 60)
+                }, 8* 60)
 
-
-            } else {
+            }else{
                 localStorage.setItem('user', JSON.stringify(user));
             }
         }
@@ -136,7 +146,7 @@ angular.module('ActivityLogger').factory('DataService',
         /**
          * update user only local or local and in firebase
          * @param user
-         * @throw exception if a firebase registered users want to update his profil but now he is not connecting.
+         * show exception message if a firebase registered users want to update his profil but now he is not connecting.
          */
         function updateUser(user) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
@@ -149,7 +159,7 @@ angular.module('ActivityLogger').factory('DataService',
                 if (!userId) {//Profil local update if have not been added in firebase
                     localStorage.setItem('user', JSON.stringify(user));
                 } else {//firebaseConnected==false
-                    throw "Um Ihre Profil zu ändern müssen Sie sich mit Firebase verbinden ";
+                    showErrorMess("Um Ihre Profil zu ändern müssen Sie sich mit Firebase verbinden ");
                 }
                 if (firebaseConnected && !userId) {
                     addUser(user);  //kann happen when usersname already used and user decide to change it.
@@ -243,7 +253,7 @@ angular.module('ActivityLogger').factory('DataService',
                     localStorage.setItem('next_af_id', parseInt(next_af_id) + 1);
                 } else {
                     // to firebase connectect and don't have a Profil-> can´t add Activities
-                    throw "Sie müssen ein Profil in Firebase  anlegen um Ihre Aktivität speichert zu können !";
+                    showErrorMess("Sie müssen ein Profil in Firebase  anlegen um Ihre Aktivität speichert zu können !");
 
                 }
             }
