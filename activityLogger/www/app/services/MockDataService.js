@@ -1,5 +1,5 @@
 /**
- * @author Christian Schulze
+ * @author Christian Schulze, Rene Lutz
  */
 
 (function() {
