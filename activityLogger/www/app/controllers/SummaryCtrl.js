@@ -241,7 +241,8 @@
 							var ctx = document.getElementById(canvas_id)
 									.getContext("2d");
 							$window.chart = new Chart(ctx).Doughnut(chart, {
-								responsive : true
+								responsive : true,
+								showTooltips: false
 							});
 							return chart;
 						};
