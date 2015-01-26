@@ -25,8 +25,6 @@
             this.isEditMode = false;
             if ($stateParams.id == 'new') {
                 $ionicNavBarDelegate.setTitle('New Activity');
-                this.activityDate = {};
-                this.activityTime = {};
                 this.activity = new Activity(0, this.activityTypes[0], 0, 0, [], "", 0, 0);
                 this.activity.userId = MockDataService.getCurrentUserId();
 
@@ -39,10 +37,8 @@
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
+                console.log(new Date(1000));
                 this.activity.type = this.activity.type.label;
-                console.log(this.activityDate);
-                console.log(this.activityTime);
-                console.log(new Date(this.activityDate));
                 MockDataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
             };

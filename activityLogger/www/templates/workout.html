@@ -45,12 +45,12 @@
 
                     </label>
                     <label class="item item-input">
-                        <span class="input-label">Date</span>
-                        <input class="text-right" type="date" ng-model="wCtrl.activityDate">
+                        <span class="input-label">Start</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.start_time">
                     </label>
                     <label class="item item-input">
-                        <span class="input-label">Starttime</span>
-                        <input class="text-right" type="time" ng-model="wCtrl.activityTime">
+                        <span class="input-label">Finish</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Duration in s</span>
@@ -66,7 +66,7 @@
             <div class="item item-divider">Track</div>
             <div id="map_canvas" style="height:300px"></div>
         </div>
-        <div class="card" ng-show="wCtrl.isEditMode">
+        <div class="card" ng-show="wCtrl.isEditMode && wCtrl.activity.track_data.length">
             <div class="item item-divider">Elevation</div>
             <div>
                 <canvas id="elevation_profile" height="250"></canvas>
