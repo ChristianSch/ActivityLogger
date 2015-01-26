@@ -71,7 +71,11 @@
                 }
 
                 function removeActivity(id) {
-                    return null;
+                    for (var i = 0; i < activities.length; i++) {
+                        if (activities[i].id == id) {
+                            activities.splice(activity[i], 1);
+                        }
+                    }
                 }
 
                 function addCompetition(competition) {
