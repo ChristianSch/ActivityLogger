@@ -113,7 +113,7 @@
                 // to start the activity
                 this.competitionCanBeStarted = false;
 
-                var allActivities = MockDataService.getAllActivities(currentUserID) || [];
+                var allActivities = MockDataService.getAllActivities(currentUserID);
                 console.log(allActivities);
 
                 var possbibleCompetitionActivities = allActivities.map(function(el, i) {

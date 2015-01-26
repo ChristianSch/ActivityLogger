@@ -269,20 +269,22 @@
                     1422290032000,
                     1422290100000, track1, "", 1589.34, users[0].id));
 
+                console.log(activities[activities.length - 1]);
                 addActivity(new Activity(0,
                     "Bike",
                     1422290031199,
                     1422290076071,
                     track2, "", 1589.4696498299068, users[0].id));
 
+                console.log(activities[activities.length - 1]);
                 var anActivity = addActivity(new Activity(0,
                     "Run",
                     1422290076071,
                     1422290031199, track3, "", 1589.4696498299068, users[1].id));
 
-                var aCompetition = new Competition(0, users[1].id, users[0].id, anActivity, null, 1000);
-                addCompetition(aCompetition);
+                addCompetition(new Competition(0, users[1].id, users[0].id, anActivity, null, 1000));
 
+                // api
                 return {
                     getAllUsers: getAllUsers,
                     addUser: addUser,
