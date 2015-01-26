@@ -10,7 +10,11 @@
 </div>
 
 <div class="card"">
-	<div class="item item-divider">Rekorde</div>
+	<div class="item item-divider">
+		Best Performances<span ng-click="showInfo('Best Performances')"
+			class="ion-information-circled"
+			style="margin-right: 0px; float: right"></span>
+	</div>
 
 
 	<div ng-repeat="performances in bestPerfs">
@@ -34,7 +38,11 @@
 
 
 <div class="card"">
-	<div class="item item-divider">Durchschnittsleistungen</div>
+	<div class="item item-divider">
+		Average Performances<span ng-click="showInfo('Average Performances')"
+			class="ion-information-circled"
+			style="margin-right: 0px; float: right"></span>
+	</div>
 	<div ng-repeat="performances in avgPerfs">
 		<div class="item">
 			<p>
@@ -57,7 +65,11 @@
 
 
 <div class="card"">
-	<div class="item item-divider">Gesamtleistungen</div>
+	<div class="item item-divider">
+		Overall Performances<span ng-click="showInfo('Overall Performances')"
+			class="ion-information-circled"
+			style="margin-right: 0px; float: right"></span>
+	</div>
 	<div class="row item" ng-repeat="performance in overallPerfs">
 		<div class="col col-50">
 			<p>{{performance.name}}:</p>
@@ -73,17 +85,21 @@
 
 <div class="card">
 	<div class="item item-divider"
-		data-ng-init="showWeekCharts(); visible_chart='week'">Leistungsverlauf</div>
+		data-ng-init="showWeekCharts(); visible_chart='week'">
+		Trends<span ng-click="showInfo('Trends')"
+			class="ion-information-circled"
+			style="margin-right: 0px; float: right"></span>
+	</div>
 	<div class="item item-divider">
 		<div class="button-bar">
-			<a class="button" ng-click="visible_chart='year';showYearCharts()">Jahr</a>
-			<a class="button" ng-click="visible_chart='month';showMonthCharts()">Monat</a>
-			<a class="button" ng-click="visible_chart='week';showWeekCharts()">Woche</a>
+			<a class="button" ng-click="visible_chart='year';showYearCharts()">Year</a>
+			<a class="button" ng-click="visible_chart='month';showMonthCharts()">Month</a>
+			<a class="button" ng-click="visible_chart='week';showWeekCharts()">Week</a>
 		</div>
 	</div>
 
 	<div class="item item-divider">
-		<p>Zeit</p>
+		<p>Duration (minutes)</p>
 	</div>
 	<div class="item item-text-wrap">
 		<div>
@@ -98,7 +114,7 @@
 	</div>
 
 	<div class="item item-divider">
-		<p>Strecke</p>
+		<p>Distance (km)</p>
 	</div>
 	<div class="item item-text-wrap">
 		<div>
@@ -113,7 +129,7 @@
 	</div>
 
 	<div class="item item-divider">
-		<p>Kalorienverbrauch</p>
+		<p>Calorie Consumption (kcal)</p>
 	</div>
 	<div class="item item-text-wrap">
 		<div>
@@ -130,7 +146,12 @@
 
 
 <div class="card"">
-	<div class="item item-divider">Leistungsverteilung</div>
+	<div class="item item-divider">
+		Activity Distribution<span
+			ng-click="showInfo('Activity Distribution')"
+			class="ion-information-circled"
+			style="margin-right: 0px; float: right"></span>
+	</div>
 	<div class="item">
 		<div>
 			<canvas id="chart_discipline_distribution"></canvas>
@@ -141,7 +162,7 @@
 				<p style="color: {{discipline.color}}">{{discipline.label}}</p>
 			</div>
 			<div class="col col-80">
-				<p>{{discipline.value}} Stunden</p>
+				<p>{{discipline.value}} Hours</p>
 			</div>
 		</div>
 	</div>

@@ -8,7 +8,8 @@
 			.module('ActivityLogger')
 			.controller(
 					'SummaryCtrl',
-					function($scope, $window, Activity, SummaryService) {
+					function($scope, $window, $ionicPopup, Activity,
+							SummaryService) {
 
 						$scope.period_slider = 42;
 						this.period_slider = 42;
@@ -40,8 +41,8 @@
 						 * Shows all week charts.
 						 */
 						$scope.showWeekCharts = function() {
-							var weekdays = [ "MO", "DI", "MI", "DO", "FR",
-									"SA", "SO" ];
+							var weekdays = [ "MON", "TUE", "WED", "THU", "FRI",
+									"SAT", "SUN" ];
 							// rotate weekdays
 							var day = new Date().getDay();
 							weekdays = weekdays.slice(day).concat(
@@ -160,21 +161,45 @@
 						$scope.getPeriodText = function(slider_value) {
 							var period = getPeriod(slider_value);
 							if (period == -1) {
-								return "Gesamter Zeitraum";
+								return "Since the beginning";
 							}
 							if (period % (60 * 60 * 24 * 7 * 30) == 0) {
-								return "letzte " + period
-										/ (60 * 60 * 24 * 7 * 30) + " Monate";
+								return "Last " + period
+										/ (60 * 60 * 24 * 7 * 30) + " months";
 							}
 							if (period % (60 * 60 * 24 * 7) == 0) {
-								return "letzte " + period / (60 * 60 * 24 * 7)
-										+ " Wochen";
+								return "Last " + period / (60 * 60 * 24 * 7)
+										+ " weeks";
 							}
 							if (period % (60 * 60 * 24) == 0) {
-								return "letzte " + period / (60 * 60 * 24)
-										+ " Tage";
+								return "Last " + period / (60 * 60 * 24)
+										+ " days";
 							}
 						}
+
+						/**
+						 * 
+						 */
+						$scope.showInfo = function(title) {
+							var text;
+
+							if (title == "Best Performances") {
+								text = "Here you can see your best performances in the chosen period.";
+							} else if (title == "Average Performances") {
+								text = "Here you can see your average performances in the chosen period.";
+							} else if (title == "Overall Performances") {
+								text = "Here you can see your summarized performances over the whole period you have chosen.";
+							} else if (title == "Trends") {
+								text = "Here you can see your trends for duration, distance and calorie consumption over the last week, month or year.";
+							} else if (title == "Activity Distribution") {
+								text = "Here you can see how much time you have spent on the single activities in the chosen period.";
+							}
+
+							var alertPopup = $ionicPopup.alert({
+								title : title,
+								template : text
+							});
+						};
 
 						/**
 						 * Draws a line chart.
@@ -242,7 +267,7 @@
 									.getContext("2d");
 							$window.chart = new Chart(ctx).Doughnut(chart, {
 								responsive : true,
-								showTooltips: false
+								showTooltips : false
 							});
 							return chart;
 						};
