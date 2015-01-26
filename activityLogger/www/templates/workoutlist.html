@@ -18,7 +18,7 @@
         <ion-list>
             <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.id}}">
                 <span>
-                {{activity.type}}, {{activity.distance}} km ({{activity.start_time}}, {{activity.end_time}}, {{activity.duration}} Seconds)
+                {{activity.type}}, {{activity.distance | normalizeMeterToKMFilter}} km ({{activity.start_time}}, {{activity.end_time}}, {{activity.duration}} Seconds)
                 </span>
                 <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.id)">
                     Löschen
