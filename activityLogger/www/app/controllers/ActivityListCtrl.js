@@ -28,7 +28,7 @@
              *
              * @param {integer} Id of the Activity that should be deleted
              */
-            this.delete = function(id) {
+            this.remove = function(id) {
                 var confirmPopup = $ionicPopup.confirm({
                     template: 'Wollen Sie die Aktivität wirklich löschen?',
                     cancelText: 'Abbrechen',
