@@ -9,9 +9,10 @@ angular.module('ActivityLogger')
             this.user=user;
         } else {
             this.user = {};
+            this.user.id="";
         }
-        this.genders = ["Männlich", "Weiblich"];
 
+        this.genders = ["Männlich", "Weiblich"];
         function valide(user) {
             var error = "";
             var leer = "   darf nicht leer sein <br>";
@@ -69,6 +70,16 @@ angular.module('ActivityLogger')
         function equal(user1, user2) {
             return user1.usersName == user2.usersName;
         }
+        function showErrorMess(mess) {
+            $ionicPopup.alert({
+                title: 'Fehler',
+                template: mess,
+                buttons: [{
+                    text: 'Schließen',
+                    type: 'button-positive'
+                }]
+            });
+        }
 
         var isSave = false;
 
@@ -79,7 +90,6 @@ angular.module('ActivityLogger')
             var error = valide(thisCtrl.user);
             if (error == "") {
                 if (!localStorage.getItem('user')) {
-                    try{
                         //1.Add User
                         DataService.addUser(thisCtl.user);
                         //Bind
@@ -88,15 +98,10 @@ angular.module('ActivityLogger')
                         if (user) {
                             thisCtrl.user=user;
                         }
-                    }catch (e){
-                        alert(e);
-                    }
                 } else {
-                    try{
-                        DataService.updateUser(thisCtl.user);
-                    }catch (e){
-                        alert(e);
-                    }
+
+                    DataService.updateUser(thisCtl.user);
+
                 }
                 isSave = true;
             } else {
