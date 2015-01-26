@@ -26,7 +26,7 @@
             /**
              * @description Deletes an activity from the Activitiy List
              *
-             * @param {integer} Id of the Activity that should be deleted
+             * @param id of the Activity that should be deleted
              */
             this.remove = function(id) {
                 var confirmPopup = $ionicPopup.confirm({

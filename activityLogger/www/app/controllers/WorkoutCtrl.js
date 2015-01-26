@@ -107,6 +107,7 @@
             function init() {
                 var initial_Position;
                 var mapOptions;
+                console.log(thisActivity);
                 if(thisActivity.track_data.length > 0) {
                     initial_Position = thisActivity.track_data[0];
                     mapOptions = {
