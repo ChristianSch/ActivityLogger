@@ -6,11 +6,11 @@
     'use strict';
 
     angular.module('ActivityLogger').controller('ActivityListCtrl',
-        function($state, $ionicPopup, $scope, $ionicPopover, Activity, DataService) {
+        function($state, $ionicPopup, $scope, $ionicPopover, Activity, MockDataService) {
 
-            var userId = DataService.getCurrentUserId();
+            var userId = MockDataService.getCurrentUserId();
 
-            this.activities = DataService.getAllActivities(userId);
+            this.activities = MockDataService.getAllActivities(userId);
 
             /**
              * @description Switches to detailed activity-view for a new activity
@@ -35,8 +35,8 @@
                     okText: 'Löschen'
                 });
                 confirmPopup.then(function(res) {
-                    thisActivities.splice(thisActivities.indexOf(DataService.getActivityByID(id)), 1);
-                    DataService.removeActivity(id);
+                    thisActivities.splice(thisActivities.indexOf(MockDataService.getActivityByID(id)), 1);
+                    MockDataService.removeActivity(id);
                 });
             };
 

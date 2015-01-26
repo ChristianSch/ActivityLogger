@@ -7,7 +7,7 @@
 
     angular.module('ActivityLogger')
         .controller('WorkoutCtrl',
-        function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, DataService, Activity) {
+        function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, MockDataService, Activity) {
             var wCtrl = this;
             var elevationSamples = 200;
             var elevationData = [];
@@ -25,22 +25,22 @@
             this.isEditMode = false;
             if ($stateParams.id == 'new') {
                 $ionicNavBarDelegate.setTitle('Neue Activity');
-                this.activity = {};
-                this.activity.type = this.activityTypes[0];
-                this.activity.userId = DataService.getCurrentUserId();
-                this.activity.track_data = [];
+                this.activity = new Activity(0, this.activityTypes[0], 0, 0, [], "", 0, 0);
+                this.activity.userId = MockDataService.getCurrentUserId();
 
             } else {
                 this.isEditMode = true;
                 $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
-                this.activity = DataService.getActivityByID($stateParams.id);
+                this.activity = MockDataService.getActivityByID($stateParams.id);
             }
             /**
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
+                console.log("save");
+                console.log(this.activity)
                 this.activity.type = this.activity.type.label;
-                DataService.addActivity(this.activity);
+                MockDataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
             };
 
@@ -57,7 +57,7 @@
                 });
                 confirmPopup.then(function(res) {
                     if(res) {
-                        DataService.removeActivity(thisActivity.id);
+                        MockDataService.removeActivity(thisActivity.id);
                         $ionicNavBarDelegate.back();
                     }
                 });
