@@ -24,7 +24,7 @@
             }];
             this.isEditMode = false;
             if ($stateParams.id == 'new') {
-                $ionicNavBarDelegate.setTitle('Neue Activity');
+                $ionicNavBarDelegate.setTitle('New Activity');
                 this.activity = new Activity(0, this.activityTypes[0], 0, 0, [], "", 0, 0);
                 this.activity.userId = MockDataService.getCurrentUserId();
 
@@ -37,8 +37,6 @@
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
-                console.log("save");
-                console.log(this.activity)
                 this.activity.type = this.activity.type.label;
                 MockDataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
@@ -51,9 +49,9 @@
              */
             this.remove = function() {
                 var confirmPopup = $ionicPopup.confirm({
-                    template: 'Wollen Sie die Aktivität wirklich löschen?',
-                    cancelText: 'Abbrechen',
-                    okText: 'Löschen'
+                    template: 'Do you really want to delete this Activity?',
+                    cancelText: 'Cancel',
+                    okText: 'Delete'
                 });
                 confirmPopup.then(function(res) {
                     if(res) {

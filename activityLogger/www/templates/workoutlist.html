@@ -23,15 +23,15 @@
                 {{activity.duration | convertMillisecondsToMinutesFilter}} Minutes)
                 </span>
                 <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.id)">
-                    Löschen
+                    Delete
                 </ion-option-button>
             </ion-item>
         </ion-list>
         <div class="item item-text-wrap" ng-hide="alCtrl.activities.length">
             <div class="list">
-                <span>Keine Aktivität vorhanden.</span>
+                <span>There are no Activities available.</span>
                 <button class="button button-block button-positive" ng-click="alCtrl.addActivity()">
-                    Activity anlegen
+                    Create Activity
                 </button>
             </div>
         </div>
