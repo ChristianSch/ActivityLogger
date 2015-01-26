@@ -35,7 +35,6 @@
                     okText: 'Löschen'
                 });
                 confirmPopup.then(function(res) {
-                    console.log("Delete");
                     thisActivities.splice(thisActivities.indexOf(DataService.getActivityByID(id)), 1);
                     DataService.removeActivity(id);
                 });

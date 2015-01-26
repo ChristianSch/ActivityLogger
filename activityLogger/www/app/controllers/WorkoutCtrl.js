@@ -39,6 +39,7 @@
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
+                this.activity.type = this.activity.type.label;
                 DataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
             };
@@ -56,11 +57,8 @@
                 });
                 confirmPopup.then(function(res) {
                     if(res) {
-                        console.log("Delete");
                         DataService.removeActivity(thisActivity.id);
                         $ionicNavBarDelegate.back();
-                    } else {
-                        console.log("Do not delete");
                     }
                 });
             };
