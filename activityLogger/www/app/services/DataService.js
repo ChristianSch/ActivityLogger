@@ -1,7 +1,7 @@
 'use-strict';
 
 angular.module('ActivityLogger').factory('DataService',
-    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state,User) {
+    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state,User,Activity) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
@@ -17,11 +17,12 @@ angular.module('ActivityLogger').factory('DataService',
 //Private method
         /**
          * get usersdata stored in local
-         * @return {Object of usersdata|null if user has no profil*}
+         * @return {Object of usersdata|empty array if user has no profil*}
          */
         function getUserLocal() {
+            var leer= new User("","","","","","","");
             var user = localStorage.getItem('user');
-            return user?JSON.parse(user):null;
+            return user?JSON.parse(user):leer;
         }
 
         /**
@@ -29,9 +30,9 @@ angular.module('ActivityLogger').factory('DataService',
          * @return {Object of activities saved local|empty array if no activty *}
          */
         function getAllActivitiesLocal() {
-            var leer = [];
+            var leer = new Activity("","","","","",[],"","","");
             var activities = localStorage.getItem('activities');
-            return activities ? JSON.parse(activities):leer;
+            return activities?JSON.parse(activities):leer;
         }
 
 
