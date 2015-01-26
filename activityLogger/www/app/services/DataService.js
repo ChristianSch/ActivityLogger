@@ -29,9 +29,9 @@ angular.module('ActivityLogger').factory('DataService',
          * @return {Object of activities saved local|empty array if no activty *}
          */
         function getAllActivitiesLocal() {
-            var leer = [];
+            //var leer = [];
             var activities = localStorage.getItem('activities');
-            return activities ? JSON.parse(activities) : leer;
+            return activities ? JSON.parse(activities):null;
         }
 
 
@@ -352,10 +352,10 @@ angular.module('ActivityLogger').factory('DataService',
         function removeActivity(id) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var activities = getAllActivitiesLocal();
-            for (var i = 0; i < activities.length; i++) {
+            for (var i = 0; i <activities.length; i++) {
                 var activity = activities[i];
                 if (activity.id == id) {
-                    activities.splice(i, 1);
+                    activities.splice(i,1);
                     localStorage.setItem('activities', JSON.stringify(activities));
                     break;
                 }
@@ -396,9 +396,16 @@ angular.module('ActivityLogger').factory('DataService',
         /**
          * Add a competition
          * @param competition
+         * @throws exception if user is not registered
          */
         function addCompetition(competition) {
-            getAllCompetitions_firebase().$add(competition);
+            var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
+            var userId =getCurrentUserId();
+             if(firebaseConnected&userId){
+                 getAllCompetitions_firebase().$add(competition);
+             }else {
+                 throw 'Um eine Competition anzulegen müssen Sie :<br>'+'<li>in Settings Die Firebase Verbindung akzeptieren falls noch nicht </li>'+'<li>sich registrieren oder anmelden</li>';
+             }
         }
 
         /**
