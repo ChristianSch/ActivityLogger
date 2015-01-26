@@ -34,6 +34,8 @@
                 // location values
                 $scope.totalDistance = 0;
 
+                $scope.speed = 0;
+
                 /**
                  * @description Setup timer to display the elapsed time.
                  * Also the geo location watcher gets set up.
@@ -197,6 +199,11 @@
                         if (data.length > 1) {
                             $scope.totalDistance = google.maps
                                 .geometry.spherical.computeLength(path);
+
+                                // save speed as km/m (is km/s)
+                                var speed = Number($scope.totalDistance) /
+                                ((data[data.length - 1].timestamp - data[0].timestamp) / 60);
+                                $scope.speed = speed;
 
                             // redraw the map
                             thisCtrl.refreshMap(data);

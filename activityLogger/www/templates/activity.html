@@ -5,6 +5,10 @@
 			<a ng-show="timerIsOn" class="button button-positive icon-left ion-pause" ng-click="stopTimer()"> Pause</a>
 			<a class="button button-balanced icon-right ion-chevron-right" ng-click="finishAcitivity()"> Finish</a>
 		</div>
+		
+		<div class="card text-center speed-card">
+			<span id="speed">{{ speed | number:2}}</span> KM/min
+		</div>
 
 		<div class="card timer-card text-center">
 			<span id="timerHours">{{ timerHours | normalizeTimeFilter}}</span>:<span id="timerMinutes">{{ timerMinutes | normalizeTimeFilter }}</span>:<span id="timerSeconds">{{ timerSeconds | normalizeTimeFilter }}</span>

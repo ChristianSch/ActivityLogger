@@ -1,10 +1,17 @@
 /* Empty. Add your own CSS if you like */
 
+
+.speed-card {
+	font-size: 250%;
+	padding: 30px 10px;
+	height: auto !important;
+}
+
 .timer-card,
 .distance-card {
 	font-size: 200%;
 	height: auto !important;
-	padding: 30px 10px;
+	padding: 10px;
 	width: 49%;
 	display: inline-block;
 }
