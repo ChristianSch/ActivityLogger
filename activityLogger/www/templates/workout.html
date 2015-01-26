@@ -7,28 +7,33 @@
         <div class="card">
             <div class="item item-divider">Overview</div>
             <div class="item item-text-wrap">
-                <div class="list">
-                    <label class="item item-input item-select">
+                <div class="list" ng-show="wCtrl.isEditMode">
+                    <label class="item item-input">
                         <div class="input-label">Discipline</div>
-                        <select ng-model="wCtrl.activity.type"
-                                ng-options="item as item.label for item in wCtrl.activityTypes">
-                        </select>
+                        <span class="text-right">{{wCtrl.activity.type}}</span>
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Distance</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.distance">
+                        <span class="text-right">{{wCtrl.activity.distance | normalizeMeterToKMFilter}} Kilometers</span>
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Starttime</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.start_time">
+                        <span class="text-right">{{wCtrl.activity.start_time | normalizeDateFilter}}</span>
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Endtime</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
+                        <span class="text-right">{{wCtrl.activity.end_time | normalizeDateFilter}}</span>
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Duration</span>
+                        <span class="text-right">{{wCtrl.activity.duration | convertMillisecondsToMinutesFilter}} Minutes</span>
                     </label>
                     <label class="item item-input" style="height: 60%;">
                         <textarea placeholder="Comments" style="resize: none" ng-model="wCtrl.activity.comment" rows="5"></textarea>
                     </label>
+                </div>
+                <div class="list" ng-hide="wCtrl.isEditMode">
+
                 </div>
             </div>
         </div>

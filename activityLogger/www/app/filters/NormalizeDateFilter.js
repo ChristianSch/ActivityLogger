@@ -19,8 +19,9 @@
                 var dateString;
                 var date = new Date(timestamp);
 
-                dateString = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " " +
-                             date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear();
+                dateString = date.getDate() + "." + (date.getMonth()+1) + "." + date.getFullYear() + " " +
+                             date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
                 return dateString;
             };
         });
