@@ -30,9 +30,9 @@
              */
             this.remove = function(id) {
                 var confirmPopup = $ionicPopup.confirm({
-                    template: 'Wollen Sie die Aktivität wirklich löschen?',
-                    cancelText: 'Abbrechen',
-                    okText: 'Löschen'
+                    template: 'Do you really want to delete this Activity?',
+                    cancelText: 'Cancel',
+                    okText: 'Delete'
                 });
                 confirmPopup.then(function(res) {
                     thisActivities.splice(thisActivities.indexOf(MockDataService.getActivityByID(id)), 1);
