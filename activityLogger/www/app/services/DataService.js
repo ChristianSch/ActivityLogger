@@ -29,9 +29,9 @@ angular.module('ActivityLogger').factory('DataService',
          * @return {Object of activities saved local|empty array if no activty *}
          */
         function getAllActivitiesLocal() {
-            //var leer = [];
+            var leer = [];
             var activities = localStorage.getItem('activities');
-            return activities ? JSON.parse(activities):null;
+            return activities ? JSON.parse(activities):leer;
         }
 
 
