@@ -8,10 +8,13 @@
     angular
         .module('ActivityLogger')
         .controller('ActivityCtrl',
-            function($scope, $state, $stateParams, $ionicPopup, DataService,
+            function($scope, $state, $stateParams, $ionicPopup, MockDataService,
                 GeoLocationService, Activity) {
                 // for referencing this later in anonymous functions
                 var thisCtrl = this;
+
+                this.competitionMode = $stateParams.competitionID ? true : false;
+                this.competitionID = $stateParams.competitionID;
 
                 // for saving the activity.
                 // not to confuse with `startStamp` which is only internally used
@@ -140,12 +143,22 @@
                             $scope.stopTimer();
                             GeoLocationService.stop();
 
-                            // id, type, start_time, end_time, track_data, comment
-                            // TODO: what is id supposed to be?
                             var activity = new Activity(1, $stateParams.type,
                                 startedTimeStamp, new Date().getTime(), data,
                                 $stateParams.comment, $scope.totalDistance);
-                            DataService.addActivity(activity);
+
+                            console.log(activity);
+
+                            if (thisCtrl.competitionMode) {
+                                var competition = thisCtrl.competitionID;
+                                var activityID = MockDataService.addActivity(activity);
+
+                                if (competition.activity_id1 == null)
+                                    competition.activity_id1 = activityID;
+                                else
+                                    competition.activity_id2 = activityID;
+                            }
+                            
                             $state.go('tab.workoutlist');
                         }
                     });

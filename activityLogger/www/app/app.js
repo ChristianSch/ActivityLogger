@@ -56,7 +56,7 @@
                     }
                 })
                 .state('tab.activity', {
-                    url: '/activity/:type/:comment',
+                    url: '/activity/:type/:comment/:competitionID',
                     views: {
                         'tab-main': {
                             templateUrl: 'templates/activity.html'

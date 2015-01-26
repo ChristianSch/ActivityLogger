@@ -8,10 +8,12 @@
     angular
         .module('ActivityLogger')
         .controller('MainCtrl',
-            function($scope, $state, $filter, $ionicModal, DataService, Competition) {
+            function($scope, $state, $filter, $ionicModal, MockDataService, Competition, Activity, User) {
                 // for referencing this later in anonymous functions
                 var thisCtrl = this;
-                var currentUserID = DataService.getCurrentUserId();
+
+                // this is going to be our user
+                var currentUserID = MockDataService.getCurrentUserId();
 
                 // set up the selectable options
                 this.possibleActivityTypes = [{
@@ -26,7 +28,7 @@
                 this.comment = '';
 
                 // set up data for competitions
-                var competitions = DataService.getAllCompetitions() || [];
+                var competitions = MockDataService.getAllCompetitions();
 
                 // filter the competitions by selecting the ones that have at least one 
                 // activity that has not been absolved yet (and therefore is null)
@@ -36,7 +38,6 @@
 
                 this.hasOpenCompetitions = openCompetitions.length > 0 ? true : false;
                 this.openCompetitionCount = openCompetitions.length;
-                this.availableCompetitionOpponents = DataService.getAllUsers();
 
                 // set up competition types (open or new)
                 var defaultCompetitionTypes = [{
@@ -57,7 +58,8 @@
                 this.possibleCompetitionTypes = defaultCompetitionTypes;
 
                 // set up possible opponents
-                var allPossibleOpponents = DataService.getAllUsers();
+                var allPossibleOpponents = MockDataService.getAllUsers();
+
                 // set defaults
                 this.possibleOpponents = allPossibleOpponents;
 
@@ -93,7 +95,8 @@
                         labelStr = 'Empty Competition';
                     } else {
                         // choose the completed activity and take it as reference
-                        var act = el.activity_id1 !== null ? el.activity_id1 : el.activity_id2;
+                        var actID = (el.activity_id1 !== null) ? el.activity_id1 : el.activity_id2;
+                        var act = MockDataService.getActivityByID(actID);
                         labelStr = $filter('normalizeMeterToKMFilter')(act.distance) + 'km (' + (act.duration / 60) + ')';
                     }
 
@@ -110,7 +113,9 @@
                 // to start the activity
                 this.competitionCanBeStarted = false;
 
-                var allActivities = DataService.getAllActivities(currentUserID) || [];
+                var allActivities = MockDataService.getAllActivities(currentUserID) || [];
+                console.log(allActivities);
+
                 var possbibleCompetitionActivities = allActivities.map(function(el, i) {
                     var labelStr = $filter('normalizeMeterToKMFilter')(el.distance) + 'km (' + (el.duration / 60) + ')';
 
@@ -119,6 +124,8 @@
                         label: labelStr
                     };
                 });
+
+                console.log(possbibleCompetitionActivities);
 
                 // regenerate options shown in the popup if an input was changed
                 this.refreshCompetitionPopup = function() {
@@ -135,6 +142,7 @@
                         // new competition
                         if (this.selectedOpponent !== undefined) {
                             if (this.selectedOpponent.id == currentUserID) {
+                                console.log('against their self');
                                 // user wants to compete theirself, therefore
                                 // show past activities as activites
                                 this.possibleActivities = possbibleCompetitionActivities;
@@ -147,9 +155,9 @@
                     } else if (this.selectedCompetitionType.id == 2) {
                         // open competition
                         // find all opponents of open competitions
-                        this.possibleOpponents = this.openCompetitions.map(function(el, index) {
+                        this.possibleOpponents = openCompetitions.map(function(el, index) {
                             var userID = el.user_id1 || el.user_id2;
-                            return DataService.getUserByID(userID);
+                            return MockDataService.getUserByID(userID);
                         });
                     }
 
