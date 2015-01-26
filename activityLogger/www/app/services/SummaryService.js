@@ -12,6 +12,7 @@ angular
 							.getCurrentUserId());
 					var user = DataService.getUserByID(DataService
 							.getCurrentUserId());
+					console.log(user);
 
 					// PUBLIC FUNCTIONS
 
