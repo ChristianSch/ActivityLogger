@@ -97,15 +97,15 @@
 							}
 
 							var performances = [ {
-								name : "Zurückgelegte Strecke",
+								name : "Distance",
 								value : Math.round(distance / 100) / 10,
 								unit : "km"
 							}, {
-								name : "Zeit insgesamt",
+								name : "Total Time",
 								value : Math.round(duration / 60),
 								unit : "min"
 							}, {
-								name : "Verbrannte Kalorien",
+								name : "Calorie Consumption",
 								value : Math.round(calories),
 								unit : "kcal"
 							} ];
@@ -161,22 +161,22 @@
 
 							return [
 									{
-										name : "Strecke",
+										name : "Distance",
 										value : Math.round(longest_track / 100) / 10,
 										unit : "km"
 									},
 									{
-										name : "Ø Geschwindigkeit",
+										name : "Ø Speed",
 										value : Math
 												.round(highest_avg_speed * 36) / 10,
 										unit : "km/h"
 									},
 									{
-										name : "Max. Geschwindigkeit",
+										name : "Max. Speed",
 										value : Math.round(highest_speed ),
 										unit : "km/h"
 									}, {
-										name : "Kalorienverbrauch",
+										name : "Calorie Consumption",
 										value : Math.round(most_kcal),
 										unit : "kcal"
 									} ];
@@ -232,21 +232,21 @@
 							var cal_per_day = total_calories / days;
 
 							return [ {
-								name : "Ø Geschwindigkeit",
+								name : "Speed",
 								value : Math.round(avg_speed * 36) / 10,
 								unit : "km/h"
 							}, {
-								name : "Strecke",
+								name : "Distance",
 								value : Math.round(dist_per_day / 100) / 10,
-								unit : "km/Tag"
+								unit : "km/day"
 							}, {
-								name : "Zeit",
+								name : "Duration",
 								value : Math.round(time_per_day / 60),
-								unit : "Min/Tag"
+								unit : "minutes/day"
 							}, {
-								name : "Kalorienverbrauch",
+								name : "Calorie Consumption",
 								value : Math.round(cal_per_day),
-								unit : "kcal/Tag"
+								unit : "kcal/day"
 							} ];
 
 						}
@@ -386,12 +386,12 @@
 
 								if (rand < 0.5) {
 									activities.push(new Activity(id--,
-											'Laufen', start, end, track, '',
+											'Running', start, end, track, '',
 											(Math.random() + 0.1) * 12000,
 											user.userId));
 								} else {
 									activities.push(new Activity(id--,
-											'Radfahren', start, end, track, '',
+											'Biking', start, end, track, '',
 											(Math.random() + 0.1) * 12000,
 											user.userId));
 								}
@@ -487,9 +487,9 @@
 						function calcCalories(activity) {
 							var met;
 							// determine MET
-							if (activity.type == "Radfahren") {
+							if (activity.type == "Biking") {
 								met = 8;
-							} else if (activity.type == "Laufen") {
+							} else if (activity.type == "Running") {
 								met = 11;
 							}
 							// consider gender
