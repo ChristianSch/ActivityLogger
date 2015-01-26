@@ -97,7 +97,7 @@
                         // choose the completed activity and take it as reference
                         var actID = (el.activity_id1 !== null) ? el.activity_id1 : el.activity_id2;
                         var act = MockDataService.getActivityByID(actID);
-                        labelStr = $filter('normalizeMeterToKMFilter')(act.distance) + 'km (' + (act.duration / 60) + ')';
+                        labelStr = $filter('normalizeMeterToKMFilter')(act.distance) + 'km (' + $filter('convertMillisecondsToMinutesFilter')(act.duration) + ')';
                     }
 
                     return {
@@ -117,7 +117,7 @@
                 var allActivities = MockDataService.getAllActivities(currentUserID);
 
                 var possbibleCompetitionActivities = allActivities.map(function(el, i) {
-                    var labelStr = $filter('normalizeMeterToKMFilter')(el.distance) + 'km (' + (el.duration / 60) + ')';
+                    var labelStr = $filter('normalizeMeterToKMFilter')(el.distance) + 'km (' + $filter('convertMillisecondsToMinutesFilter')(el.duration) + ')';
 
                     return {
                         id: i,
