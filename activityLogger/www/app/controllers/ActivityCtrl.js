@@ -145,9 +145,7 @@
 
                             var activity = new Activity(1, $stateParams.type,
                                 startedTimeStamp, new Date().getTime(), data,
-                                $stateParams.comment, $scope.totalDistance);
-
-                            console.log(activity);
+                                $stateParams.comment, $scope.totalDistance, MockDataService.getCurrrentID());
 
                             if (thisCtrl.competitionMode) {
                                 var competition = thisCtrl.competitionID;

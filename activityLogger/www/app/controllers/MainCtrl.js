@@ -114,7 +114,6 @@
                 this.competitionCanBeStarted = false;
 
                 var allActivities = MockDataService.getAllActivities(currentUserID);
-                console.log(allActivities);
 
                 var possbibleCompetitionActivities = allActivities.map(function(el, i) {
                     var labelStr = $filter('normalizeMeterToKMFilter')(el.distance) + 'km (' + (el.duration / 60) + ')';
@@ -124,8 +123,6 @@
                         label: labelStr
                     };
                 });
-
-                console.log(possbibleCompetitionActivities);
 
                 // regenerate options shown in the popup if an input was changed
                 this.refreshCompetitionPopup = function() {
@@ -142,13 +139,12 @@
                         // new competition
                         if (this.selectedOpponent !== undefined) {
                             if (this.selectedOpponent.id == currentUserID) {
-                                console.log('against their self');
                                 // user wants to compete theirself, therefore
                                 // show past activities as activites
-                                this.possibleActivities = possbibleCompetitionActivities;
+                                this.possibleCompetitionDisciplins = possbibleCompetitionActivities;
                             } else {
                                 // set available competition lengths back to default
-                                this.possibleActivities = defaultCompetitionActivities;
+                                this.possibleCompetitionDisciplins = defaultCompetitionActivities;
                             }
                         }
 
@@ -159,6 +155,8 @@
                             var userID = el.user_id1 || el.user_id2;
                             return MockDataService.getUserByID(userID);
                         });
+
+                        this.possibleCompetitionDisciplins = this.possibleCompetitions;
                     }
 
                     if (this.selectedCompetitionType !== undefined &&
@@ -166,11 +164,6 @@
                         this.selectedCompetitionDisciplin !== undefined) {
                         this.competitionCanBeStarted = true;
                     }
-
-                    // DEBUG
-                    // console.log(this.selectedCompetitionType);
-                    // console.log(this.selectedOpponent);
-                    // console.log(this.selectedCompetitionDisciplin);
                 };
 
                 this.startCompetitionActivity = function() {
