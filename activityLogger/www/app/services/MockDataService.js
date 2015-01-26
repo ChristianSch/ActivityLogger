@@ -81,12 +81,12 @@
                 function addCompetition(competition) {
                     competition.id = nextCompetitionID;
                     nextCompetitionID += 1;
-                    competitions.push(competition);
+                    competitions.push(competition); 
 
                     return competition.id;
                 }
 
-                function getCompetitionByID(id) {
+                function getCompetitionById(id) {
                     for (var i = 0; i < competitions.length; i++) {
                         if (competitions[i].id == id) {
                             return competitions[i];
@@ -98,6 +98,14 @@
 
                 function getAllCompetitions() {
                     return competitions;
+                }
+
+                function updateCompetition(id, competition) {
+                    for (var i = 0; i < competitions.length; i++) {
+                        if (competitions[i].id == id) {
+                            competitions[i] = competition;
+                        }
+                    }
                 }
 
                 // mock some data
@@ -269,14 +277,12 @@
                     1422290032000,
                     1422290100000, track1, "", 1589.34, users[0].id));
 
-                console.log(activities[activities.length - 1]);
                 addActivity(new Activity(0,
                     "Bike",
                     1422290031199,
                     1422290076071,
                     track2, "", 1589.4696498299068, users[0].id));
 
-                console.log(activities[activities.length - 1]);
                 var anActivity = addActivity(new Activity(0,
                     "Run",
                     1422290076071,
@@ -296,8 +302,9 @@
                     getActivityByID: getActivityByID,
                     removeActivity: removeActivity,
                     addCompetition: addCompetition,
-                    getCompetitionByID: getCompetitionByID,
-                    getAllCompetitions: getAllCompetitions
+                    getCompetitionById: getCompetitionById,
+                    getAllCompetitions: getAllCompetitions,
+                    updateCompetition: updateCompetition
                 };
             });
 })();
