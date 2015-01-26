@@ -56,7 +56,7 @@
 
                 function getAllActivities(user_id) {
                     return activities.filter(function(el, i) {
-                        return el.id == user_id;
+                        return el.userId == user_id;
                     });
                 }
 
@@ -267,8 +267,9 @@
 
                 addActivity(new Activity(0,
                     "Bike",
+                    1422290031199,
                     1422290076071,
-                    1422290031199, track2, "", 1589.4696498299068, users[0].id));
+                    track2, "", 1589.4696498299068, users[0].id));
 
                 var anActivity = addActivity(new Activity(0,
                     "Run",
