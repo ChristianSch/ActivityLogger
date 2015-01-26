@@ -6,10 +6,10 @@
     'use strict';
 
     angular.module('ActivityLogger').controller('ActivityListCtrl',
-        function($state, $ionicPopup, $scope, $ionicPopover, Activity, Track, TrackRecord, DataService) {
+        function($state, $ionicPopup, $scope, $ionicPopover, Activity, DataService) {
 
             var userId = DataService.getCurrentUserId();
-            
+
             this.activities = DataService.getAllActivities(userId);
 
             /**
@@ -20,6 +20,8 @@
                     id: 'new'
                 });
             };
+
+            var thisActivities = this.activities;
 
             /**
              * @description Deletes an activity from the Activitiy List
