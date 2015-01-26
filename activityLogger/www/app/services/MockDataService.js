@@ -73,7 +73,7 @@
                 function removeActivity(id) {
                     for (var i = 0; i < activities.length; i++) {
                         if (activities[i].id == id) {
-                            activities.splice(activity[i], 1);
+                            activities.splice(activities[i], 1);
                         }
                     }
                 }
