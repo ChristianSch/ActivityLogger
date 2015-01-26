@@ -33,7 +33,32 @@
                     </label>
                 </div>
                 <div class="list" ng-hide="wCtrl.isEditMode">
+                    <label class="item item-input item-select">
+                        <div class="input-label">Discipline</div>
+                        <select ng-model="wCtrl.activity.type"
+                                ng-options="item as item.label for item in wCtrl.activityTypes">
+                        </select>
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Distance in m</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.distance">
 
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Date</span>
+                        <input class="text-right" type="date" ng-model="wCtrl.activityDate">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Starttime</span>
+                        <input class="text-right" type="time" ng-model="wCtrl.activityTime">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Duration in s</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.duration">
+                    </label>
+                    <label class="item item-input" style="height: 60%;">
+                        <textarea placeholder="Comments" style="resize: none" ng-model="wCtrl.activity.comment" rows="5"></textarea>
+                    </label>
                 </div>
             </div>
         </div>
