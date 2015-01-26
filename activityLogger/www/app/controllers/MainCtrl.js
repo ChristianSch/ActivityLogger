@@ -33,7 +33,7 @@
                 // filter the competitions by selecting the ones that have at least one 
                 // activity that has not been absolved yet (and therefore is null)
                 var openCompetitions = competitions.filter(function(el) {
-                    return el.activity_id1 === null || el.activity_id2 === null;
+                    return el.activity_id2 === null;
                 });
 
                 this.hasOpenCompetitions = openCompetitions.length > 0 ? true : false;
@@ -102,6 +102,7 @@
 
                     return {
                         id: i,
+                        competitionID: el.id,
                         label: labelStr
                     };
                 });
@@ -163,23 +164,25 @@
                         this.selectedOpponent !== undefined &&
                         this.selectedCompetitionDisciplin !== undefined) {
                         this.competitionCanBeStarted = true;
+                        this.competitionID = this.selectedCompetitionDisciplin.competitionID;
                     }
                 };
 
                 this.startCompetitionActivity = function() {
-                    if (!this.competitionID) {
+                    if (this.competitionID === undefined) {
                         var dist;
 
                         if (this.selectedOpponent.id == currentUserID) {
                             dist = this.selectedCompetitionType.meters;
                         } else {
-                            dist = 0; // TODO
+                            dist = this.selectedCompetitionDisciplin.distance;
                         }
 
-                        var competition = new Competition(1, currentUserID, this.selectedOpponent.id, null, null, dist);
-                        this.competitionID = competition.id;
+                        var competition = new Competition(0, currentUserID, this.selectedOpponent.id, null, null, dist);
+                        this.competitionID = MockDataService.addCompetition(competition);
                     }
 
+                    console.log(this.competitionID);
                     this.startActivity();
                 };
 
@@ -188,6 +191,7 @@
                  * the `activity` tab
                  */
                 this.startActivity = function() {
+                    console.log('start competition ' + thisCtrl.competitionID);
                     if (thisCtrl.selectedActivityType !== undefined) {
                         $state.go('tab.activity', {
                             'type': thisCtrl.selectedActivityType.label,

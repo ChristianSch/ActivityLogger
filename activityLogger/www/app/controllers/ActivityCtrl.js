@@ -15,6 +15,26 @@
 
                 this.competitionMode = $stateParams.competitionID ? true : false;
                 this.competitionID = $stateParams.competitionID;
+                this.competition = MockDataService.getCompetitionById(this.competitionID);
+
+                if (this.competitionMode) {
+                    var opponentActivityID = this.competition.activity_id1 || this.competition.activity_id2;
+
+                    // both activity ids are null if the competition was newly created
+                    if (opponentActivityID !== null) {
+                        var opponentActivity = MockDataService.getActivityByID(opponentActivityID);
+
+                        this.opponentPath = [];
+
+                        for (var i = 0; i < opponentActivity.track_data.length; i++) {
+                            var coords = opponentActivity.track_data[i].coords;
+
+                            this.opponentPath.push(new google.maps.LatLng(
+                                coords.latitude,
+                                coords.longitude));
+                        }
+                    }
+                }
 
                 // for saving the activity.
                 // not to confuse with `startStamp` which is only internally used
@@ -50,6 +70,15 @@
                         $scope.timerIsOn = true;
 
                         $scope.timer = setInterval(function() {
+                            // if in competition mode: stop 
+                            if (this.competitionMode) {
+                                var now = new Date.getTime();
+
+                                if ((now - this.startedTimeStamp) >= this.competition.duration) {
+                                    $scope.finishAcitivity();
+                                }
+                            }
+
                             if ($scope.timerSeconds === 59) {
                                 if ($scope.timerMinutes === 59) {
                                     // increment hour
@@ -132,7 +161,7 @@
                  * everything will continue as if nothing happened. The app
                  * then will go to the workout list to show the newly created workout.
                  */
-                $scope.finishAcitivity = function() {
+                $scope.finishActivity = function() {
                     var confirmPopup = $ionicPopup.confirm({
                         title: 'Finish Activity',
                         template: 'Are you sure you want to finish your activity?'
@@ -145,16 +174,18 @@
 
                             var activity = new Activity(1, $stateParams.type,
                                 startedTimeStamp, new Date().getTime(), data,
-                                $stateParams.comment, $scope.totalDistance, MockDataService.getCurrrentID());
+                                $stateParams.comment, $scope.totalDistance, MockDataService.getCurrentUserId());
+                            var activityID = MockDataService.addActivity(activity);
 
                             if (thisCtrl.competitionMode) {
-                                var competition = thisCtrl.competitionID;
-                                var activityID = MockDataService.addActivity(activity);
-
-                                if (competition.activity_id1 == null)
-                                    competition.activity_id1 = activityID;
+                                var comp = MockDataService.getCompetitionById(thisCtrl.competitionID);
+                                
+                                if (comp.activity_id1 == null)
+                                    comp.activity_id1 = activityID;
                                 else
-                                    competition.activity_id2 = activityID;
+                                    comp.activity_id2 = activityID;
+
+                                MockDataService.updateCompetition(thisCtrl.competitionID, comp);
                             }
                             
                             $state.go('tab.workoutlist');
@@ -164,10 +195,8 @@
 
                 /**
                  * @description Set up the map and draw the new position data as path
-                 *
-                 * @param  {Array} data as returned by GeoLocationService
                  */
-                this.refreshMap = function(data) {
+                this.refreshMap = function() {
                     // set up options of the map provided by google
                     var options = {
                         zoom: 14,
@@ -179,6 +208,16 @@
                     // get handle of `map-canvas`
                     var map = new google.maps.Map(document.getElementById("map-canvas"),
                         options);
+
+                    if (this.competitionMode) {
+                        var opponentPolyline = new google.maps.Polyline({
+                            map: map,
+                            path: this.opponentPath,
+                            strokeColor: '#F51C2C',
+                            stroleOpacity: 0.5,
+                            strokeWeight: 6
+                        });
+                    }
 
                     // draw location path to map
                     var polyline = new google.maps.Polyline({
@@ -215,10 +254,10 @@
                                 var speed = Number($scope.totalDistance) /
                                 ((data[data.length - 1].timestamp - data[0].timestamp) / 60);
                                 $scope.speed = speed;
-
-                            // redraw the map
-                            thisCtrl.refreshMap(data);
                         }
+
+                        // draw the map
+                        thisCtrl.refreshMap();
                     }, function(err) {
                         alert(err);
                     });
