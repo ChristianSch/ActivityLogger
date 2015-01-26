@@ -15,11 +15,21 @@
             var map;
             var polyline;
 
+            this.activityTypes = [{
+                id: 1,
+                label: 'Run'
+            }, {
+                id: 2,
+                label: 'Bike'
+            }];
             this.isEditMode = false;
             if ($stateParams.id == 'new') {
                 $ionicNavBarDelegate.setTitle('Neue Activity');
                 this.activity = {};
-                this.activity.user_id = DataService.getCurrentUserId();
+                this.activity.type = this.activityTypes[0];
+                this.activity.userId = DataService.getCurrentUserId();
+                this.activity.track_data = [];
+
             } else {
                 this.isEditMode = true;
                 $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
@@ -29,7 +39,7 @@
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
-                DataService.addActivity(activity);
+                DataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
             };
 
@@ -98,25 +108,28 @@
              */
             function init() {
                 var initial_Position;
-                if(thisActivity.track_data.track_records.length > 0) {
-                    initial_Position = thisActivity.track_data.track_records[0];
+                var mapOptions;
+                if(thisActivity.track_data.length > 0) {
+                    initial_Position = thisActivity.track_data[0];
+                    mapOptions = {
+                        center: new google.maps.LatLng(initial_Position.coords.latitude, initial_Position.coords.longitude),
+                        zoom: 10,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
                 } else {
                     // Default initial Position
-                    initial_Position = new TrackRecord(50.5851, 8.6841, 0, 0);
+                    mapOptions = {
+                        center: new google.maps.LatLng(50.5851, 8.6841),
+                        zoom: 10,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
                 }
-                var mapOptions = {
-                    center: new google.maps.LatLng(initial_Position.latitude, initial_Position.logitude),
-                    zoom: 10,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
+
 
                 map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-                if(thisActivity.track_data.track_records.length > 0) {
+                if(thisActivity.track_data.length > 0) {
                     elevator = new google.maps.ElevationService();
-
-                    // google.maps.event.addListener(map, 'click', getElevation);
-
                     drawPath();
                 }
             }
@@ -125,10 +138,12 @@
              * @description Draws the currently shown Activity to GoogleMaps.
              */
             function drawPath() {
+                var position;
                 var path = [];
 
-                for(var i = 0; i < thisActivity.track_data.track_records.length; i++) {
-                    path.push(new google.maps.LatLng(thisActivity.track_data.track_records[i].latitude, thisActivity.track_data.track_records[i].logitude));
+                for(var i = 0; i < thisActivity.track_data.length; i++) {
+                    position = thisActivity.track_data[i];
+                    path.push(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
                 }
 
                 // Create a PathElevationRequest object using this array.
