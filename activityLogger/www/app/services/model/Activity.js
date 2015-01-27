@@ -3,7 +3,7 @@
 
 angular.module('ActivityLogger').factory('Activity',
     function() {
-        var Activity = function(id, type, start_time, end_time, track_data,
+        var Activity = function(id, type, start_time, end_time,track_data,
             comment, distance, userId) {
             this.id = id;
             this.userId = userId;

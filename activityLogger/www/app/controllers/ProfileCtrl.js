@@ -90,18 +90,10 @@ angular.module('ActivityLogger')
             var error = valide(thisCtrl.user);
             if (error == "") {
                 if (!localStorage.getItem('user')) {
-                        //1.Add User
                         DataService.addUser(thisCtl.user);
-                        //Bind
-                        var userId =localStorage.getItem('userId');
-                        var user=DataService.getUserByID(userId);
-                        if (user) {
-                            thisCtrl.user=user;
-                        }
                 } else {
 
                     DataService.updateUser(thisCtl.user);
-
                 }
                 isSave = true;
             } else {
