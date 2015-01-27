@@ -15,23 +15,13 @@
                 Cancel
             </button>
         </div>
-        <ion-list ng-hide="alCtrl.isUserconnect">
+        <ion-list>
             <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.id}}">
-                <span>
-                {{activity.type}}, {{activity.distance}} km ({{activity.start_time}}, {{activity.end_time}})
-                </span>
-                <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.id)">
-                    Löschen
-                </ion-option-button>
-            </ion-item>
-        </ion-list>
-        <ion-list ng-show="alCtrl.isUserconnect">
-            <ion-item class="item-text-wrap" ng-repeat="activity in filteredActivities = (alCtrl.activities | filter:alCtrl.searchQuery | orderBy:'start_time')" href="#/tab/workout/{{activity.$id}}">
                 <span>
                 {{activity.type}}, {{activity.distance}} km ({{activity.start_time}}, {{activity.end_time}}, {{activity.duration}} Seconds)
                 </span>
-                <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.$id)">
-                    LöschenConnect
+                <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.id)">
+                    Löschen
                 </ion-option-button>
             </ion-item>
         </ion-list>
