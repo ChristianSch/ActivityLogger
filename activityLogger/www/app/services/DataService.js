@@ -1,7 +1,7 @@
 'use-strict';
 
 angular.module('ActivityLogger').factory('DataService',
-    function ($firebase, FIREBASE_URL, $timeout, $q, $ionicPopup, $state,User,Activity) {
+    function ($firebase, FIREBASE_URL, $timeout, $ionicPopup, $state,User,Activity,Competition) {
 
         var rootRef = new Firebase(FIREBASE_URL);
         var usersRef = rootRef.child('users');
@@ -30,7 +30,7 @@ angular.module('ActivityLogger').factory('DataService',
          * @return {Object of activities saved local|empty array if no activty *}
          */
         function getAllActivitiesLocal() {
-            var leer = new Activity("","","","","",[],"","","");
+            var leer=[];
             var activities = localStorage.getItem('activities');
             return activities?JSON.parse(activities):leer;
         }
@@ -61,7 +61,7 @@ angular.module('ActivityLogger').factory('DataService',
         }
 
         function equal(user1,user2) {
-            return user1.usersName == user2.usersName;
+            return user1.id == user2.id;
         }
 
         function getFirebaseId(userId, id) {
@@ -84,6 +84,7 @@ angular.module('ActivityLogger').factory('DataService',
                     type: 'button-positive'
                 }]
             });
+
         }
 
 //Public method
@@ -104,15 +105,14 @@ angular.module('ActivityLogger').factory('DataService',
         function addUser(user) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId = localStorage.getItem('userId');
-            var fconnect=false;
+            var user= new User(user.id,user.firstname,user.surname,user.gender,user.birthday,user.weight,user.size);
             if ((firebaseConnected) && (!userId)) {  //Add User on firebase if not have been.
                 var users = getAllUsers();
                 var timer = $timeout(function () {
-                    alert(users.length);
                     var hasUser = false;
                     for (var i = 0; i < users.length; i++) {
                         var userf = users[i];
-                        if (userf.usersName == user.usersName) {
+                        if (userf.id == user.id) {
                             hasUser = true;
                             break;
                         }
@@ -121,26 +121,17 @@ angular.module('ActivityLogger').factory('DataService',
                        // throw "BenutzerName schon Vegeben";
                         showErrorMess("BenutzerName schon Vegeben");
                     } else {
-                        fconnect = true;
-
                         getAllUsers().$add(user);
                         localStorage.setItem('user', JSON.stringify(user));
                         localStorage.setItem('infirebaseSaved', 'true');
                         saveUserId_Local(user);
-                        var users_ref2 = getAllUsers();
-                        timer=$timeout(function(user){
-                            var userId=getCurrentUserId();
-                            var user=getUserByID(userId);
-                            user.id=userId;
-                            users_ref2.$save(user);
-                            localStorage.setItem('user', JSON.stringify(user));
-                        },4*60)
-
+                        showMessage(" Ihre Daten  wurden erfolgreich in firebase gespeichert")
                     }
                 }, 8* 60)
 
             }else{
                 localStorage.setItem('user', JSON.stringify(user));
+                showMessage(" Ihre Daten  wurden erfolgreich local  gespeichert")
             }
         }
 
@@ -208,7 +199,6 @@ angular.module('ActivityLogger').factory('DataService',
          */
         function addActivity(activity) {
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
-            var userId = localStorage.getItem('userId');
             var activities = getAllActivitiesLocal();
             var nexid = localStorage.getItem('nextActivityId');
 
@@ -217,47 +207,36 @@ angular.module('ActivityLogger').factory('DataService',
             } else {
                 nexid = parseInt(nexid);
             }
-            if (activities != null) {
-                activity.id = nexid;
-                activities.push(activity);
-            } else {
-                activities = [];
-                activity.id = nexid;
-                activities.push(activity);
-            }
-            localStorage.setItem('activities', JSON.stringify(activities));
-            localStorage.setItem('nextActivityId', parseInt(nexid) + 1);
-
-            if (firebaseConnected) { //Add activity in firebase, and to to a list on Activities saved on firebase(activities_firebase)
-                alert(" persit on firebase ...");
-                if (userId != null) {
-                    var activities_firebase = localStorage.getItem('activities_firebase'); // Activities saved on firebase.
-                    var next_af_id = localStorage.getItem('next_af_id');//next Activity id saved on firebase
-
-                    if (!next_af_id) {
-                        next_af_id = 1;
-                    } else {
-                        next_af_id = parseInt(next_af_id);
-                    }
-                    if (activities_firebase) {
-                        activity.id = next_af_id;
-                        activities_firebase = JSON.parse(activities_firebase);
-                        activities_firebase.push(activity);
-                    } else {
-                        activities_firebase = [];
-                        activity.id = next_af_id;
-                        activities_firebase.push(activity);
-                    }
-                    activity.userId = userId;
-                    getAllActivities_firebase().$add(activity);
-                    localStorage.setItem('activities_firebase', JSON.stringify(activities_firebase));
-                    localStorage.setItem('next_af_id', parseInt(next_af_id) + 1);
+            if (firebaseConnected) {
+                var userId = localStorage.getItem('userId');
+                if (userId) {
+                    _activity= new Activity(nexid,activity.type,activity.start_time,activity.end_time,activity.track_data,activity.comment,activity.distance,userId);
+                    getAllActivities_firebase().$add(_activity);
+                    activities.push(_activity);
+                    localStorage.setItem('activities',JSON.stringify(activities));
+                    localStorage.setItem('nextActivityId', parseInt(nexid) + 1);
+                    showMessage(" Activity erfolgreich local und in firebase  gespeichert")
                 } else {
                     // to firebase connectect and don't have a Profil-> can´t add Activities
                     showErrorMess("Sie müssen ein Profil in Firebase  anlegen um Ihre Aktivität speichert zu können !");
-
                 }
+            }else{
+                var _activity= new Activity(nexid,activity.type,activity.start_time,activity.end_time,activity.track_data,activity.comment,activity.distance,"");
+                activities.push(_activity);
+
+                localStorage.setItem('activities',JSON.stringify(activities));
+                localStorage.setItem('nextActivityId', parseInt(nexid) + 1);
+                showMessage("Activity erfolgreich local gespeichert")
             }
+        }
+
+        function showMessage(mess){
+            var myPopup= $ionicPopup.show({
+                title: mess
+            })
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 2000);
         }
 
         /**
@@ -332,7 +311,7 @@ angular.module('ActivityLogger').factory('DataService',
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var cur_userId = getCurrentUserId();
             if (firebaseConnected && cur_userId) {
-                id =getFirebaseId(cur_userId, id);  //converted to activtysid in firebase
+               // id =getFirebaseId(cur_userId, id);  //converted to activtysid in firebase
                 return getAllActivities_firebase().$getRecord(id);
             } else {
                 var activities = getAllActivitiesLocal();
@@ -400,12 +379,23 @@ angular.module('ActivityLogger').factory('DataService',
          * @throws exception if user is not registered
          */
         function addCompetition(competition) {
+            var nexCompetitionId = localStorage.getItem('nexCompetitionId');
+
+            if (!nexCompetitionId) {
+                nexCompetitionId= 1;
+            } else {
+                nexCompetitionId= parseInt(nexCompetitionId);
+            }
             var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
             var userId =getCurrentUserId();
-             if(firebaseConnected&userId){
+             if(firebaseConnected&&userId){
+                 var competition=new Competition(nexCompetitionId,competition.user_id1,competition.user_id2,competition.activity_id1,competition.activity_id2,competition.distance);
                  getAllCompetitions_firebase().$add(competition);
+                 localStorage.setItem('nexCompetitionId', parseInt('nexCompetitionId') + 1);
+
              }else {
-                 throw 'Um eine Competition anzulegen müssen Sie :<br>'+'<li>in Settings Die Firebase Verbindung akzeptieren falls noch nicht </li>'+'<li>sich registrieren oder anmelden</li>';
+                 showErrorMess("Um eine Competition anzulegen müssen Sie in Settings Die Firebase Verbindung akzeptieren falls noch nicht sich registrieren oder anmelden");
+
              }
         }
 
