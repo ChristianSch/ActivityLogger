@@ -9,7 +9,7 @@
             <div class="item item-text-wrap">
                 <div class="list">
                     <label class="item item-input item-select">
-                        <div class="input-label">Disziplin</div>
+                        <span class="input-label">Disziplin</span>
                         <select ng-model="wCtrl.activity.type"
                                 ng-options="item as item.label for item in wCtrl.activityTypes">
                         </select>
@@ -17,6 +17,14 @@
                     <label class="item item-input">
                         <span class="input-label">Distanz</span>
                         <input class="text-right" type="text" ng-model="wCtrl.activity.distance">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Dauer</span>
+                        <input class="text-right" type="text" ng-model="wCtrl.activity.duration">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Durchschnittsgeschwindigkeit</span>
+                        <input class="text-right" type="text">
                     </label>
                     <label class="item item-input">
                         <span class="input-label">Startzeit</span>

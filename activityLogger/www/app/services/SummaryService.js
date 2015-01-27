@@ -11,16 +11,15 @@
 					function(Activity, User, DataService) {
 
 						// TEST DATA
-//						if (activities === undefined) {
-//							var activities = getRandomActivities();
-//						}
-//						var user = new User(42, "a", "b", "male", null, 80, 180);
-						 var activities = DataService
-								.getAllActivities(DataService
-										.getCurrentUserId());
-						var user = DataService.getUserByID(DataService
-								.getCurrentUserId());
-						// console.log(user);
+						var user = new User(42, "a", "b", "male", null, 80, 180);
+						if (activities === undefined) {
+							var activities = getRandomActivities();
+						}
+						// var activities = DataService
+						// .getAllActivities(DataService
+						// .getCurrentUserId());
+						// var user = DataService.getUserByID(DataService
+						// .getCurrentUserId());
 
 						// PUBLIC FUNCTIONS
 
@@ -98,15 +97,15 @@
 							}
 
 							var performances = [ {
-								name : "Zurückgelegte Strecke",
+								name : "Distance",
 								value : Math.round(distance / 100) / 10,
 								unit : "km"
 							}, {
-								name : "Zeit insgesamt",
+								name : "Total Time",
 								value : Math.round(duration / 60),
 								unit : "min"
 							}, {
-								name : "Verbrannte Kalorien",
+								name : "Calorie Consumption",
 								value : Math.round(calories),
 								unit : "kcal"
 							} ];
@@ -162,22 +161,22 @@
 
 							return [
 									{
-										name : "Strecke",
+										name : "Distance",
 										value : Math.round(longest_track / 100) / 10,
 										unit : "km"
 									},
 									{
-										name : "Ø Geschwindigkeit",
+										name : "Ø Speed",
 										value : Math
 												.round(highest_avg_speed * 36) / 10,
 										unit : "km/h"
 									},
 									{
-										name : "Max. Geschwindigkeit",
-										value : Math.round(highest_speed * 36) / 10,
+										name : "Max. Speed",
+										value : Math.round(highest_speed ),
 										unit : "km/h"
 									}, {
-										name : "Kalorienverbrauch",
+										name : "Calorie Consumption",
 										value : Math.round(most_kcal),
 										unit : "kcal"
 									} ];
@@ -233,21 +232,21 @@
 							var cal_per_day = total_calories / days;
 
 							return [ {
-								name : "Ø Geschwindigkeit",
+								name : "Speed",
 								value : Math.round(avg_speed * 36) / 10,
 								unit : "km/h"
 							}, {
-								name : "Strecke",
+								name : "Distance",
 								value : Math.round(dist_per_day / 100) / 10,
-								unit : "km/Tag"
+								unit : "km/day"
 							}, {
-								name : "Zeit",
+								name : "Duration",
 								value : Math.round(time_per_day / 60),
-								unit : "Min/Tag"
+								unit : "minutes/day"
 							}, {
-								name : "Kalorienverbrauch",
+								name : "Calorie Consumption",
 								value : Math.round(cal_per_day),
-								unit : "kcal/Tag"
+								unit : "kcal/day"
 							} ];
 
 						}
@@ -372,24 +371,29 @@
 							var id = 1000;
 							var date = new Date().getTime() / 1000 - 60 * 60
 									* 10;
-							var track = [];
 							var x;
 
 							for (var i = 0; i < 1053; i++) {
+								var track = [ {
+									speed : (Math.random() + 0.1) * 30
+								} ];
+								var rand = Math.random() + 0.1;
 								var start = Math.floor(date - Math.random()
 										* 60 * 60 * 10);
-								var end = Math.floor(start + Math.random() * 60
-										* 60 * 2);
-								date = start;
+								var end = Math
+										.floor(start + rand * 60 * 60 * 2);
+								date = start - 14400;
 
-								if (Math.random() < 0.5) {
+								if (rand < 0.5) {
 									activities.push(new Activity(id--,
-											'Laufen', start, end, track, '',
-											Math.random() * 12000));
+											'Running', start, end, track, '',
+											(Math.random() + 0.1) * 12000,
+											user.userId));
 								} else {
 									activities.push(new Activity(id--,
-											'Radfahren', start, end, track, '',
-											Math.random() * 12000));
+											'Biking', start, end, track, '',
+											(Math.random() + 0.1) * 12000,
+											user.userId));
 								}
 							}
 							return activities;
@@ -403,12 +407,11 @@
 						 * @return {number} maximum speed.
 						 */
 						function getMaxSpeed(activity) {
-							var track_records = activity.track_data.track_records;
 							var max_speed = 0;
 							var i;
-							for (i in track_records) {
-								if (track_records[i].speed > max_speed) {
-									max_speed = track_records[i].speed;
+							for (i in activity.track_data) {
+								if (activity.track_data[i].speed > max_speed) {
+									max_speed = activity.track_data[i].speed;
 								}
 							}
 							return max_speed;
@@ -484,9 +487,9 @@
 						function calcCalories(activity) {
 							var met;
 							// determine MET
-							if (activity.type == "Radfahren") {
+							if (activity.type == "Biking") {
 								met = 8;
-							} else if (activity.type == "Laufen") {
+							} else if (activity.type == "Running") {
 								met = 11;
 							}
 							// consider gender
