@@ -32,7 +32,7 @@ angular.module('ActivityLogger').factory('DataService',
         function getAllActivitiesLocal() {
             var leer=[];
             var activities = localStorage.getItem('activities');
-            return activities?JSON.parse(activities):leer;
+            return JSON.parse(activities)||leer;
         }
 
 
@@ -317,11 +317,11 @@ angular.module('ActivityLogger').factory('DataService',
                 var activities = getAllActivitiesLocal();
                 for (var i = 0; i < activities.length; i++) {
                     var activity = activities[i];
-                    if (activity.id == id) {
-                        return activity;
+                    if (activity.id === id) {
+                        return new Activity(activity.id,activity.type,activity.start_time,activity.end_time,activity.track_data,activity.comment,activity.distance,cur_userId,"");
                     }
                 }
-                return null;
+                return new Activity("","","","","","","","","");
             }
         }
 
