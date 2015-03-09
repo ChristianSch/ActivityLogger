@@ -8,7 +8,13 @@
     angular
         .module('ActivityLogger')
         .factory('MockDataService',
-            function(Activity, Competition, User) {
+            function($firebase, Activity, Competition, User, FIREBASE_URL_MOCK) {
+
+                var root = new Firebase(FIREBASE_URL_MOCK);
+                var fireUsers = root.child('users');
+                var fireCompetitions = root.child('competitions');
+                var fireActivities = root.child('activities');
+
                 var users = [];
                 var competitions = [];
                 var activities = [];
