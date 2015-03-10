@@ -9,7 +9,7 @@
         .controller('WorkoutCtrl',
         function($stateParams, $scope, $ionicNavBarDelegate, $ionicPopup, $window, MockDataService, Activity) {
             var wCtrl = this;
-            var elevationSamples = 200;
+            var elevationSamples = 250;
             var elevationData = [];
             var elevator;
             var map;
