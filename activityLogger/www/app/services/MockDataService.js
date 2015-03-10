@@ -15,6 +15,14 @@
                 var fireCompetitions = root.child('competitions');
                 var fireActivities = root.child('activities');
 
+                //AngularFire Wrapper
+                var fireUsersAngular = $firebase(fireUsers);
+                var fireCompetitionsAngular = $firebase(fireCompetitions);
+                var fireActivitiesAngular = $firebase(fireActivities);
+
+                // Only for tests
+                var cloud = false;
+
                 var users = [];
                 var competitions = [];
                 var activities = [];
@@ -25,22 +33,29 @@
                 var currentUserID = null;
 
                 function getAllUsers() {
-                    return users;
+                    if(cloud) {
+                        return fireUsersAngular.$asArray();
+                    } else {
+                        return users;
+                    }
                 }
 
                 function addUser(user) {
-                    users.push(user);
-
+                    if(cloud) {
+                        this.getAllUsers().$add(user);
+                    } else {
+                        users.push(user);
+                    }
                     return user.id;
                 }
 
                 function getUserByID(id) {
-                    for (var i = 0; i < users.length; i++) {
-                        if (users[i].id == id) {
-                            return users[i];
+                    var userDummy = getAllUsers();
+                    for (var i = 0; i < userDummy.length; i++) {
+                        if (usersDummy[i].id == id) {
+                            return userDummy[i];
                         }
                     }
-
                     return null;
                 }
 
@@ -55,18 +70,29 @@
                 function addActivity(activity) {
                     activity.id = nextActivityID;
                     nextActivityID += 1;
-                    activities.push(activity);
 
+                    if(cloud) {
+                        fireActivitiesAngular.$asArray().$add(activity);
+                    } else {
+                        activities.push(activity);
+                    }
                     return activity.id;
                 }
 
                 function getAllActivities(user_id) {
-                    return activities.filter(function(el, i) {
+                    var activitiesDummy;
+                    if(cloud) {
+                        activitiesDummy = fireActivitiesAngular.$asArray();
+                    } else {
+                        activitiesDummy = activities;
+                    }
+                    return activitiesDummy.filter(function(el, i) {
                         return el.userId == user_id;
                     });
                 }
 
                 function getActivityByID(id) {
+                    //TODO Cloud connection
                     for (var i = 0; i < activities.length; i++) {
                         if (activities[i].id == id) {
                             return activities[i];
@@ -77,6 +103,7 @@
                 }
 
                 function removeActivity(id) {
+                    //TODO Cloud connection
                     for (var i = 0; i < activities.length; i++) {
                         if (activities[i].id == id) {
                             activities.splice(activities[i], 1);
@@ -87,15 +114,19 @@
                 function addCompetition(competition) {
                     competition.id = nextCompetitionID;
                     nextCompetitionID += 1;
-                    competitions.push(competition); 
-
+                    if(cloud) {
+                        this.getAllCompetitions().$add(competition);
+                    } else {
+                        competitions.push(competition);
+                    }
                     return competition.id;
                 }
 
                 function getCompetitionById(id) {
-                    for (var i = 0; i < competitions.length; i++) {
-                        if (competitions[i].id == id) {
-                            return competitions[i];
+                    var competitionsDummy = getAllCompetitions();
+                    for (var i = 0; i < competitionsDummy.length; i++) {
+                        if (competitionsDummy[i].id == id) {
+                            return competitionsDummy[i];
                         }
                     }
 
@@ -103,13 +134,18 @@
                 }
 
                 function getAllCompetitions() {
-                    return competitions;
+                    if (cloud) {
+                        return fireCompetitionsAngular.$asArray();
+                    } else {
+                        return competitions;
+                    }
                 }
 
                 function updateCompetition(id, competition) {
-                    for (var i = 0; i < competitions.length; i++) {
-                        if (competitions[i].id == id) {
-                            competitions[i] = competition;
+                    var competitionsDummy = getAllCompetitions();
+                    for (var i = 0; i < competitionsDummy.length; i++) {
+                        if (competitionsDummy[i].id == id) {
+                            competitionsDummy[i] = competition;
                         }
                     }
                 }
