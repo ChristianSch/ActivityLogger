@@ -15,13 +15,13 @@
                 var fireCompetitions = root.child('competitions');
                 var fireActivities = root.child('activities');
 
-                //AngularFire Wrapper
+                // AngularFire Wrapper
                 var fireUsersAngular = $firebase(fireUsers);
                 var fireCompetitionsAngular = $firebase(fireCompetitions);
                 var fireActivitiesAngular = $firebase(fireActivities);
 
                 // Only for tests
-                var cloud = false;
+                var cloud = true;
 
                 var users = [];
                 var competitions = [];
@@ -33,7 +33,7 @@
                 var currentUserID = null;
 
                 function getAllUsers() {
-                    if(cloud) {
+                    if (cloud) {
                         return fireUsersAngular.$asArray();
                     } else {
                         return users;
@@ -41,21 +41,24 @@
                 }
 
                 function addUser(user) {
-                    if(cloud) {
+                    if (cloud) {
                         this.getAllUsers().$add(user);
                     } else {
                         users.push(user);
                     }
+
                     return user.id;
                 }
 
                 function getUserByID(id) {
                     var userDummy = getAllUsers();
+
                     for (var i = 0; i < userDummy.length; i++) {
-                        if (usersDummy[i].id == id) {
+                        if (usersDummy[i].id === id) {
                             return userDummy[i];
                         }
                     }
+
                     return null;
                 }
 
@@ -71,42 +74,55 @@
                     activity.id = nextActivityID;
                     nextActivityID += 1;
 
-                    if(cloud) {
+                    if (cloud) {
                         fireActivitiesAngular.$asArray().$add(activity);
                     } else {
                         activities.push(activity);
                     }
+
                     return activity.id;
                 }
 
                 function getAllActivities(user_id) {
                     var activitiesDummy;
-                    if(cloud) {
+
+                    if (cloud) {
                         activitiesDummy = fireActivitiesAngular.$asArray();
                     } else {
                         activitiesDummy = activities;
                     }
+
                     return activitiesDummy.filter(function(el, i) {
-                        return el.userId == user_id;
+                        return el.userId === user_id;
                     });
                 }
 
                 function getActivityByID(id) {
-                    //TODO Cloud connection
-                    for (var i = 0; i < activities.length; i++) {
-                        if (activities[i].id == id) {
-                            return activities[i];
-                        }
+                    var activitiesDummy = getAllActivities();
+
+                    for (var i = 0; i < activitiesDummy.length; i++) {
+                        if (activitiesDummy[i].id === id) return elt;
                     }
 
                     return null;
                 }
 
                 function removeActivity(id) {
-                    //TODO Cloud connection
-                    for (var i = 0; i < activities.length; i++) {
-                        if (activities[i].id == id) {
-                            activities.splice(activities[i], 1);
+                    var activitiesDummy = null;
+
+                    if (cloud) {
+                        activitiesDummy = fireActivitiesAngular.$asArray();
+                    } else {
+                        activitiesDummy = getAllActivities();
+                    }
+
+                    for (var i = 0; i < activitiesDummy.length; i++) {
+                        if (activitiesDummy[i].id === id) {
+                            if (cloud) {
+                                activitiesDummy.$remove(activiesDummy[i]);
+                            } else {
+                                activitiesDummy.splice(activitiesDummy[i], 1);
+                            }
                         }
                     }
                 }
@@ -114,18 +130,21 @@
                 function addCompetition(competition) {
                     competition.id = nextCompetitionID;
                     nextCompetitionID += 1;
-                    if(cloud) {
+
+                    if (cloud) {
                         this.getAllCompetitions().$add(competition);
                     } else {
                         competitions.push(competition);
                     }
+
                     return competition.id;
                 }
 
                 function getCompetitionById(id) {
                     var competitionsDummy = getAllCompetitions();
+
                     for (var i = 0; i < competitionsDummy.length; i++) {
-                        if (competitionsDummy[i].id == id) {
+                        if (competitionsDummy[i].id === id) {
                             return competitionsDummy[i];
                         }
                     }
@@ -143,8 +162,9 @@
 
                 function updateCompetition(id, competition) {
                     var competitionsDummy = getAllCompetitions();
+
                     for (var i = 0; i < competitionsDummy.length; i++) {
-                        if (competitionsDummy[i].id == id) {
+                        if (competitionsDummy[i].id === id) {
                             competitionsDummy[i] = competition;
                         }
                     }
