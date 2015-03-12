@@ -42,7 +42,7 @@
 
                 function addUser(user) {
                     if (cloud) {
-                        this.getAllUsers().$add(user);
+                        getAllUsers().$add(user);
                     } else {
                         users.push(user);
                     }
@@ -132,7 +132,7 @@
                     nextCompetitionID += 1;
 
                     if (cloud) {
-                        this.getAllCompetitions().$add(competition);
+                        getAllCompetitions().$add(competition);
                     } else {
                         competitions.push(competition);
                     }
