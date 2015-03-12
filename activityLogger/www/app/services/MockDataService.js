@@ -171,10 +171,8 @@
                 }
 
                 // mock some data
-                addUser(new User('Foobar', 'Foo', 'Bar', 'Male', '34.3.4192', 118, 167));
-                addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', '13.3.1992', 64, 165));
-
-                currentUserID = users[0].id;
+                currentUserID = addUser(new User('Foobar', 'Foo', 'Bar', 'Male', '34.3.4192', 118, 167));
+                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', '13.3.1992', 64, 165));
 
                 var track1 = [{
                     coords: {
@@ -337,20 +335,20 @@
                 addActivity(new Activity(0,
                     "Run",
                     1422290032000,
-                    1422290100000, track1, "", 1589.34, users[0].id));
+                    1422290100000, track1, "", 1589.34, currentUserID));
 
                 addActivity(new Activity(0,
                     "Bike",
                     1422290031199,
                     1422290076071,
-                    track2, "", 1589.4696498299068, users[0].id));
+                    track2, "", 1589.4696498299068, currentUserID));
 
                 var anActivity = addActivity(new Activity(0,
                     "Run",
                     1422290076071,
-                    1422290031199, track3, "", 1589.4696498299068, users[1].id));
+                    1422290031199, track3, "", 1589.4696498299068, secondTestUser));
 
-                addCompetition(new Competition(0, users[1].id, users[0].id, anActivity, null, 1000));
+                addCompetition(new Competition(0, secondTestUser, currentUserID, anActivity, null, 1000));
 
                 // api
                 return {
