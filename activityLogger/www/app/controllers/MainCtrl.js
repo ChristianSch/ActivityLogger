@@ -30,7 +30,7 @@
                 // set up data for competitions
                 var competitions = MockDataService.getAllCompetitions();
 
-                // filter the competitions by selecting the ones that have at least one 
+                // filter the competitions by selecting the ones that have at least one
                 // activity that has not been absolved yet (and therefore is null)
                 var openCompetitions = competitions.filter(function(el) {
                     return el.activity_id2 === null;
