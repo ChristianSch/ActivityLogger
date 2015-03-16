@@ -37,12 +37,8 @@ angular.module('ActivityLogger')
             this.connectWithFirebase = function() {
                 if (!thisCtrl.firebaseConection) { // Confirm connection only if not connected
                     var confirmPopup = $ionicPopup.confirm({
-                        title: " Firebase Verbindung",
-                        cancelText: 'Abbrechen',
-                        template: 'Wenn Sie die Verbindung mit der externe Datenbank Firebase zulassen werden ' +
-                            'Ihre  Profil und Aktivitätsdaten in dieser gespeichert, synchronisiert  und mit Daten anderer User vergleichen<br>' +
-                            'Diese Option ist für den Wettkampftsmodus erforderlich<br>' +
-                            'Wollen Sie es wirklich zulassen ? '
+                        title: " Firebase connection",
+                        template: 'Your data will be stored in the database Firebase when you accepted the connection. This option is required if you want to work online or create a competition. Otherwise, your data will be stored only local.<br>'+'Do you accept the Firebase connection?'
                     });
 
                     confirmPopup.then(function(res) {
@@ -51,18 +47,18 @@ angular.module('ActivityLogger')
                              connectedRef = new Firebase("https://activtitylogger.firebaseio.com/.info/connected");
                              connectedRef.on("value", function(snap) {
                                 if (snap.val() === true) {
-
                                     localStorage.setItem('internetConnection','true');
                                     thisCtrl.firebaseConection = true;
                                     localStorage.setItem('firebaseConection', thisCtrl.firebaseConection);
-
                                     var user = localStorage.getItem('user'); //Ad user to firebase if not have been
                                     if(user){
                                         user=JSON.parse(user);
                                         DataService.addUser(user);
+                                    }else{
+                                        showMess("Important","You must create a profile or login to start and  save an activity in Firebase. If this is not the case, See Profile")
                                     }
-                                } else {
-                                    showErrorMess(" Keine Internet Verbindung !");
+                                }else {
+                                    showMess("Error"," No Internet connection !");
                                     localStorage.setItem('internetConnection','false');
                                     thisCtrl.firebaseConection = false;
                                     localStorage.setItem('firebaseConection',thisCtrl.firebaseConection);
@@ -80,18 +76,15 @@ angular.module('ActivityLogger')
                 }
 
             }
-            function showErrorMess(mess) {
+            function showMess(title,mess) {
                 $ionicPopup.alert({
-                    title: 'Fehler',
+                    title: title,
                     template: mess,
                     buttons: [{
-                        text: 'Schließen',
+                        text: 'OK',
                         type: 'button-positive'
                     }]
                 });
             }
-            $scope.$on('$stateChangeStart()', function() {
-                // TODO something before change state
-            });
         });
 
