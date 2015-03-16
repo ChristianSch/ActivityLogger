@@ -1,7 +1,7 @@
 'use strict';
 angular.module('ActivityLogger')
     .controller('ProfileCtrl',
-    function ($scope, $ionicPopup, DataService, $timeout, $state) {
+    function ($scope,$ionicPopup,DataService,$timeout,$state) {
         var thisCtrl = this;
         var userId = DataService.getCurrentUserId();
         var user = DataService.getUserByID(userId);
