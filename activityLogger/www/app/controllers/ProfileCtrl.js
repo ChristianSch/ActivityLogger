@@ -30,9 +30,6 @@ angular.module('ActivityLogger')
         $scope.login = function () {
             localStorage.removeItem('activities_CurrUser');
             thisCtrl.user_id=thisCtrl.user_id.toLowerCase();
-
-            console.log("low case log");
-            console.log(thisCtrl.user_id);
             DataService.setCurrentUserId(thisCtrl.user_id).then(function (curUserId) {
                 thisCtrl.user = DataService.getUserByID(curUserId);
                 thisCtrl.login_Ok = true;
@@ -43,10 +40,16 @@ angular.module('ActivityLogger')
         };
 
         $scope.logout = function () {
-            localStorage.removeItem("userId");
-            thisCtrl.user = {};
-            thisCtrl.logoutOption = false;
-            localStorage.removeItem('activities_CurrUser');
+            var firebaseConnected = localStorage.getItem('firebaseConection') == 'true';
+            if(firebaseConnected){
+                localStorage.removeItem("userId");
+                thisCtrl.user = {};
+                thisCtrl.logoutOption = false;
+                localStorage.removeItem('activities_CurrUser');
+            }else{
+                showErrorMess("Your are not with Firebase connected. See Settings");
+            }
+
         };
 
         $scope.showInfo = function (title, mess) {
