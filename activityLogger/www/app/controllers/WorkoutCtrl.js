@@ -14,6 +14,7 @@
             var elevator;
             var map;
             var polyline;
+            var thisActivity;
 
             this.activityTypes = [{
                 id: 1,
@@ -32,18 +33,17 @@
                 this.isEditMode = true;
                 $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
                 this.activity = MockDataService.getActivityByID($stateParams.id);
+                console.log(this.activity);
             }
+            thisActivity = this.activity;
             /**
              * @description Saves the currently edited Activity.
              */
             this.save = function() {
-                console.log(new Date(1000));
                 this.activity.type = this.activity.type.label;
                 MockDataService.addActivity(this.activity);
                 $ionicNavBarDelegate.back();
             };
-
-            var thisActivity = this.activity;
 
             /**
              * @description Deletes the currently edited Activity.
@@ -106,7 +106,7 @@
             function init() {
                 var initial_Position;
                 var mapOptions;
-                console.log(thisActivity);
+
                 if(thisActivity.track_data.length > 0) {
                     initial_Position = thisActivity.track_data[0];
                     mapOptions = {
