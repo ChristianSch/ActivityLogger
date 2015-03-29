@@ -27,8 +27,8 @@
             var competitions = [];
             var activities = [];
 
-            var nextCompetitionID = 0;
-            var nextActivityID = 0;
+            var nextCompetitionID = localStorage.getItem("nextCompetitionID") || 1;
+            var nextActivityID = localStorage.getItem("nextActivityID") || 2;
 
             var currentUserID = 'Foobar';
             /**
@@ -100,8 +100,10 @@
              * @return {number}   ID of the added activity
              */
             function addActivity(activity) {
+                nextActivityID = localStorage.getItem("nextActivityID") || 2;
                 activity.id = nextActivityID;
                 nextActivityID += 1;
+                localStorage.setItem("nextActivityID", nextActivityID);
 
                 if (cloud) {
                     fireActivitiesAngular.$asArray().$add(activity);
@@ -173,8 +175,10 @@
              * @return {Number}  ID of the added competition
              */
             function addCompetition(competition) {
+                nextCompetitionID = localStorage.getItem("nextCompetitionID") || 1;
                 competition.id = nextCompetitionID;
                 nextCompetitionID += 1;
+                localStorage.setItem("nextCompetitionID", nextCompetitionID);
 
                 if (cloud) {
                     getAllCompetitions().$add(competition);
