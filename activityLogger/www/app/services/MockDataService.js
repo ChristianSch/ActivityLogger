@@ -30,7 +30,7 @@
             var nextCompetitionID = 0;
             var nextActivityID = 0;
 
-            var currentUserID = null;
+            var currentUserID = 'Foobar';
             /**
              * Gets all users that are currently registrated
              *
