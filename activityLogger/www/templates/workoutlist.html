@@ -23,8 +23,10 @@
                 </div>
                 <br class="clearfix">
                 <div>
+                    <span class="text-right activity-date">Start: {{activity.start_time | normalizeDateFilter}}</span>
+                    <br>
                     <span class="text-left activity-distance">{{activity.distance | normalizeMeterToKMFilter}} KM</span>
-                    <span class="text-right activity-date">({{activity.start_time | normalizeDateFilter}} to {{activity.end_time | normalizeDateFilter}})</span>
+                    <span class="text-right activity-date">End: {{activity.end_time | normalizeDateFilter}}</span>
                 </div>
                 <ion-option-button class="button-info" ng-click="alCtrl.remove(activity.id)">
                     Delete
