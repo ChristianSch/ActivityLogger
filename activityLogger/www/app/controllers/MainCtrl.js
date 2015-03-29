@@ -96,7 +96,7 @@
                     } else {
                         // choose the completed activity and take it as reference
                         var actID = (el.activity_id1 !== null) ? el.activity_id1 : el.activity_id2;
-                        var act = MockDataService.getActivityByID(actID);
+                        var act = MockDataService.getActivityByID(actID) || [];
                         labelStr = $filter('normalizeMeterToKMFilter')(act.distance) + 'km (' + $filter('convertMillisecondsToMinutesFilter')(act.duration) + ')';
                     }
 
