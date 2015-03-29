@@ -30,3 +30,27 @@
 .settingOption{
 	font-weight: bold;
 }
+
+.activity-type,
+.activity-distance{
+    display: inline-block
+}
+.activity-type{
+    float: left;
+}
+.activity-distance {
+    float: left;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, .6);
+}
+.activity-date {
+    float: right;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, .6);
+}
+.activity-duration {
+    float: right;
+}
+.clearfix {
+    clear: both;
+}
