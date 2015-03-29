@@ -8,20 +8,22 @@
 			.module('ActivityLogger')
 			.factory(
 					'SummaryService',
-					function(Activity, User, DataService, MockDataService) {
+					function(Activity, User, MockDataService) {
 
 						// TEST DATA
-//						var user = new User(42, "a", "b", "male", null, 80, 180);
-//						if (activities === undefined) {
-//							var activities = getRandomActivities();
-//						}
-						
-						 var userID = MockDataService.getCurrentUserId();
-						 var activities = MockDataService.getAllActivities(userID);						 
-						 var user = MockDataService.getUserByID(userID);
-						 console.log(userID);
-						 console.log(activities);
-						 console.log(user);
+						// var user = new User(42, "a", "b", "male", null, 80,
+						// 180);
+						// if (activities === undefined) {
+						// var activities = getRandomActivities();
+						// }
+
+						var userID = MockDataService.getCurrentUserId();
+						var activities = MockDataService
+								.getAllActivities(userID);
+						var user = MockDataService.getUserByID(userID);
+						console.log(userID);
+						console.log(activities);
+						console.log(user);
 
 						// PUBLIC FUNCTIONS
 
@@ -39,6 +41,7 @@
 							var performances = [];
 							var disciplines = getAllActivityTypes();
 							var i;
+
 							for (i in disciplines) {
 								performances.push({
 									discipline : disciplines[i],
@@ -86,7 +89,7 @@
 							var distance = 0;
 							var calories = 0;
 							var duration = 0;
-							var time = new Date().getTime() / 1000 - period;
+							var time = new Date().getTime() - period;
 							var i;
 							for (i in activities) {
 								if (activities[i].start_time < time
@@ -95,7 +98,7 @@
 								}
 								distance += activities[i].distance;
 								calories += calcCalories(activities[i]);
-								duration += activities[i].duration;
+								duration += activities[i].duration / 1000;
 							}
 
 							var performances = [ {
@@ -131,7 +134,7 @@
 							var highest_avg_speed = 0;
 							var highest_speed = 0;
 							var most_kcal = 0;
-							var time = new Date().getTime() / 1000 - period;
+							var time = new Date().getTime() - period;
 
 							var i;
 							for (i in activities) {
@@ -139,10 +142,11 @@
 										&& period != -1) {
 									continue;
 								}
+
 								if (activities[i].type == activity_type) {
 									var dist = activities[i].distance;
 									var avg_speed = dist
-											/ activities[i].duration;
+											/ (activities[i].duration / 1000);
 									var max_speed = getMaxSpeed(activities[i]);
 									var kcal = calcCalories(activities[i]);
 
@@ -172,10 +176,9 @@
 										value : Math
 												.round(highest_avg_speed * 36) / 10,
 										unit : "km/h"
-									},
-									{
+									}, {
 										name : "Max. Speed",
-										value : Math.round(highest_speed ),
+										value : Math.round(highest_speed),
 										unit : "km/h"
 									}, {
 										name : "Calorie Consumption",
@@ -203,7 +206,7 @@
 							var total_duration = 0;
 							var total_distance = 0;
 							var total_calories = 0;
-							var time = new Date().getTime() / 1000 - period;
+							var time = new Date().getTime() - period;
 
 							var i;
 							for (i in activities) {
@@ -213,7 +216,7 @@
 								}
 								if (activities[i].type == activity_type) {
 									count++;
-									total_duration += activities[i].duration;
+									total_duration += activities[i].duration / 1000;
 									total_distance += activities[i].distance;
 									total_calories += calcCalories(activities[i]);
 									if (activities[i].start_time < first_activity_time
@@ -224,7 +227,7 @@
 							}
 
 							if (period == -1) {
-								period = new Date().getTime() / 1000
+								period = new Date().getTime()
 										- first_activity_time;
 							}
 							var days = period / 60 / 60 / 24;
@@ -263,11 +266,11 @@
 						 *         for each day in minutes.
 						 */
 						function getDurations(days) {
-							var today = new Date().getTime() / 1000;
+							var today = new Date().getTime();
 							var durations = [];
 							for (var i = days - 1; i >= 0; i--) {
-								durations.push(getDurationPerDay(today - 86400
-										* i) / 60);
+								durations.push(getDurationPerDay(today - 86400000
+										* i) / 60 / 1000);
 							}
 							return durations;
 						}
@@ -282,10 +285,10 @@
 						 *         for each day in km.
 						 */
 						function getDistances(days) {
-							var today = new Date().getTime() / 1000;
+							var today = new Date().getTime();
 							var distances = [];
 							for (var i = days - 1; i >= 0; i--) {
-								distances.push(getDistancePerDay(today - 86400
+								distances.push(getDistancePerDay(today - 86400000
 										* i) / 1000);
 							}
 							return distances;
@@ -301,10 +304,10 @@
 						 *         for each day in kcal.
 						 */
 						function getCalories(days) {
-							var today = new Date().getTime() / 1000;
+							var today = new Date().getTime();
 							var calories = [];
 							for (var i = days - 1; i >= 0; i--) {
-								calories.push(getCaloriesPerDay(today - 86400
+								calories.push(getCaloriesPerDay(today - 86400000
 										* i));
 							}
 							return calories;
@@ -321,7 +324,7 @@
 						 * @return {number} duration
 						 */
 						function getDurationOfDiscipline(discipline, period) {
-							var time = new Date().getTime() / 1000 - period;
+							var time = new Date().getTime() - period;
 							var duration = 0;
 
 							var i;
@@ -331,10 +334,9 @@
 									continue;
 								}
 								if (activities[i].type == discipline) {
-									duration += activities[i].duration;
+									duration += activities[i].duration / 1000;
 								}
 							}
-
 							return duration;
 						}
 
@@ -371,8 +373,7 @@
 						function getRandomActivities() {
 							var activities = [];
 							var id = 1000;
-							var date = new Date().getTime() / 1000 - 60 * 60
-									* 10;
+							var date = new Date().getTime() - 60 * 60 * 10000;
 							var x;
 
 							for (var i = 0; i < 1053; i++) {
@@ -412,8 +413,8 @@
 							var max_speed = 0;
 							var i;
 							for (i in activity.track_data) {
-								if (activity.track_data[i].speed > max_speed) {
-									max_speed = activity.track_data[i].speed;
+								if (activity.track_data[i].coords.speed > max_speed) {
+									max_speed = activity.track_data[i].coords.speed;
 								}
 							}
 							return max_speed;
@@ -433,7 +434,7 @@
 							var i;
 							for (i in activities) {
 								if (isSameDay(activities[i].start_time, day)) {
-									duration += activities[i].duration;
+									duration += activities[i].duration / 1000;
 								}
 							}
 							return duration;
@@ -489,18 +490,18 @@
 						function calcCalories(activity) {
 							var met;
 							// determine MET
-							if (activity.type == "Biking") {
+							if (activity.type == "Bike") {
 								met = 8;
-							} else if (activity.type == "Running") {
+							} else if (activity.type == "Run") {
 								met = 11;
 							}
 							// consider gender
-							if (user.gender == "Weiblich") {
+							if (user.gender == "Female") {
 								met *= 0.9;
 							}
 							// calculate kcal
 							// MET * kg * hours
-							var hours = activity.duration / 60 / 60;
+							var hours = activity.duration / 1000 / 60 / 60;
 							var kcal = met * user.weight * hours;
 							return kcal;
 						}
@@ -514,10 +515,10 @@
 						 *            {number} Second timestamp.
 						 */
 						function isSameDay(timestamp_a, timestamp_b) {
-							var date_a = new Date(timestamp_a * 1000).setHours(
-									0, 0, 0, 0);
-							var date_b = new Date(timestamp_b * 1000).setHours(
-									0, 0, 0, 0);
+							var date_a = new Date(timestamp_a).setHours(0, 0,
+									0, 0);
+							var date_b = new Date(timestamp_b).setHours(0, 0,
+									0, 0);
 							if (date_a === date_b) {
 								return true;
 							}

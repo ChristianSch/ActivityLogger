@@ -130,7 +130,7 @@
 								labels.push(durations[i].discipline);
 								values
 										.push(Math
-												.floor(durations[i].duration / 60 / 60));
+												.floor(durations[i].duration / 60));
 							}
 							return drawPieChart(labels, values,
 									"chart_discipline_distribution");
@@ -144,11 +144,11 @@
 						 */
 						var getPeriod = function(slider_value) {
 							if (slider_value < 30) {
-								return slider_value * 60 * 60 * 24;
+								return slider_value * 60 * 60 * 24 * 1000;
 							}
 							if (slider_value < 42) {
-								return (slider_value - 29) * 60 * 60 * 24 * 7
-										* 30;
+								return (slider_value - 29) * 60 * 60 * 24 * 30
+										* 1000;
 							}
 							return -1;
 						}
@@ -159,13 +159,13 @@
 						 * @return {string} text.
 						 */
 						$scope.getPeriodText = function(slider_value) {
-							var period = getPeriod(slider_value);
-							if (period == -1) {
+							var period = getPeriod(slider_value) / 1000;
+							if (period == -1 / 1000) {
 								return "Since the beginning";
 							}
-							if (period % (60 * 60 * 24 * 7 * 30) == 0) {
+							if (period % (60 * 60 * 24 * 30) == 0) {
 								return "Last " + period
-										/ (60 * 60 * 24 * 7 * 30) + " months";
+										/ (60 * 60 * 24 * 30) + " months";
 							}
 							if (period % (60 * 60 * 24 * 7) == 0) {
 								return "Last " + period / (60 * 60 * 24 * 7)
