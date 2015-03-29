@@ -8,18 +8,20 @@
 			.module('ActivityLogger')
 			.factory(
 					'SummaryService',
-					function(Activity, User, DataService) {
+					function(Activity, User, DataService, MockDataService) {
 
 						// TEST DATA
-						var user = new User(42, "a", "b", "male", null, 80, 180);
-						if (activities === undefined) {
-							var activities = getRandomActivities();
-						}
-						// var activities = DataService
-						// .getAllActivities(DataService
-						// .getCurrentUserId());
-						// var user = DataService.getUserByID(DataService
-						// .getCurrentUserId());
+//						var user = new User(42, "a", "b", "male", null, 80, 180);
+//						if (activities === undefined) {
+//							var activities = getRandomActivities();
+//						}
+						
+						 var userID = MockDataService.getCurrentUserId();
+						 var activities = MockDataService.getAllActivities(userID);						 
+						 var user = MockDataService.getUserByID(userID);
+						 console.log(userID);
+						 console.log(activities);
+						 console.log(user);
 
 						// PUBLIC FUNCTIONS
 
