@@ -56,7 +56,7 @@
                 var userDummy = getAllUsers();
 
                 for (var i = 0; i < userDummy.length; i++) {
-                    if (usersDummy[i].id === id) {
+                    if (userDummy[i].id === id) {
                         return userDummy[i];
                     }
                 }
