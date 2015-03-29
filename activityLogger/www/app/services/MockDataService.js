@@ -27,8 +27,8 @@
             var competitions = [];
             var activities = [];
 
-            var nextCompetitionID = localStorage.getItem("nextCompetitionID") || 1;
-            var nextActivityID = localStorage.getItem("nextActivityID") || 2;
+            var nextCompetitionID;
+            var nextActivityID;
 
             var currentUserID = 'Foobar';
             /**
@@ -102,7 +102,7 @@
             function addActivity(activity) {
                 nextActivityID = localStorage.getItem("nextActivityID") || 2;
                 activity.id = nextActivityID;
-                nextActivityID += 1;
+                nextActivityID = activities.length + 1;
                 localStorage.setItem("nextActivityID", nextActivityID);
 
                 if (cloud) {
@@ -177,7 +177,7 @@
             function addCompetition(competition) {
                 nextCompetitionID = localStorage.getItem("nextCompetitionID") || 1;
                 competition.id = nextCompetitionID;
-                nextCompetitionID += 1;
+                nextCompetitionID = competitions.length + 1;
                 localStorage.setItem("nextCompetitionID", nextCompetitionID);
 
                 if (cloud) {
