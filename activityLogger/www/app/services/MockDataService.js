@@ -31,7 +31,11 @@
             var nextActivityID = 0;
 
             var currentUserID = null;
-
+            /**
+             * Gets all users that are currently registrated
+             *
+             * @return {Array}   Array of user models
+             */
             function getAllUsers() {
                 if (cloud) {
                     return fireUsersAngular.$asArray();
@@ -40,7 +44,12 @@
                     return users;
                 }
             }
-
+            /**
+             * Adds a user to the registrated users list
+             *
+             * @param  {User} to add
+             * @return {String}   id of the added user
+             */
             function addUser(user) {
                 if (cloud) {
                     getAllUsers().$add(user);
@@ -51,7 +60,12 @@
 
                 return user.id;
             }
-
+            /**
+             * Get a user by his given id
+             *
+             * @param  {String} id of the user
+             * @return {User}   with the given id, NULL if not available
+             */
             function getUserByID(id) {
                 var userDummy = getAllUsers();
 
@@ -63,15 +77,28 @@
 
                 return null;
             }
-
+            /**
+             * Sets the current user id
+             *
+             * @param  {String} ID of the current user
+             */
             function setCurrentUserId(id) {
                 currentUserID = id;
             }
 
+            /**
+             * Returns the ID of the current user
+             * @returns {String} ID of the current user
+             */
             function getCurrentUserId() {
                 return currentUserID;
             }
-
+            /**
+             * Adds an activity to the activity list
+             *
+             * @param  {Activity} to add
+             * @return {number}   ID of the added activity
+             */
             function addActivity(activity) {
                 activity.id = nextActivityID;
                 nextActivityID += 1;
@@ -85,7 +112,12 @@
 
                 return activity.id;
             }
-
+            /**
+             * Returns all activities of a user
+             *
+             * @param  {String} user ID to get activities from
+             * @return {Array}  of activites
+             */
             function getAllActivities(user_id) {
                 var activitiesDummy;
 
@@ -99,7 +131,12 @@
                     return el.userId == user_id;
                 });
             }
-
+            /**
+             * Returns an activity with given id of the current user
+             *
+             * @param  {number} of the activity
+             * @return {Activity}   Activity with the given id, NULL if not available
+             */
             function getActivityByID(id) {
                 var activitiesDummy = getAllActivities(currentUserID);
 
@@ -108,9 +145,13 @@
                         return activitiesDummy[i];
                     }
                 }
-                return [];
+                return null;
             }
-
+            /**
+             * removes an Activity with the given id from the list
+             *
+             * @param  {number} id of the activity that should be removed
+             */
             function removeActivity(id) {
                 var activitiesDummy = getAllActivities(currentUserID);
 
@@ -125,7 +166,12 @@
                     }
                 }
             }
-
+            /**
+             * Adds a competition to the competition list
+             *
+             * @param  {Competition} to add
+             * @return {Number}  ID of the added competition
+             */
             function addCompetition(competition) {
                 competition.id = nextCompetitionID;
                 nextCompetitionID += 1;
@@ -139,7 +185,12 @@
 
                 return competition.id;
             }
-
+            /**
+             * Returns a competition with the given ID
+             *
+             * @param  {Number} of the competition that should be returned
+             * @return {Competition}   with the given ID, NULL if not available
+             */
             function getCompetitionById(id) {
                 var competitionsDummy = getAllCompetitions();
 
@@ -151,7 +202,11 @@
 
                 return null;
             }
-
+            /**
+             * returns the competition list
+             *
+             * @return {Array}   List of competitions
+             */
             function getAllCompetitions() {
                 if (cloud) {
                     return fireCompetitionsAngular.$asArray();
@@ -160,7 +215,12 @@
                     return competitions;
                 }
             }
-
+            /**
+             * Updates a existing competition
+             *
+             * @param  {Number} ID of the competition to update
+             * @param  {Competition} Updated competition for entry ID
+             */
             function updateCompetition(id, competition) {
                 var competitionsDummy = getAllCompetitions();
 
