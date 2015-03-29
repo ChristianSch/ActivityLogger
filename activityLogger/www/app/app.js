@@ -81,15 +81,6 @@
                         }
                     }
                 })
-                .state('tab.settings', {
-                    url: '/settings',
-                    views: {
-                        'tab-settings': {
-                            templateUrl: 'templates/settings.html',
-                            controller: 'SettingsCtrl as setCtrl'
-                        }
-                    }
-                })
                 .state('tab.summary', {
                     url: '/summary',
                     views: {
