@@ -31,6 +31,7 @@
             var nextActivityID;
 
             var currentUserID = 'Foobar';
+
             /**
              * Gets all users that are currently registrated
              *
@@ -44,6 +45,7 @@
                     return users;
                 }
             }
+
             /**
              * Adds a user to the registrated users list
              *
@@ -60,6 +62,7 @@
 
                 return user.id;
             }
+
             /**
              * Get a user by his given id
              *
@@ -74,9 +77,9 @@
                         return userDummy[i];
                     }
                 }
-
                 return null;
             }
+
             /**
              * Sets the current user id
              *
@@ -93,6 +96,7 @@
             function getCurrentUserId() {
                 return currentUserID;
             }
+
             /**
              * Adds an activity to the activity list
              *
@@ -100,20 +104,22 @@
              * @return {number}   ID of the added activity
              */
             function addActivity(activity) {
-                nextActivityID = localStorage.getItem("nextActivityID") || 2;
+                nextActivityID = parseInt(localStorage.getItem("nextActivityID") || 0);
                 activity.id = nextActivityID;
-                nextActivityID = activities.length + 1;
-                localStorage.setItem("nextActivityID", nextActivityID);
 
                 if (cloud) {
                     fireActivitiesAngular.$asArray().$add(activity);
+                    nextActivityID =  nextActivityID + 1;
                 } else {
                     activities.push(activity);
                     localStorage.setItem("activities", JSON.stringify(activities));
+                    nextActivityID = activities.length + 1;
                 }
 
+                localStorage.setItem("nextActivityID", nextActivityID);
                 return activity.id;
             }
+
             /**
              * Returns all activities of a user
              *
@@ -133,6 +139,7 @@
                     return el.userId == user_id;
                 });
             }
+
             /**
              * Returns an activity with given id of the current user
              *
@@ -149,6 +156,7 @@
                 }
                 return null;
             }
+
             /**
              * removes an Activity with the given id from the list
              *
@@ -160,14 +168,15 @@
                 for (var i = 0; i < activitiesDummy.length; i++) {
                     if (activitiesDummy[i].id == id) {
                         if (cloud) {
-                            activitiesDummy.$remove(activitiesDummy[i]);
+                            fireActivitiesAngular.$asArray().$remove(activitiesDummy[i]);
                         } else {
-                            activitiesDummy.splice(activitiesDummy[i], 1);
-                            localStorage.setItem("activities", JSON.stringify(activitiesDummy));
+                            activities.splice(activitiesDummy[i], 1);
+                            localStorage.setItem("activities", JSON.stringify(activities));
                         }
                     }
                 }
             }
+
             /**
              * Adds a competition to the competition list
              *
@@ -175,20 +184,20 @@
              * @return {Number}  ID of the added competition
              */
             function addCompetition(competition) {
-                nextCompetitionID = localStorage.getItem("nextCompetitionID") || 1;
+                nextCompetitionID = parseInt(localStorage.getItem("nextCompetitionID") || 1);
                 competition.id = nextCompetitionID;
-                nextCompetitionID = competitions.length + 1;
-                localStorage.setItem("nextCompetitionID", nextCompetitionID);
 
                 if (cloud) {
-                    getAllCompetitions().$add(competition);
+                    fireCompetitionsAngular.$asArray().$add(competition);
                 } else {
                     competitions.push(competition);
                     localStorage.setItem("competitions", JSON.stringify(competitions));
                 }
-
+                nextCompetitionID = nextCompetitionID + 1;
+                localStorage.setItem("nextCompetitionID", nextCompetitionID);
                 return competition.id;
             }
+
             /**
              * Returns a competition with the given ID
              *
@@ -203,9 +212,9 @@
                         return competitionsDummy[i];
                     }
                 }
-
                 return null;
             }
+
             /**
              * returns the competition list
              *
@@ -219,6 +228,7 @@
                     return competitions;
                 }
             }
+
             /**
              * Updates a existing competition
              *
@@ -414,13 +424,11 @@
                         timestamp: 1422290100000
                     }
                 ];
-            }
-            if (cloud) {
-                activities = getAllActivities(currentUserID);
-                competitions = getAllCompetitions();
-                users = getAllUsers();
-            }
-            if (activities.length == 0 && !cloud){
+
+                var anActivity = addActivity(new Activity(0,
+                    "Run",
+                    1422290076071,
+                    1422290031199, track3, "", 1589.4696498299068, secondTestUser));
                 addActivity(new Activity(0,
                     "Run",
                     1422290032000,
@@ -431,13 +439,23 @@
                     1422290031199,
                     1422290076071,
                     track2, "", 1589.4696498299068, currentUserID));
-
-                var anActivity = addActivity(new Activity(0,
+                addActivity(new Activity(0,
                     "Run",
-                    1422290076071,
-                    1422290031199, track3, "", 1589.4696498299068, secondTestUser));
+                    1427634000000,
+                    1427634600000, track1, "", 1589.34, currentUserID));
+
+                addActivity(new Activity(0,
+                    "Bike",
+                    1427634000000,
+                    1427634600000,
+                    track2, "", 1589.4696498299068, currentUserID));
 
                 addCompetition(new Competition(0, secondTestUser, currentUserID, anActivity, null, 1000));
+
+            } else {
+                activities = getAllActivities(currentUserID);
+                competitions = getAllCompetitions();
+                users = getAllUsers();
             }
             // api
             return {
