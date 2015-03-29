@@ -21,7 +21,7 @@
             var fireActivitiesAngular = $firebase(fireActivities);
 
             // Only for tests
-            var cloud = false;
+            var cloud = true;
 
             var users = [];
             var competitions = [];
@@ -56,7 +56,7 @@
                 var userDummy = getAllUsers();
 
                 for (var i = 0; i < userDummy.length; i++) {
-                    if (userDummy[i].id === id) {
+                    if (userDummy[i].id == id) {
                         return userDummy[i];
                     }
                 }
@@ -96,23 +96,26 @@
                 }
 
                 return activitiesDummy.filter(function (el, i) {
-                    return el.userId === user_id;
+                    return el.userId == user_id;
                 });
             }
 
             function getActivityByID(id) {
                 var activitiesDummy = getAllActivities(currentUserID);
 
-                return activitiesDummy.filter(function(el, i) {
-                    return el.id === id;
-                });
+                for(var i = 0; i < activitiesDummy.length; i++) {
+                    if(activitiesDummy[i].id == id) {
+                        return activitiesDummy[i];
+                    }
+                }
+                return [];
             }
 
             function removeActivity(id) {
                 var activitiesDummy = getAllActivities(currentUserID);
 
                 for (var i = 0; i < activitiesDummy.length; i++) {
-                    if (activitiesDummy[i].id === id) {
+                    if (activitiesDummy[i].id == id) {
                         if (cloud) {
                             activitiesDummy.$remove(activitiesDummy[i]);
                         } else {
@@ -141,7 +144,7 @@
                 var competitionsDummy = getAllCompetitions();
 
                 for (var i = 0; i < competitionsDummy.length; i++) {
-                    if (competitionsDummy[i].id === id) {
+                    if (competitionsDummy[i].id == id) {
                         return competitionsDummy[i];
                     }
                 }
@@ -162,7 +165,7 @@
                 var competitionsDummy = getAllCompetitions();
 
                 for (var i = 0; i < competitionsDummy.length; i++) {
-                    if (competitionsDummy[i].id === id) {
+                    if (competitionsDummy[i].id == id) {
                         competitionsDummy[i] = competition;
                     }
                 }
@@ -352,7 +355,7 @@
                 competitions = getAllCompetitions();
                 users = getAllUsers();
             }
-            if (activities.length === 0){
+            if (activities.length == 0){
                 addActivity(new Activity(0,
                     "Run",
                     1422290032000,

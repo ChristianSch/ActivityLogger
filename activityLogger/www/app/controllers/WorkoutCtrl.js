@@ -33,9 +33,9 @@
                 this.isEditMode = true;
                 $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
                 this.activity = MockDataService.getActivityByID($stateParams.id);
-                console.log(this.activity);
             }
             thisActivity = this.activity;
+
             /**
              * @description Saves the currently edited Activity.
              */
