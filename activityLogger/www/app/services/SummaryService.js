@@ -230,7 +230,7 @@
 								period = new Date().getTime()
 										- first_activity_time;
 							}
-							var days = period / 60 / 60 / 24;
+							var days = period / 1000 / 60 / 60 / 24;
 							var avg_speed = total_distance / total_duration;
 							var dist_per_day = total_distance / days;
 							var time_per_day = total_duration / days;
