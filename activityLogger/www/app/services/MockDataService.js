@@ -232,190 +232,191 @@
             }
 
             // mock some data
-            currentUserID = addUser(new User('Foobar', 'Foo', 'Bar', 'Male', '34.3.4192', 118, 167));
-            var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', '13.3.1992', 64, 165));
+            if(!cloud) {
+                currentUserID = addUser(new User('Foobar', 'Foo', 'Bar', 'Male', '34.3.4192', 118, 167));
+                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', '13.3.1992', 64, 165));
 
-            var track1 = [
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.578581,
-                        longitude: -118.291994,
-                        speed: 0
+                var track1 = [
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.578581,
+                            longitude: -118.291994,
+                            speed: 0
+                        },
+                        timestamp: 1422290032000
                     },
-                    timestamp: 1422290032000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.606111,
-                        longitude: -118.062778,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.606111,
+                            longitude: -118.062778,
+                            speed: 0
+                        },
+                        timestamp: 1422290052000
                     },
-                    timestamp: 1422290052000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.433269,
-                        longitude: -117.950916,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.433269,
+                            longitude: -117.950916,
+                            speed: 0
+                        },
+                        timestamp: 1422290070000
                     },
-                    timestamp: 1422290070000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.588056,
-                        longitude: -116.943056,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.588056,
+                            longitude: -116.943056,
+                            speed: 0
+                        },
+                        timestamp: 1422290100000
                     },
-                    timestamp: 1422290100000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.339722,
-                        longitude: -117.467778,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.339722,
+                            longitude: -117.467778,
+                            speed: 0
+                        },
+                        timestamp: 1422290120000
                     },
-                    timestamp: 1422290120000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 36.23998,
-                        longitude: -116.83171,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 36.23998,
+                            longitude: -116.83171,
+                            speed: 0
+                        },
+                        timestamp: 1422290100000
+                    }
+                ];
+                var track2 = [
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.5851,
+                            longitude: 8.6841,
+                            speed: 0
+                        },
+                        timestamp: 1422290032000
                     },
-                    timestamp: 1422290100000
-                }
-            ];
-            var track2 = [
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.5851,
-                        longitude: 8.6841,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.5866,
+                            longitude: 8.6815,
+                            speed: 0
+                        },
+                        timestamp: 1422290042000
                     },
-                    timestamp: 1422290032000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.5866,
-                        longitude: 8.6815,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.5874,
+                            longitude: 8.6840,
+                            speed: 0
+                        },
+                        timestamp: 1422290052000
                     },
-                    timestamp: 1422290042000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.5874,
-                        longitude: 8.6840,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.5860,
+                            longitude: 8.6861,
+                            speed: 0
+                        },
+                        timestamp: 1422290100000
+                    }
+                ];
+                var track3 = [
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.7967,
+                            longitude: 8.7688,
+                            speed: 0
+                        },
+                        timestamp: 1422290032000
                     },
-                    timestamp: 1422290052000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.5860,
-                        longitude: 8.6861,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.7950,
+                            longitude: 8.7689,
+                            speed: 0
+                        },
+                        timestamp: 1422290052000
                     },
-                    timestamp: 1422290100000
-                }
-            ];
-            var track3 = [
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.7967,
-                        longitude: 8.7688,
-                        speed: 0
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.7943,
+                            longitude: 8.7625,
+                            speed: 0
+                        },
+                        timestamp: 1422290070000
                     },
-                    timestamp: 1422290032000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.7950,
-                        longitude: 8.7689,
-                        speed: 0
-                    },
-                    timestamp: 1422290052000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.7943,
-                        longitude: 8.7625,
-                        speed: 0
-                    },
-                    timestamp: 1422290070000
-                },
-                {
-                    coords: {
-                        accuracy: 1,
-                        altitude: -0.134625,
-                        altitudeAccuracy: null,
-                        heading: 0,
-                        latitude: 50.5851,
-                        longitude: 8.6841,
-                        speed: 0
-                    },
-                    timestamp: 1422290100000
-                }
-            ];
-
+                    {
+                        coords: {
+                            accuracy: 1,
+                            altitude: -0.134625,
+                            altitudeAccuracy: null,
+                            heading: 0,
+                            latitude: 50.5851,
+                            longitude: 8.6841,
+                            speed: 0
+                        },
+                        timestamp: 1422290100000
+                    }
+                ];
+            }
             if (cloud) {
                 activities = getAllActivities(currentUserID);
                 competitions = getAllCompetitions();
                 users = getAllUsers();
             }
-            if (activities.length == 0){
+            if (activities.length == 0 && !cloud){
                 addActivity(new Activity(0,
                     "Run",
                     1422290032000,
