@@ -270,7 +270,7 @@
 							var durations = [];
 							for (var i = days - 1; i >= 0; i--) {
 								durations.push(getDurationPerDay(today - 86400000
-										* i) / 60 / 1000);
+										* i) / 60);
 							}
 							return durations;
 						}
