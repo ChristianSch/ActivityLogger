@@ -1,13 +1,13 @@
 <ion-view>
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon ion-ios7-trash" ng-show="wCtrl.isEditMode" ng-click="wCtrl.remove()">
+        <button class="button button-icon icon ion-ios7-trash" ng-click="wCtrl.remove()">
         </button>
     </ion-nav-buttons>
     <ion-content class="padding">
         <div class="card">
             <div class="item item-divider">Overview</div>
             <div class="item item-text-wrap">
-                <div class="list" ng-show="wCtrl.isEditMode">
+                <div class="list">
                     <label class="item item-input">
                         <div class="input-label">Discipline</div>
                         <span class="text-right">{{wCtrl.activity.type}}</span>
@@ -32,50 +32,17 @@
                         <textarea placeholder="Comments" style="resize: none" ng-model="wCtrl.activity.comment" rows="5"></textarea>
                     </label>
                 </div>
-                <div class="list" ng-hide="wCtrl.isEditMode">
-                    <label class="item item-input item-select">
-                        <div class="input-label">Discipline</div>
-                        <select ng-model="wCtrl.activity.type"
-                                ng-options="item as item.label for item in wCtrl.activityTypes">
-                        </select>
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Distance in m</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.distance">
-
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Start</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.start_time">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Finish</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.end_time">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Duration in s</span>
-                        <input class="text-right" type="text" ng-model="wCtrl.activity.duration">
-                    </label>
-                    <label class="item item-input" style="height: 60%;">
-                        <textarea placeholder="Comments" style="resize: none" ng-model="wCtrl.activity.comment" rows="5"></textarea>
-                    </label>
-                </div>
             </div>
         </div>
-        <div class="card" ng-show="wCtrl.isEditMode">
+        <div class="card">
             <div class="item item-divider">Track</div>
             <div id="map_canvas" style="height:300px"></div>
         </div>
-        <div class="card" ng-show="wCtrl.isEditMode && wCtrl.activity.track_data.length">
+        <div class="card" ng-show="wCtrl.activity.track_data.length">
             <div class="item item-divider">Elevation</div>
             <div>
                 <canvas id="elevation_profile" height="250"></canvas>
             </div>
-        </div>
-        <div>
-            <button class="button button-block button-positive" ng-hide="wCtrl.isEditMode" ng-click="wCtrl.save()">
-                Save
-            </button>
         </div>
 
     </ion-content>

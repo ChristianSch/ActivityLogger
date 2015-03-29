@@ -23,17 +23,10 @@
                 id: 2,
                 label: 'Bike'
             }];
-            this.isEditMode = false;
-            if ($stateParams.id == 'new') {
-                $ionicNavBarDelegate.setTitle('New Activity');
-                this.activity = new Activity(0, this.activityTypes[0], 0, 0, [], "", 0, 0);
-                this.activity.userId = MockDataService.getCurrentUserId();
 
-            } else {
-                this.isEditMode = true;
-                $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
-                this.activity = MockDataService.getActivityByID($stateParams.id);
-            }
+            $ionicNavBarDelegate.setTitle('Activity ' + $stateParams.id);
+            this.activity = MockDataService.getActivityByID($stateParams.id);
+
             thisActivity = this.activity;
 
             /**
@@ -185,8 +178,6 @@
             }
 
             //Show GooogleMaps only if it's a persisted Activity
-            if(this.isEditMode) {
-                google.maps.event.addDomListener(window, 'load', init());
-            }
+            google.maps.event.addDomListener(window, 'load', init());
         });
 })();

@@ -16,8 +16,7 @@
              * @description Switches to detailed activity-view for a new activity
              */
             this.addActivity = function() {
-                $state.go('tab.workout', {
-                    id: 'new'
+                $state.go('tab.main', {
                 });
             };
 
