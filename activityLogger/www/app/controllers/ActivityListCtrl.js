@@ -34,8 +34,10 @@
                     okText: 'Delete'
                 });
                 confirmPopup.then(function(res) {
-                    thisActivities.splice(thisActivities.indexOf(MockDataService.getActivityByID(id)), 1);
-                    MockDataService.removeActivity(id);
+                    if (res) {
+                        thisActivities.splice(thisActivities.indexOf(MockDataService.getActivityByID(id)), 1);
+                        MockDataService.removeActivity(id);
+                    }
                 });
             };
 
