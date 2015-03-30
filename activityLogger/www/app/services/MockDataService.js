@@ -29,7 +29,7 @@
             var nextCompetitionID;
             var nextActivityID;
 
-            var currentUserID = 'Foobar';
+            var currentUserID = 'ÄÖÜ';
 
             /**
              * Gets all users that are currently registrated
@@ -63,7 +63,6 @@
             }
 
             function updateUser(id, user) {
-                console.log("Update user");
                 var dummyUser = getAllUsers();
 
                 if(cloud) {
@@ -130,6 +129,7 @@
                 activity.id = nextActivityID;
 
                 if (cloud) {
+                    if(activity.track_data.length == 0) activity.track_data = 42;
                     fireActivitiesAngular.$asArray().$add(activity);
                     nextActivityID =  nextActivityID + 1;
                 } else {
@@ -173,6 +173,8 @@
 
                 for(var i = 0; i < activitiesDummy.length; i++) {
                     if(activitiesDummy[i].id == id) {
+                        //Firebase has problems with empty Arrays, so there must be used dummy data
+                        if(activitiesDummy[i].track_data == 42) activitiesDummy[i].track_data = [];
                         return activitiesDummy[i];
                     }
                 }
