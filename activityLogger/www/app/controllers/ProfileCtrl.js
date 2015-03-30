@@ -14,22 +14,33 @@
             this.user.gender = this.genders[0];
 
             /**
-             * Checks if the given String is a valid Namestring for
-             * @param name
-             * @returns {boolean}
+             * Checks if the given String is a valid Namestring for Accountname, First name and Last name
+             * @param {String] namestring to check
+             * @returns {boolean} true if its valid, false otherwise
              */
             function checkName(name) {
                 return /[a-zA-Z]+$/.test(name);
             }
+            /**
+             * Checks if the given Sring is a valid Numberstring for Weight and Size
+             * @param {String] Numberstring to check
+             * @returns {boolean} true if its valid, false otherwise
+             */
             function checkNumber(str) {
                 return /^[+|-]?[0-9]+(\.[0-9]+)?$/.test(str);
             }
 
+            /**
+             * Clears the cache of used users (Used Accounts list)
+             */
             this.clearUserCache = function() {
                 this.userCache = [];
                 localStorage.setItem("userCache", null);
             }
-
+            /**
+             * Tests if an used account is in the user cache. If not, it will be added
+             * @param {String} id of the user to test
+             */
             this.rememberUser = function(id) {
                 console.log("Remember user " + id);
                 var insert = true;
@@ -58,7 +69,9 @@
                     }
                 }
             }
-
+            /**
+             * Logout for the current user. The storage will be set to localStorage and a default user
+             */
             this.logout = function() {
                 this.loginFlag = false;
                 localStorage.setItem("loginFlag", false);
@@ -66,7 +79,9 @@
                 MockDataService.setCloudConnection(false);
                 MockDataService.setCurrentUserId("ÄÖÜ");
             }
-
+            /**
+             * Login for the users. It will also be checked if the user is in the user cache
+             */
             this.loginUser = function(){
                 var available = false;
                 var users = MockDataService.getAllUsers();
@@ -90,7 +105,10 @@
                     });
                 }
             }
-
+            /**
+             * Changes the current user to an user with the given id (Used for "Used Accounts" list)
+             * @param {String} id of the user, which should be used now
+             */
             this.changeUser = function (id) {
                 this.user = MockDataService.getUserByID(id);
                 MockDataService.setCurrentUserId(id);
@@ -106,7 +124,9 @@
                     console.log("First name popup");
                 });
             }
-
+            /**
+             * Registers an new user in the localStorage or the cloud.
+             */
             this.register = function() {
                 var users = MockDataService.getAllUsers();
                 var user;
@@ -186,7 +206,9 @@
                 MockDataService.addUser(user);
                 this.rememberUser(user.id);
             }
-
+            /**
+             * Updates an existing User. If the User isn't registered yet, it will be added.
+             */
             this.save = function () {
                 var user;
                 var alertPopup;
@@ -247,7 +269,7 @@
                     return null;
                 }
 
-                oldCloudSetup = MockDataService.getUserByID(this.userId)
+                oldCloudSetup = MockDataService.getUserByID(this.user.id);
                 user = new User(this.user.id, this.user.firstname, this.user.surname, this.user.gender, this.user.cloud, this.user.weight, this.user.size);
                 if(oldCloudSetup == null) {
                     MockDataService.setCloudConnection(this.user.cloud);

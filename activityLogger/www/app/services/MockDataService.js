@@ -62,6 +62,11 @@
                 return user.id;
             }
 
+            /**
+             * Updates a given user
+             * @param {String} ID of the user that should be updatet
+             * @param {User] Record of the user with the new values
+             */
             function updateUser(id, user) {
                 var dummyUser = getAllUsers();
 
@@ -135,7 +140,7 @@
                 } else {
                     activities.push(activity);
                     localStorage.setItem("activities", JSON.stringify(activities));
-                    nextActivityID = activities.length + 1;
+                    nextActivityID = nextActivityID + 1;
                 }
 
                 localStorage.setItem("nextActivityID", nextActivityID);
