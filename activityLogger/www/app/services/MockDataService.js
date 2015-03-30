@@ -20,8 +20,7 @@
             var fireCompetitionsAngular = $firebase(fireCompetitions);
             var fireActivitiesAngular = $firebase(fireActivities);
 
-            // Only for tests
-            var cloud = true;
+            var cloud = false;
 
             var users = [];
             var competitions = [];
@@ -63,6 +62,21 @@
                 return user.id;
             }
 
+            function updateUser(id, user) {
+                console.log("Update user");
+                var dummyUser = getAllUsers();
+
+                if(cloud) {
+                    fireUsersAngular.$asArray().$save(user);
+                } else {
+                    for(var i = 0; i < dummyUser.length; i++) {
+                        if(dummyUser[i].id == id) {
+                            dummyUser[i] = user;
+                        }
+                    }
+                    localStorage.setItem("users", JSON.stringify(dummyUser));
+                }
+            }
             /**
              * Get a user by his given id
              *
@@ -97,6 +111,14 @@
                 return currentUserID;
             }
 
+            /**
+             * Sets the kind of persistance
+             *
+             * @param  {Boolean} True for cloud persistance, false otherwise
+             */
+            function setCloudConnection(bool) {
+                cloud = bool;
+            }
             /**
              * Adds an activity to the activity list
              *
@@ -247,8 +269,8 @@
 
             // mock some data
             if(!cloud) {
-                currentUserID = addUser(new User('Foobar', 'Foo', 'Bar', 'Male', '34.3.4192', 118, 167));
-                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', '13.3.1992', 64, 165));
+                currentUserID = addUser(new User('Foobar', 'Foo', 'Bar', 'male', true, 118, 167));
+                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'female', false, 64, 165));
 
                 var track1 = [
                     {
@@ -462,8 +484,10 @@
                 getAllUsers: getAllUsers,
                 addUser: addUser,
                 getUserByID: getUserByID,
+                updateUser: updateUser,
                 getCurrentUserId: getCurrentUserId,
                 setCurrentUserId: setCurrentUserId,
+                setCloudConnection: setCloudConnection,
                 addActivity: addActivity,
                 getAllActivities: getAllActivities,
                 getActivityByID: getActivityByID,
