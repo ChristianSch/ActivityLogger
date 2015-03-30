@@ -9,25 +9,17 @@
 			.controller(
 					'SummaryCtrl',
 					function($scope, $window, $ionicPopup, Activity,
-							SummaryService) {
+							SummaryService) {						
 
 						$scope.period_slider = 42;
-						this.period_slider = 42;
-
-						$scope.bestPerfs = SummaryService
-								.getBestPerformances(-1);
-
-						$scope.overallPerfs = SummaryService
-								.getOverallPerformances(-1);
-
-						$scope.avgPerfs = SummaryService
-								.getAveragePerformances(-1);
+						this.period_slider = 42;						
 
 						/**
 						 * Updates all statistics depending on the period.
 						 */
-						$scope.update = function() {
+						$scope.update = function() {	
 							var p = getPeriod(this.period_slider);
+							SummaryService.update();
 							$scope.bestPerfs = SummaryService
 									.getBestPerformances(p);
 							$scope.overallPerfs = SummaryService
@@ -295,8 +287,7 @@
 							return summarized_data;
 						};
 
-						$scope.disciplineDistributionLegend = $scope
-								.showDisciplineDistributionChart(-1);
+						$scope.update();
 
 					});
 })();

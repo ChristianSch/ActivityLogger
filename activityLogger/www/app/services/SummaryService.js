@@ -21,11 +21,15 @@
 						var activities = MockDataService
 								.getAllActivities(userID);
 						var user = MockDataService.getUserByID(userID);
-						console.log(userID);
-						console.log(activities);
-						console.log(user);
 
 						// PUBLIC FUNCTIONS
+
+						function update() {
+							userID = MockDataService.getCurrentUserId();
+							activities = MockDataService
+									.getAllActivities(userID);
+							user = MockDataService.getUserByID(userID);
+						}
 
 						/**
 						 * Collects the best performances for each activity type
@@ -269,8 +273,8 @@
 							var today = new Date().getTime();
 							var durations = [];
 							for (var i = days - 1; i >= 0; i--) {
-								durations.push(getDurationPerDay(today - 86400000
-										* i) / 60);
+								durations.push(getDurationPerDay(today
+										- 86400000 * i) / 60);
 							}
 							return durations;
 						}
@@ -288,8 +292,8 @@
 							var today = new Date().getTime();
 							var distances = [];
 							for (var i = days - 1; i >= 0; i--) {
-								distances.push(getDistancePerDay(today - 86400000
-										* i) / 1000);
+								distances.push(getDistancePerDay(today
+										- 86400000 * i) / 1000);
 							}
 							return distances;
 						}
@@ -307,8 +311,8 @@
 							var today = new Date().getTime();
 							var calories = [];
 							for (var i = days - 1; i >= 0; i--) {
-								calories.push(getCaloriesPerDay(today - 86400000
-										* i));
+								calories.push(getCaloriesPerDay(today
+										- 86400000 * i));
 							}
 							return calories;
 						}
@@ -549,7 +553,8 @@
 							getCalories : getCalories,
 							getAveragePerformances : getAveragePerformances,
 							getDurationOfDiscipline : getDurationOfDiscipline,
-							getDurationOfAllDisciplines : getDurationOfAllDisciplines
+							getDurationOfAllDisciplines : getDurationOfAllDisciplines,
+							update : update
 						};
 
 						return service;
