@@ -4,6 +4,23 @@
         </button>
     </ion-nav-buttons>
     <ion-content class="padding">
+        <div class="card" ng-show="pCtrl.userCache.length && !pCtrl.loginFlag">
+            <div class="item item-divider">
+                Used Accounts
+                <span ng-click="pCtrl.clearUserCache()"
+                      class="ion-ios7-trash"
+                      style="margin-right: 0px; float: right"></span>
+            </div>
+            <div class="item item-text-wrap">
+                <div class="list">
+                    <ion-item class="item-text-wrap" ng-repeat="usedAccount in pCtrl.userCache" ng-click="pCtrl.changeUser(usedAccount.id)">
+                        <div>
+                            <span class="text-left">{{usedAccount.id}}</span>
+                        </div>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
         <div class="card" ng-hide="pCtrl.loginFlag">
             <div class="item item-divider">Login</div>
             <div class="item item-text-wrap">
@@ -104,23 +121,6 @@
                 <button class="button button-block button-positive"
                         ng-click="pCtrl.save()">Save
                 </button>
-            </div>
-        </div>
-        <div class="card" ng-show="pCtrl.userCache.length && !pCtrl.loginFlag">
-            <div class="item item-divider">
-                Used Accounts
-                <span ng-click="pCtrl.clearUserCache()"
-                      class="ion-ios7-trash"
-                      style="margin-right: 0px; float: right"></span>
-            </div>
-            <div class="item item-text-wrap">
-                <div class="list">
-                    <ion-item class="item-text-wrap" ng-repeat="usedAccount in pCtrl.userCache" ng-click="pCtrl.changeUser(usedAccount.id)">
-                        <div>
-                            <span class="text-left">{{usedAccount.id}}</span>
-                        </div>
-                    </ion-item>
-                </div>
             </div>
         </div>
     </ion-content>

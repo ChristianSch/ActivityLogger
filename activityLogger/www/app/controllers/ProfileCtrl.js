@@ -13,7 +13,11 @@
             this.genders = ["male", "female"];
             this.user.gender = this.genders[0];
 
-
+            /**
+             * Checks if the given String is a valid Namestring for
+             * @param name
+             * @returns {boolean}
+             */
             function checkName(name) {
                 return /[a-zA-Z]+$/.test(name);
             }
@@ -23,7 +27,7 @@
 
             this.clearUserCache = function() {
                 this.userCache = [];
-                localStorage.setItem("userCache", JSON.stringify(this.knownUser));
+                localStorage.setItem("userCache", null);
             }
 
             this.rememberUser = function(id) {
@@ -60,7 +64,7 @@
                 localStorage.setItem("loginFlag", false);
                 this.user = new User("", "", "", "", false, "", "");
                 MockDataService.setCloudConnection(false);
-                MockDataService.setCurrentUserId("");
+                MockDataService.setCurrentUserId("ÄÖÜ");
             }
 
             this.loginUser = function(){
@@ -186,6 +190,7 @@
             this.save = function () {
                 var user;
                 var alertPopup;
+                var oldCloudSetup;
                 //Accountname
                 if(this.user.id == "") {
                     alertPopup = $ionicPopup.alert({
@@ -242,9 +247,14 @@
                     return null;
                 }
 
+                oldCloudSetup = MockDataService.getUserByID(this.userId)
                 user = new User(this.user.id, this.user.firstname, this.user.surname, this.user.gender, this.user.cloud, this.user.weight, this.user.size);
-                MockDataService.updateUser(user.id, user);
-                this.logout();
+                if(oldCloudSetup == null) {
+                    MockDataService.setCloudConnection(this.user.cloud);
+                    MockDataService.addUser(user);
+                } else {
+                    MockDataService.updateUser(user.id, user);
+                }
             }
         });
 })();
