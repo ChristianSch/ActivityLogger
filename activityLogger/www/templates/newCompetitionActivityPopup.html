@@ -1,6 +1,6 @@
 <ion-modal-view>
 	<ion-header-bar>
-		<h1 class="title">Neuer Wettkampf</h1>
+		<h1 class="title">Start Competition</h1>
 	</ion-header-bar>
 
 	<ion-content>
@@ -11,8 +11,8 @@
 
 			<div class="item item-text-wrap">
 				<select ng-model="mCtrl.selectedCompetitionType"
-				ng-change="mCtrl.refreshCompetitionPopup()" 
-				ng-options="competitionType as competitionType.label for competitionType in mCtrl.possibleCompetitionTypes"></select>	
+				ng-change="mCtrl.refreshCompetitionPopup()"
+				ng-options="competitionType as competitionType.label for competitionType in mCtrl.possibleCompetitionTypes"></select>
 			</div>
 		</div>
 
@@ -23,8 +23,8 @@
 
 			<div class="item item-text-wrap">
 				<select ng-model="mCtrl.selectedOpponent"
-				ng-change="mCtrl.refreshCompetitionPopup()" 
-				ng-options="opponent as opponent.id for opponent in mCtrl.possibleOpponents"></select>	
+				ng-change="mCtrl.refreshCompetitionPopup()"
+				ng-options="opponent as opponent.id for opponent in mCtrl.possibleOpponents"></select>
 			</div>
 		</div>
 
@@ -35,8 +35,8 @@
 
 			<div class="item item-text-wrap">
 				<select ng-model="mCtrl.selectedCompetitionDisciplin"
-				ng-change="mCtrl.refreshCompetitionPopup()" 
-				ng-options="competitionDisciplin as competitionDisciplin.label for competitionDisciplin in mCtrl.possibleCompetitionDisciplins"></select>	
+				ng-change="mCtrl.refreshCompetitionPopup()"
+				ng-options="competitionDisciplin as competitionDisciplin.label for competitionDisciplin in mCtrl.possibleCompetitionDisciplins"></select>
 			</div>
 		</div>
 
