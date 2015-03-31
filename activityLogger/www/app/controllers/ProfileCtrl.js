@@ -10,7 +10,7 @@
             this.loginFlag = localStorage.getItem("loginFlag") || false;
             this.userCache = JSON.parse(localStorage.getItem("userCache")) || [];
             this.user = new User("", "", "", "", false, "", "");
-            this.genders = ["male", "female"];
+            this.genders = ["Male", "Female"];
             this.user.gender = this.genders[0];
 
             /**
