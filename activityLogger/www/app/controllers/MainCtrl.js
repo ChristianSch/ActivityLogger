@@ -182,7 +182,6 @@
                         this.competitionID = MockDataService.addCompetition(competition);
                     }
 
-                    console.log(this.competitionID);
                     this.startActivity();
                 };
 
@@ -191,7 +190,6 @@
                  * the `activity` tab
                  */
                 this.startActivity = function() {
-                    console.log('start competition ' + thisCtrl.competitionID);
                     if (thisCtrl.selectedActivityType !== undefined) {
                         $state.go('tab.activity', {
                             'type': thisCtrl.selectedActivityType.label,

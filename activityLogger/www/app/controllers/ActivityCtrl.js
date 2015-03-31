@@ -244,7 +244,7 @@
 
                         data.push(position);
 
-                        // the map should only be touched if there are at 
+                        // the map should only be touched if there are at
                         // least two data points so that a path can be drawn
                         if (data.length > 1) {
                             $scope.totalDistance = google.maps
@@ -259,7 +259,7 @@
                         // draw the map
                         thisCtrl.refreshMap();
                     }, function(err) {
-                        alert(err);
+                        // do nothing for now
                     });
                 }
 
