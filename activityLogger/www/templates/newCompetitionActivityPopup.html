@@ -1,6 +1,7 @@
 <ion-modal-view>
 	<ion-header-bar>
 		<h1 class="title">Start Competition</h1>
+        <div class="button button-clear" ng-click="modal.hide()" style="-webkit-user-select: none; -webkit-user-drag: none;"><span class="icon ion-close"></span></div>
 	</ion-header-bar>
 
 	<ion-content>
@@ -40,8 +41,8 @@
 			</div>
 		</div>
 
-		<div class="button button-block button-positive" ng-disabled="!mCtrl.competitionCanBeStarted" ng-click="mCtrl.startCompetitionActivity()">
+		<button class="button button-block button-positive" ng-disabled="!mCtrl.competitionCanBeStarted" ng-click="mCtrl.startCompetitionActivity()">
 			GO!
-		</div>
+		</button>
 	</ion-content>
 </ion-modal-view>
