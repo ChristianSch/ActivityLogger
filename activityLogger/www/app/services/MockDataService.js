@@ -289,7 +289,7 @@
                             heading: 0,
                             latitude: 36.578581,
                             longitude: -118.291994,
-                            speed: 0
+                            speed: 1
                         },
                         timestamp: 1422290032000
                     },
@@ -301,7 +301,7 @@
                             heading: 0,
                             latitude: 36.606111,
                             longitude: -118.062778,
-                            speed: 0
+                            speed: 2
                         },
                         timestamp: 1422290052000
                     },
@@ -313,7 +313,7 @@
                             heading: 0,
                             latitude: 36.433269,
                             longitude: -117.950916,
-                            speed: 0
+                            speed: 3
                         },
                         timestamp: 1422290070000
                     },
@@ -325,7 +325,7 @@
                             heading: 0,
                             latitude: 36.588056,
                             longitude: -116.943056,
-                            speed: 0
+                            speed: 4
                         },
                         timestamp: 1422290100000
                     },
@@ -337,7 +337,7 @@
                             heading: 0,
                             latitude: 36.339722,
                             longitude: -117.467778,
-                            speed: 0
+                            speed: 5
                         },
                         timestamp: 1422290120000
                     },
@@ -349,7 +349,7 @@
                             heading: 0,
                             latitude: 36.23998,
                             longitude: -116.83171,
-                            speed: 0
+                            speed: 6
                         },
                         timestamp: 1422290100000
                     }
@@ -363,7 +363,7 @@
                             heading: 0,
                             latitude: 50.5851,
                             longitude: 8.6841,
-                            speed: 0
+                            speed: 1
                         },
                         timestamp: 1422290032000
                     },
@@ -375,7 +375,7 @@
                             heading: 0,
                             latitude: 50.5866,
                             longitude: 8.6815,
-                            speed: 0
+                            speed: 2
                         },
                         timestamp: 1422290042000
                     },
@@ -387,7 +387,7 @@
                             heading: 0,
                             latitude: 50.5874,
                             longitude: 8.6840,
-                            speed: 0
+                            speed: 3
                         },
                         timestamp: 1422290052000
                     },
@@ -399,7 +399,7 @@
                             heading: 0,
                             latitude: 50.5860,
                             longitude: 8.6861,
-                            speed: 0
+                            speed: 4
                         },
                         timestamp: 1422290100000
                     }
@@ -425,7 +425,7 @@
                             heading: 0,
                             latitude: 50.7950,
                             longitude: 8.7689,
-                            speed: 0
+                            speed: 1
                         },
                         timestamp: 1422290052000
                     },
@@ -437,7 +437,7 @@
                             heading: 0,
                             latitude: 50.7943,
                             longitude: 8.7625,
-                            speed: 0
+                            speed: 2
                         },
                         timestamp: 1422290070000
                     },
@@ -449,7 +449,7 @@
                             heading: 0,
                             latitude: 50.5851,
                             longitude: 8.6841,
-                            speed: 0
+                            speed: 3
                         },
                         timestamp: 1422290100000
                     }
