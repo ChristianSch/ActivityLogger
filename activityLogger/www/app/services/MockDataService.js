@@ -276,8 +276,8 @@
 
             // mock some data
             if(!cloud) {
-                addUser(new User('Foobar', 'Foo', 'Bar', 'male', true, 118, 167));
-                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'female', false, 64, 165));
+                addUser(new User('Foobar', 'Foo', 'Bar', 'Male', true, 118, 167));
+                var secondTestUser = addUser(new User('Foobaz', 'Baz', 'Foo', 'Female', false, 64, 165));
 
                 var track1 = [
                     {
